@@ -1,0 +1,36 @@
+<div class="grid p-3" style="height: 100vh;" > <!-- Se establece una altura de 100vh en el contenedor -->
+    <!-- Columna izquierda -->
+    <div class="col-12 md:col-3" style="height: 110%;"> <!-- Asegura que la columna tenga 100% de altura -->
+        <mat-card class="p-3">
+            <app-login-page></app-login-page>
+        </mat-card>
+
+        <div class="p-0 mt-3" style="height: 40%;"> <!-- Se asegura que el contenedor del navbar tenga 100% de altura -->
+            <app-navbar-page></app-navbar-page>
+        </div>
+    </div>
+
+    <!-- Columna central -->
+    <div class="col-12 md:col-6 flex flex-column align-items-center justify-content-center">
+
+        <mat-card class="p-3">
+            <app-post-content-page></app-post-content-page>
+        </mat-card>
+
+        <mat-card class="p-3">
+            <app-filter-page></app-filter-page>
+        </mat-card>
+
+        <mat-card class="p-3">
+            <app-meeting-room-page></app-meeting-room-page>
+        </mat-card>
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="col-12 md:col-3">
+        <mat-card class="p-3">
+            <app-public-feed-page></app-public-feed-page>
+        </mat-card>
+    </div>
+</div>
+

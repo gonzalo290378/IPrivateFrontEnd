@@ -1,0 +1,92 @@
+<!-- <mat-sidenav-container autosize style="height: 85%; min-height: 10%;">
+    <mat-sidenav [opened]="true" mode="side" class="sidenav">
+      <mat-nav-list class="flex-container">
+        <a mat-list-item>
+          <span class="entry">
+            <mat-icon class="icon">house</mat-icon>
+            <span class="text">Inicio</span>
+          </span>
+        </a>
+  
+        <a mat-list-item>
+          <mat-icon class="icon">chat</mat-icon>
+          <span class="text">Mis Mensajes</span>
+        </a>
+  
+        <a mat-list-item>
+          <span class="entry">
+            <mat-icon class="icon">house</mat-icon>
+            <span class="text">Mis Suscripciones</span>
+          </span>
+        </a>
+  
+        <a mat-list-item>
+          <span class="entry">
+            <mat-icon class="icon">circle_notifications</mat-icon>
+            <span class="text">Te quiere decir algo</span>
+          </span>
+        </a>
+  
+        <a mat-list-item>
+          <span class="entry">
+            <mat-icon class="icon">settings</mat-icon>
+            <span class="text">Mi Cuenta</span>
+          </span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <h2>Content</h2>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+   -->
+
+   <mat-sidenav-container autosize style="height: 85%; min-height: 10%;">
+    <mat-sidenav [opened]="true" mode="side" class="sidenav">
+      <mat-nav-list class="flex-container">
+        <!-- Inicio -->
+        <a mat-list-item routerLink="/">
+          <span class="entry">
+            <mat-icon class="icon">house</mat-icon>
+            <span class="text">Inicio</span>
+          </span>
+        </a>
+  
+        <!-- Mis Mensajes -->
+        <a mat-list-item [routerLink]="['/', 'username', 'messages']">
+          <span class="entry">
+            <mat-icon class="icon">chat</mat-icon>
+            <span class="text">Mis Mensajes</span>
+          </span>
+        </a>
+  
+        <!-- Mis Suscripciones -->
+        <a mat-list-item [routerLink]="['/', 'username', 'suscriptions']">
+          <span class="entry">
+            <mat-icon class="icon">house</mat-icon>
+            <span class="text">Mis Suscripciones</span>
+          </span>
+        </a>
+  
+        <!-- Te quiere decir algo -->
+        <a mat-list-item [routerLink]="['/', 'username', 'suscriptions']">
+          <span class="entry">
+            <mat-icon class="icon">circle_notifications</mat-icon>
+            <span class="text">Te quiere decir algo</span>
+          </span>
+        </a>
+  
+        <!-- Mi Cuenta -->
+        <a mat-list-item [routerLink]="['/edit', 'username']">
+          <span class="entry">
+            <mat-icon class="icon">settings</mat-icon>
+            <span class="text">Mi Cuenta</span>
+          </span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <h2>Content</h2>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
