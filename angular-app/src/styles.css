@@ -28,7 +28,7 @@ body {
 
 .app-name .i-letter {
     font-family: 'Poppins', sans-serif; /* Fuente moderna para la "I" */
-    color: #ff4081; /* Color rosado brillante para la "I" */
+    color: #300f8b; /* Color rosado brillante para la "I" */
     font-size: 70px; /* Un tamaño un poco mayor para la "I" */
     letter-spacing: 0; /* Sin espaciado extra para la "I" */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra sutil para la "I" */
@@ -41,7 +41,7 @@ body {
 }
 
 .app-name:hover {
-    color: #ff4081; /* Cambia el color a rosado cuando pase el mouse */
+    color: #054093; /* Cambia el color a rosado cuando pase el mouse */
     text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.4); /* Intensifica la sombra en hover */
     transform: scale(1.1); /* Agrandar un poco el texto en hover */
 }

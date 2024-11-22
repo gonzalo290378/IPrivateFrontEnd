@@ -11,13 +11,6 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./auth/pages/login-page/login-page.component').then(
-            (m) => m.LoginPageComponent
-          ),
-      },
-      {
-        path: '',
-        loadComponent: () =>
           import('./shared/pages/navbar-page/navbar-page.component').then(
             (m) => m.NavbarPageComponent
           ),
@@ -134,6 +127,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./users/pages/message-page/message-page.component').then(
         (m) => m.MessagePageComponent
+      ),
+  },
+  {
+    path: 'account/login',
+    loadComponent: () =>
+      import('./auth/pages/login-page/login-page.component').then(
+        (m) => m.LoginPageComponent
       ),
   },
   {
