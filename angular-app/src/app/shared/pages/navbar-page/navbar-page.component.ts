@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
-import { Router, RouterLink } from '@angular/router';
-import { User } from '../../../models/user';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { FilterPageComponent } from "../../../home/pages/filter-page/filter-page.component";
+
 
 @Component({
   selector: 'app-navbar-page',
@@ -9,18 +11,50 @@ import { User } from '../../../models/user';
   imports: [
     MaterialModule,
     RouterLink,
-    
-  ],
+    FormsModule,
+    FilterPageComponent
+],
   templateUrl: './navbar-page.component.html',
   styleUrl: './navbar-page.component.css'
 })
 export class NavbarPageComponent {
 
-  constructor(
-    // private authService: AuthService,
-    private router: Router
-  ) {}
+  isDrawerOpen = false;
 
-  //TODO: HACER username en el html dinamico
+  toggleDrawer() {
+    this.isDrawerOpen = !this.isDrawerOpen;
+  }
+
+  onDrawerToggle(isOpen: boolean) {
+    this.isDrawerOpen = isOpen;
+  }
+
+  filters = {
+    name: '',
+    minAge: null,
+    maxAge: null,
+    gender: '',
+  };
+
+  // Aplicar filtros
+  applyFilters() {
+    console.log('Filtros aplicados:', this.filters);
+    // Aquí podrías emitir un evento o realizar una consulta
+  }
+
+  // Restablecer filtros
+  resetFilters() {
+    this.filters = {
+      name: '',
+      minAge: null,
+      maxAge: null,
+      gender: '',
+    };
+    console.log('Filtros restablecidos');
+    
+  }
+
+
+
 
 }

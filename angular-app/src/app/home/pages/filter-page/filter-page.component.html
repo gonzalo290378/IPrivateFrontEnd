@@ -1,68 +1,52 @@
 <mat-sidenav-container class="example-container">
-    <mat-sidenav #drawer mode="over" class="flex flex-column justify-content-center" [opened]="false">
-        <mat-list class="flex flex-column justify-content-center" style="gap: 20px;">
-            <mat-label>Filtro de busqueda</mat-label>
-            <mat-list-item>
-                <mat-form-field appearance="fill" style="width: 80%;">
-                    <mat-label>Ciudad</mat-label>
-                    <input matInput placeholder="Buenos Aires" [(ngModel)]="filters.name">
+    <mat-list class="flex flex-column justify-content-center" style="gap: 10px;">
+        <div class="flex justify-content-center m-3">
+            <a>Busca gente</a>
+        </div>
+
+        <mat-list-item>
+            <mat-form-field appearance="fill" style="width: 90%;">
+                <mat-label>Ciudad</mat-label>
+                <input matInput placeholder="Buenos Aires" [(ngModel)]="filters.name">
+            </mat-form-field>
+        </mat-list-item>
+
+        <mat-list-item>
+            <div class="flex justify-content-between gap-2" style="width: 90%;">
+                <mat-form-field appearance="fill" style="flex: 1;">
+                    <mat-label>Edad mínima</mat-label>
+                    <input matInput type="text" [(ngModel)]="filters.minAge">
                 </mat-form-field>
-            </mat-list-item>
 
-            <mat-list-item>
-                <div class="flex justify-content-between gap-2" style="width: 80%;">
-                    <mat-form-field appearance="fill" style="flex: 1;">
-                        <mat-label>Edad mínima</mat-label>
-                        <input matInput type="text" [(ngModel)]="filters.minAge">
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" style="flex: 1;">
-                        <mat-label>Edad máxima</mat-label>
-                        <input matInput type="text" [(ngModel)]="filters.maxAge">
-                    </mat-form-field>
-                </div>
-            </mat-list-item>
-
-            <mat-list-item>
-                <mat-form-field appearance="fill" style="width: 80%;">
-                    <mat-label>Género</mat-label>
-                    <mat-select [(ngModel)]="filters.gender">
-                        <mat-option value="male">Hombres</mat-option>
-                        <mat-option value="female">Mujeres</mat-option>
-                        <mat-option value="other">Otro</mat-option>
-                    </mat-select>
+                <mat-form-field appearance="fill" style="flex: 1;">
+                    <mat-label>Edad máxima</mat-label>
+                    <input matInput type="text" [(ngModel)]="filters.maxAge">
                 </mat-form-field>
-            </mat-list-item>
-        </mat-list>
+            </div>
+        </mat-list-item>
 
-        <!-- Botón de acción -->
-        <div class="flex align-items mt-1">
-            <button mat-raised-button color="primary" (click)="applyFilters()" style="margin-right: 2px;">Aplicar</button>
-            <button mat-raised-button color="warn" (click)="resetFilters()">Volver</button>
-        </div>
-    </mat-sidenav>
+        <mat-list-item>
+            <mat-form-field appearance="fill" style="width: 90%;">
+                <mat-label>Género</mat-label>
+                <mat-select [(ngModel)]="filters.gender">
+                    <mat-option value="male">Hombres</mat-option>
+                    <mat-option value="female">Mujeres</mat-option>
+                    <mat-option value="other">Otro</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-list-item>
+    </mat-list>
 
-    <!-- Contenido principal -->
-    <mat-sidenav-content style="flex: 1; display: flex; flex-direction: column;">
-        <mat-toolbar color="primary">
-            <!-- Botón para abrir el menú -->
-            <button mat-icon-button (click)="drawer.toggle()">
-                <mat-icon>menu</mat-icon>
-            </button>
-            <span>Filtro de búsquedas</span>
-        </mat-toolbar>
+    <div class="flex justify-content-center mt-1">
+        <button mat-raised-button color="primary" (click)="applyFilters()" style="margin-right: 2px;">Aplicar</button>
+    </div>
 
-        <!-- Aquí va el contenido principal -->
-        <div style="flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center;">
-            <h1>Bienvenido</h1>
-            <p>Aquí puedes filtrar a las personas según tus preferencias.</p>
-            <!-- Resultado de filtros o contenido adicional -->
-        </div>
-        <div class="flex justify-content-center m-1">
-            <a [routerLink]="['/', 'account', 'login']" class="link">Login</a>
-        </div>
-        <div class="flex justify-content-center m-1">
-            <a [routerLink]="['/', 'new-account', 'register-page']" class="link">Crear una nueva cuenta</a>
-        </div>
-    </mat-sidenav-content>
+
+    <div class="flex justify-content-end m-3">
+        <a [routerLink]="['/', 'account', 'login']" class="link">Login</a>
+    </div>
+    <div class="flex justify-content-end m-3">
+        <a [routerLink]="['/', 'new-account', 'register-page']" class="link">Crear una nueva cuenta</a>
+    </div>
+
 </mat-sidenav-container>

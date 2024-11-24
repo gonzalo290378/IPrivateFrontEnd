@@ -25,13 +25,6 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./home/pages/filter-page/filter-page.component').then(
-            (m) => m.FilterPageComponent
-          ),
-      },
-      {
-        path: '',
-        loadComponent: () =>
           import(
             './home/pages/meeting-room-page/meeting-room-page.component'
           ).then((m) => m.MeetingRoomPageComponent),
