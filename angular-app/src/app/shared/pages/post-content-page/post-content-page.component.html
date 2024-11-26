@@ -8,7 +8,7 @@
         <mat-icon color="primary" fontSize="48px">cloud_upload</mat-icon>
         <p style="margin: 0; color: #03a9f4;">Arrastra tus imágenes aquí o haz clic abajo para seleccionar</p>
         <button mat-raised-button color="primary" (click)="fileInput.click()">Seleccionar imágenes</button>
-        <input mat-input #fileInput multiple (change)="onFileSelected($event)" accept="image/*" hidden />
+        <input type="file" #fileInput multiple (change)="onFileSelected($event)" accept="image/*" hidden />
     </div>
 
     <!-- Área para texto -->
