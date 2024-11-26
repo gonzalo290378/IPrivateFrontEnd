@@ -1,6 +1,6 @@
 <mat-sidenav-container class="example-container">
-    <mat-list class="flex flex-column justify-content-center" style="gap: 10px;">
-        <div class="flex justify-content-center m-3">
+    <mat-list class="flex flex-column justify-content-center" style="gap: 20px;">
+        <div class="flex justify-content-center">
             <a>Busca gente</a>
         </div>
 
@@ -37,16 +37,9 @@
         </mat-list-item>
     </mat-list>
 
-    <div class="flex justify-content-center mt-1">
-        <button mat-raised-button color="primary" (click)="applyFilters()" style="margin-right: 2px;">Aplicar</button>
+    <div class="flex justify-content-center m-1">
+        <button mat-raised-button color="primary" (click)="applyFilters()">Aplicar</button>
     </div>
 
-
-    <div class="flex justify-content-end m-3">
-        <a [routerLink]="['/', 'account', 'login']" class="link">Login</a>
-    </div>
-    <div class="flex justify-content-end m-3">
-        <a [routerLink]="['/', 'new-account', 'register-page']" class="link">Crear una nueva cuenta</a>
-    </div>
 
 </mat-sidenav-container>

@@ -19,42 +19,10 @@ import { FilterPageComponent } from "../../../home/pages/filter-page/filter-page
 })
 export class NavbarPageComponent {
 
-  isDrawerOpen = false;
+  isMenuOpen = false;
 
-  toggleDrawer() {
-    this.isDrawerOpen = !this.isDrawerOpen;
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
   }
-
-  onDrawerToggle(isOpen: boolean) {
-    this.isDrawerOpen = isOpen;
-  }
-
-  filters = {
-    name: '',
-    minAge: null,
-    maxAge: null,
-    gender: '',
-  };
-
-  // Aplicar filtros
-  applyFilters() {
-    console.log('Filtros aplicados:', this.filters);
-    // Aquí podrías emitir un evento o realizar una consulta
-  }
-
-  // Restablecer filtros
-  resetFilters() {
-    this.filters = {
-      name: '',
-      minAge: null,
-      maxAge: null,
-      gender: '',
-    };
-    console.log('Filtros restablecidos');
-    
-  }
-
-
-
 
 }
