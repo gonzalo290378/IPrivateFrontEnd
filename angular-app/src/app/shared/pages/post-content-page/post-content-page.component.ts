@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './post-content-page.component.css'
 })
 export class PostContentPageComponent {
+  
   uploadedImages: string[] = [];
   textComment: string = ''; // Variable para el comentario
   isDragOver = false;
