@@ -11,14 +11,13 @@ body {
 
 }
 
-/* Define una fuente atractiva para el nombre */
-/* Importamos fuentes elegantes de Google Fonts */
+/* Logo IPrivado */
 
 .app-name {
     font-family: 'Playfair Display', serif; /* Fuente elegante y clásica */
     font-size: 60px; /* Tamaño grande para impactar */
     font-weight: 700; /* Pesa más la fuente para mayor impacto */
-    color: #37378d; /* Morado sofisticado */
+    color: #0b0b6f; /* Morado sofisticado */
     text-transform: none; /* Mantener las mayúsculas y minúsculas como están */
     letter-spacing: 2px; /* Espaciado entre letras */
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
@@ -42,7 +41,6 @@ body {
 
 .app-name:hover {
     color: #054093; /* Cambia el color a rosado cuando pase el mouse */
-    text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.4); /* Intensifica la sombra en hover */
     transform: scale(1.1); /* Agrandar un poco el texto en hover */
 }
 

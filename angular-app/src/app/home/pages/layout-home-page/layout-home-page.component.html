@@ -1,23 +1,39 @@
-<div class="grid p-3" style="height: 100vh;" > <!-- Se establece una altura de 100vh en el contenedor -->
+<div class="grid p-3"> <!-- Se establece una altura de 100vh en el contenedor -->
     <!-- Columna izquierda -->
-    <div class="col-12 md:col-3" style="height: 110%;"> <!-- Asegura que la columna tenga 100% de altura -->
+    <div class="col-12 md:col-3"> <!-- Asegura que la columna tenga 100% de altura -->
 
-        <div class="p-0 mt-3" style="height: 40%;"> <!-- Se asegura que el contenedor del navbar tenga 100% de altura -->
-            <app-navbar-page></app-navbar-page>
+        <!-- Se asegura que el contenedor del navbar tenga 100% de altura -->
+        <app-navbar-page></app-navbar-page>
+
+
+        <!-- <div class="flex justify-content-start m-3">
+                <a [routerLink]="['/', 'account', 'login']" class="link">Login</a>
+            </div>
+            <div class="flex justify-content-start m-3">
+                <a [routerLink]="['/', 'new-account', 'register-page']" class="link">Crear una nueva cuenta</a>
+            </div> -->
+
+        <div class="flex justify-content-end m-2">
+            <a [routerLink]="['/', 'account', 'login']" class="link">Login</a>
         </div>
+        <div class="flex justify-content-end m-2">
+            <a [routerLink]=" ['/', 'new-account' , 'register-page' ]" class="link">Crear una nueva cuenta</a>
+        </div>
+
+
 
     </div>
 
     <!-- Columna central -->
-    <div class="col-12 md:col-6 flex flex-column align-items-center justify-content-center">
+    <div class="col-12 md:col-6 flex flex-column">
 
         <mat-card class="p-3">
             <app-post-content-page></app-post-content-page>
         </mat-card>
 
-        <mat-card class="p-3">
-            <app-meeting-room-page></app-meeting-room-page>
-        </mat-card>
+        <!-- <mat-card class="p-3"> -->
+        <app-meeting-room-page></app-meeting-room-page>
+        <!-- </mat-card> -->
     </div>
 
     <!-- Columna derecha -->
@@ -27,4 +43,3 @@
         </mat-card>
     </div>
 </div>
-
