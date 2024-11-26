@@ -1,35 +1,20 @@
-<div class="grid p-3"> <!-- Se establece una altura de 100vh en el contenedor -->
+<div class="grid p-3">
+
     <!-- Columna izquierda -->
-    <div class="col-12 md:col-3"> <!-- Asegura que la columna tenga 100% de altura -->
+    <div class="col-12 md:col-3">
 
-        <!-- Se asegura que el contenedor del navbar tenga 100% de altura -->
+        <div class="flex flex-column mb-3">
+            <a [routerLink]="['/', 'account', 'login']">Login</a>
+    
+            <a [routerLink]="['/', 'new-account', 'register-page']">Crear una nueva cuenta</a>
+        </div>
+
         <app-navbar-page></app-navbar-page>
-
-
-        <!-- <div class="flex justify-content-start m-3">
-                <a [routerLink]="['/', 'account', 'login']" class="link">Login</a>
-            </div>
-            <div class="flex justify-content-start m-3">
-                <a [routerLink]="['/', 'new-account', 'register-page']" class="link">Crear una nueva cuenta</a>
-            </div> -->
-
-        <div class="flex justify-content-end m-2">
-            <a [routerLink]="['/', 'account', 'login']" class="link">Login</a>
-        </div>
-        <div class="flex justify-content-end m-2">
-            <a [routerLink]=" ['/', 'new-account' , 'register-page' ]" class="link">Crear una nueva cuenta</a>
-        </div>
-
-
-
     </div>
 
     <!-- Columna central -->
     <div class="col-12 md:col-6 flex flex-column">
-
-        <mat-card class="p-3">
-            <app-post-content-page></app-post-content-page>
-        </mat-card>
+        <app-post-content-page></app-post-content-page>
 
         <!-- <mat-card class="p-3"> -->
         <app-meeting-room-page></app-meeting-room-page>
