@@ -3,22 +3,14 @@
     <!-- Columna izquierda -->
     <div class="col-12 md:col-3">
 
-        <div class="flex flex-column mb-3">
-            <a [routerLink]="['/', 'account', 'login']">Login</a>
-    
-            <a [routerLink]="['/', 'new-account', 'register-page']">Crear una nueva cuenta</a>
-        </div>
-
+        <app-link-login-and-create-account></app-link-login-and-create-account>
         <app-navbar-page></app-navbar-page>
     </div>
 
     <!-- Columna central -->
     <div class="col-12 md:col-6 flex flex-column">
         <app-post-content-page></app-post-content-page>
-
-        <!-- <mat-card class="p-3"> -->
         <app-meeting-room-page></app-meeting-room-page>
-        <!-- </mat-card> -->
     </div>
 
     <!-- Columna derecha -->

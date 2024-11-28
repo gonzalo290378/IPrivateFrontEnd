@@ -13,34 +13,35 @@ import { CommonModule } from '@angular/common';
   styleUrl: './meeting-room-page.component.css',
 })
 
-export class MeetingRoomPageComponent 
-//implements OnInit 
-{
+export class MeetingRoomPageComponent implements OnInit {
 
   constructor(private userService: UserService) {}
     
   users: UserDTO[] = [];
   isLoading: boolean = false;
   error: string | null = null;
+  page = 0;
+  size = 5;
 
-  // ngOnInit(): void {
-  //   this.loadAll();
-  // }
+  ngOnInit(): void {
+    this.loadAll();
+  }
 
-  // loadAll(): void {
-  //   this.isLoading = true;
-  //   this.error = null;
-  //   this.userService.findAll().subscribe({
-  //     next: (data) => {
-  //       this.users = data;
-  //       this.isLoading = false;
-  //     },
-  //     error: (err) => {
-  //       this.error = 'Failed to load users';
-  //       console.error(err);
-  //       this.isLoading = false;
-  //     },
-  //   });
-  // }
+  loadAll(): void {
+    this.isLoading = true;
+    this.error = null;
+  
+    this.userService.findAll(this.page, this.size).subscribe({
+      next: (data) => {
+        this.users = data.content;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load users';
+        console.error(err);
+        this.isLoading = false;
+      },
+    });
+  }
 
 }
