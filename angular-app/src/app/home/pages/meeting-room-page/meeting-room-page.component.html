@@ -1,29 +1,18 @@
-<div class="meeting-room-page">
-  <h2>Meeting Room</h2>
-
-  <!-- Indicador de carga -->
-  <div *ngIf="isLoading" class="loading">
-    Loading users...
-  </div>
-
-  <!-- Mensaje de error -->
-  <div *ngIf="error" class="error">
-    {{ error }}
-  </div>
-
-  <!-- Lista de usuarios -->
-  <ul *ngIf="!isLoading && !error && users.length > 0" class="user-list">
-    <li *ngFor="let user of users">
-      <div class="user-card">
-        <h3>{{ user.username }}</h3>
-        <p>Email: {{ user.email }}</p>
-        <p>Age: {{ user.age }}</p>
-      </div>
-    </li>
-  </ul>
-
-  <!-- Mensaje si no hay usuarios -->
-  <div *ngIf="!isLoading && !error && users.length === 0">
-    No users available.
+<div
+  infinite-scroll
+  [infiniteScrollDistance]="distance"
+  [infiniteScrollThrottle]="throttle"
+  (scrolled)="onScroll()"
+>
+  <div *ngFor="let user of users">
+    <mat-card-title>
+        <a>{{ user.username }}</a>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <a>{{ user.email }}</a>
+    </mat-card-subtitle>
+    <mat-card-content>
+      <a>Type: {{ user.birthdate }}</a>
+    </mat-card-content>
   </div>
 </div>
