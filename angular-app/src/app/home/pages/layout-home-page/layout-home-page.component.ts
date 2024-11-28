@@ -5,19 +5,19 @@ import { NavbarPageComponent } from '../../../shared/pages/navbar-page/navbar-pa
 import { PostContentPageComponent } from '../../../shared/pages/post-content-page/post-content-page.component';
 import { MaterialModule } from '../../../material/material-module';
 import { RouterLink } from '@angular/router';
+import { LinkLoginAndCreateAccountComponent } from "../../../shared/pages/link-login-and-create-account/link-login-and-create-account.component";
 
 @Component({
   selector: 'app-layout-home-page',
   standalone: true,
-  imports:[
+  imports: [
     MeetingRoomPageComponent,
     PublicFeedPageComponent,
     NavbarPageComponent,
     PostContentPageComponent,
     MaterialModule,
-    RouterLink,
-    
-  ],
+    LinkLoginAndCreateAccountComponent
+],
   templateUrl: './layout-home-page.component.html',
   styleUrl: './layout-home-page.component.css'
 })
