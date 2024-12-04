@@ -1,8 +1,20 @@
-<p>layout-users-page works!</p>
-<app-login-page></app-login-page>
-<app-navbar-page></app-navbar-page>
-<app-post-content-page></app-post-content-page>
-<app-edit-profile-page></app-edit-profile-page>
-<app-free-content-page></app-free-content-page>
-<app-private-content-page></app-private-content-page>
-<app-suggestion-page></app-suggestion-page>
+<div class="grid p-3">
+
+    <!-- Columna izquierda -->
+    <div class="col-12 md:col-3">
+        <app-link-login-and-create-account></app-link-login-and-create-account>
+        <app-navbar-page></app-navbar-page>
+    </div>
+
+    <!-- Columna central -->
+    <div class="col-12 md:col-6 flex flex-column">
+        <app-free-content-page></app-free-content-page>
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="col-12 md:col-3">
+        <mat-card class="p-3">
+            <app-suggestion-page></app-suggestion-page>
+        </mat-card>
+    </div>
+</div>
