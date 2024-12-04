@@ -23,4 +23,5 @@ export class UserDTO {
   preferenceDTO?: PreferenceDTO;
   countryDTO?: CountryDTO;
   cityDTO?: CityDTO;
+  alt_img?: string;
 }
