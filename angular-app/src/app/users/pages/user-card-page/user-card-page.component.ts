@@ -9,6 +9,7 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { UserImagePipe } from '../../pipes/user-image.pipe';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-card-page',
@@ -25,6 +26,7 @@ import { UserImagePipe } from '../../pipes/user-image.pipe';
     MatIcon,
     RouterLink,
     UserImagePipe,
+    CommonModule,
     
   ],
   templateUrl: './user-card-page.component.html',
