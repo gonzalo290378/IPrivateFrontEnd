@@ -5,7 +5,7 @@ import { PostContentPageComponent } from '../../../shared/pages/post-content-pag
 import { FreeContentPageComponent } from '../../../shared/pages/free-content-page/free-content-page.component';
 import { PrivateContentPageComponent } from '../private-content-page/private-content-page.component';
 import { SuggestionPageComponent } from '../../../shared/pages/suggestion-page/suggestion-page.component';
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCard } from '@angular/material/card';
 import { LinkLoginAndCreateAccountComponent } from '../../../shared/pages/link-login-and-create-account/link-login-and-create-account.component';

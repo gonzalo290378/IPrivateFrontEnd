@@ -3,7 +3,7 @@ import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle }
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../../users/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, switchMap } from 'rxjs';
 import { UserDTO } from '../../../dto/user-dto';
