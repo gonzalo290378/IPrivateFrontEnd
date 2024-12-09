@@ -2,16 +2,11 @@
     <mat-list class="flex flex-column justify-content-center" style="gap: 20px;">
         
         <div class="flex justify-content-center">
-            <a>Donde esta esa tu match?</a>
+            <a>Ciudad donde buscas a tu match</a>
         </div>
 
-        <mat-list-item>
-            <mat-form-field appearance="fill" style="width: 100%;">
-                <mat-label>Ciudad</mat-label>
-                <input matInput placeholder="Buenos Aires" [(ngModel)]="filters.name">
-            </mat-form-field>
-        </mat-list-item>
-
+        <app-by-country-page></app-by-country-page>
+        
         <mat-list-item>
             <div class="flex justify-content-between gap-2" style="width: 100%;">
                 <mat-form-field appearance="fill" style="flex: 1;">
@@ -24,7 +19,7 @@
                     <input matInput type="text" [(ngModel)]="filters.maxAge">
                 </mat-form-field>
             </div>
-        </mat-list-item>
+        </mat-list-item> 
 
         <mat-list-item>
             <mat-form-field appearance="fill" style="width: 100%;">
@@ -37,7 +32,6 @@
             </mat-form-field>
         </mat-list-item>
     </mat-list>
-
     <div class="flex justify-content-center">
         <button mat-raised-button color="primary" (click)="applyFilters()">Aplicar</button>
     </div>

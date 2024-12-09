@@ -12,7 +12,7 @@ import { FilterPageComponent } from "../../../home/pages/filter-page/filter-page
     MaterialModule,
     RouterLink,
     FormsModule,
-    FilterPageComponent
+    FilterPageComponent,
 ],
   templateUrl: './navbar-page.component.html',
   styleUrl: './navbar-page.component.css'
