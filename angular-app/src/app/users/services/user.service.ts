@@ -9,7 +9,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class UserService {
 
-  private baseUrl = `http://localhost:8001/`; // Cambia a tu endpoint real
+  private baseUrl = `http://localhost:8001/`;
 
   constructor(private http: HttpClient) {}
 

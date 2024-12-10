@@ -45,7 +45,7 @@ export class FreeContentPageComponent {
   ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
-        delay(200),
+        //delay(200),
         switchMap(({ username }) =>
           this.userService.getUserByUsername(username)
         )

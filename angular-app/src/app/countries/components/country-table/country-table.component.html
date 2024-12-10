@@ -1,26 +1,17 @@
 <div *ngIf="countries.length === 0; else table" class="alert alert-warning text-center">
-  No hay paises que mostrar
 </div>
 
 <ng-template #table>
-  <table class="table table-hover">
+  <table class="table table-hover flex flex-column align-items-center">
     <thead>
-      <tr>
-        <th>Pais</th>
-      </tr>
     </thead>
     <tbody>
       <tr *ngFor="let country of countries; let i = index">
-
         <td>{{ country.name }}</td>
-
         <td>
-          <a class="m-2" [routerLink]="[ '/countries/by', country.name]">Este pais!</a>
+          <a class="m-2" (click)="onCountrySelect(country.name)">Este pais!</a>
         </td>
-
       </tr>
     </tbody>
-
   </table>
-
 </ng-template>

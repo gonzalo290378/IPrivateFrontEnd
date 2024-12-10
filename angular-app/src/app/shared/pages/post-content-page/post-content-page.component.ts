@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
-import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -18,7 +17,7 @@ import { CommonModule } from '@angular/common';
 export class PostContentPageComponent {
   
   uploadedImages: string[] = [];
-  textComment: string = ''; // Variable para el comentario
+  textComment: string = '';
   isDragOver = false;
 
   onFileSelected(event: Event): void {
@@ -59,11 +58,8 @@ export class PostContentPageComponent {
   }
 
   submit(): void {
-    // Procesar las imágenes y el comentario
     console.log('Imágenes subidas:', this.uploadedImages);
     console.log('Comentario:', this.textComment);
-
-    // Lógica para enviar los datos al servidor
   }
 
 }

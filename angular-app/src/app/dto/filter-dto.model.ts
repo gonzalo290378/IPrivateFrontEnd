@@ -1,5 +1,3 @@
-// filter-dto.model.ts
-
 import { CityDTO } from "./city-dto";
 import { CountryDTO } from "./country-dto";
 import { FreeAreaDTO } from "./free-area-dto";
@@ -13,8 +11,8 @@ export class FilterDTO {
   age?: number;
   sex?: string;
   email?: string;
-  birthdate!: string; // LocalDate mapeado como string en formato ISO 8601
-  registerDate!: string; // LocalDate mapeado como string en formato ISO 8601
+  birthdate!: string;
+  registerDate!: string;
   description?: string;
   isEnabled?: boolean;
   idFreeArea?: number;

@@ -6,8 +6,8 @@ export class UserFormDTO {
   age!: number;
   sex!: string;
   email!: string;
-  birthdate!: string; // LocalDate mapeado como string en formato ISO 8601
-  registerDate!: string; // LocalDate mapeado como string en formato ISO 8601
+  birthdate!: string;
+  registerDate!: string;
   description!: string;
   isEnabled?: boolean;
   password!: string;
@@ -19,7 +19,6 @@ export class UserFormDTO {
   country!: string;
   city!: string;
 
-  // Método para calcular la edad
   getAge(): number {
     const today = new Date();
     const birthDate = new Date(this.birthdate);
