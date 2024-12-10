@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col">
-    <shared-search-box (onDebounce)="searchByCountry($event)" [initialValue]="initialValue"
+    <a class="flex flex-column align-items-center">Pais</a>
+    <shared-search-box (onDebounce)="searchByCountry($event)" [initialValue]="selectedCountry"
       placeholder="Buscar por pais"></shared-search-box>
   </div>
 </div>
 
 <div class="row">
   <div class="col">
-    <hr>
-    <country-table [countries]="countries"></country-table>
+    <app-country-table [countries]="countries" (countrySelected)="updateSearchBox($event)">></app-country-table>
   </div>
 </div>

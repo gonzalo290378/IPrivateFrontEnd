@@ -19,14 +19,15 @@ import { Country } from '../../interfaces/country';
   styles: [],
 })
 export class ByCountryPageComponent implements OnInit {
+  
   public initialValue: string = '';
   public countries: Country[] = [];
+  public selectedCountry: string = '';
 
   constructor( private countryService: CountryService ) {}
 
   ngOnInit(): void {
-    this.countries = this.countryService.cacheStore.byCountries.countries;
-    this.initialValue = this.countryService.cacheStore.byCountries.term;
+    this.countries = [];
   }
 
   searchByCountry( term: string ):void  {
@@ -34,6 +35,10 @@ export class ByCountryPageComponent implements OnInit {
       .subscribe( countries => {
         this.countries = countries;
       });
+  }
 
+  updateSearchBox(countryName: string): void {
+    this.selectedCountry = countryName;
+    
   }
 }
