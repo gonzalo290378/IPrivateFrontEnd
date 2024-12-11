@@ -12,7 +12,7 @@ import { StateService } from '../../services/state.service';
   templateUrl: './state-table.component.html',
 })
 
-export class StateTableComponent implements OnInit {
+export class StateTableComponent  {
   
   @Input()
   public states: State[] = [];
@@ -23,22 +23,15 @@ export class StateTableComponent implements OnInit {
   constructor(private stateService: StateService) {}
 
 
-  ngOnInit(): void {
-    this.stateService.states$.subscribe((states) => {
-      this.states = states;
-      console.log('States received in StateTableComponent:', this.states);
-    });
+  ngOnChange(): void {
+    this.states = [];
   }
 
-  ngOnChanges(): void {
-    if (this.states.length) {
-      console.log('states', this.states);
-      this.states = [];
-    }
-  }
 
   onStateSelect(stateName: string): void {
     this.stateSelected.emit(stateName);
     this.states = [];
-  }
+    }
+  
+  
 }

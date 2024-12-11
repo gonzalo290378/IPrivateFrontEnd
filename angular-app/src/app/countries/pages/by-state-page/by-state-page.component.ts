@@ -15,11 +15,10 @@ import { StateTableComponent } from '../../components/state-table/state-table.co
     SearchBoxComponent,
     FormsModule,
     StateTableComponent,
-],
+  ],
   templateUrl: './by-state-page.component.html',
 })
 export class ByStatePageComponent implements OnInit {
-
   public initialValue: string = '';
   public states: State[] = [];
   public selectedState: string = '';
@@ -30,11 +29,13 @@ export class ByStatePageComponent implements OnInit {
     this.states = [];
   }
 
-  searchByState( term: string ):void  {
-    this.stateService.searchState( term )
-      .subscribe( states => {
+  searchByState(term: string): void {
+    this.stateService.states$.subscribe((states) => {
+      this.states = states;
+      this.stateService.searchState(term, this.states).subscribe((states) => {
         this.states = states;
       });
+    });
   }
 
   updateSearchBox(stateName: string): void {
