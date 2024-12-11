@@ -34,21 +34,11 @@ export class CountryTableComponent {
 
   public country: Country[] = [];
 
-  ngOnChanges(): void {
-    if (this.countries.length === 214) {
-      this.countries = [];
-    }
-  }
-
-
   onCountrySelect(countryName: string): void {
     this.countrySelected.emit(countryName);
-  
-    this.stateService.getStates(countryName).subscribe((state) => {
-      this.states = state;
-      console.log("VER1", this.states);
-  
-      // Emitir los estados al servicio compartido
+    this.stateService.getStates(countryName).subscribe((states) => {
+      this.states = states;
+      console.log("VER1", this.states);  
       this.stateService.setStates(this.states);
     });
   
