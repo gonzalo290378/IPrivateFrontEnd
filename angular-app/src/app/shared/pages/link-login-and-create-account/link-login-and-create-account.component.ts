@@ -10,7 +10,6 @@ import { RouterLink } from '@angular/router';
     RouterLink,
   ],
   templateUrl: './link-login-and-create-account.component.html',
-  styleUrl: './link-login-and-create-account.component.css'
 })
 export class LinkLoginAndCreateAccountComponent {
 
