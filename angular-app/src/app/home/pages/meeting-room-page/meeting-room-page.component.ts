@@ -10,7 +10,6 @@ import { UserCardPageComponent } from '../../../users/pages/user-card-page/user-
   standalone: true,
   imports: [CommonModule, InfiniteScrollDirective, UserCardPageComponent],
   templateUrl: './meeting-room-page.component.html',
-  styleUrl: './meeting-room-page.component.css',
 })
 export class MeetingRoomPageComponent implements OnInit {
   constructor(private userService: UserService) {}

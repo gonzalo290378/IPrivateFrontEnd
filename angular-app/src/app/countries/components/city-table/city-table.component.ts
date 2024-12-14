@@ -3,6 +3,7 @@ import { City } from '../../interfaces/city';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
+import { CityService } from '../../services/city.service';
 
 @Component({
   selector: 'app-city-table',
@@ -17,13 +18,9 @@ export class CityTableComponent {
   @Output()
   public citySelected = new EventEmitter<string>();
 
-  ngOnChanges(): void {
-    if (this.cities.length) {
-      this.cities = [];
-    }
-  }
+  constructor(private cityService: CityService) {}
 
-  onCountrySelect(cityName: string): void {
+  onCitySelect(cityName: string): void {
     this.citySelected.emit(cityName);
     this.cities = [];
   }

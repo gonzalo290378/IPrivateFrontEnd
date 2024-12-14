@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { UserService } from '../../../users/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { delay, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { UserDTO } from '../../../dto/user-dto';
 import { CommonModule } from '@angular/common';
 import { UserImagePipe } from "../../../users/pipes/user-image.pipe";
@@ -21,7 +21,6 @@ import { MaterialModule } from '../../../material/material-module';
     MatCard,
     MatCardHeader,
     MatCardTitle,
-    MatCardSubtitle,
     MatCardContent,
     MatList,
     MatListItem,
@@ -30,7 +29,6 @@ import { MaterialModule } from '../../../material/material-module';
     MaterialModule,
 ],
   templateUrl: './free-content-page.component.html',
-  styleUrl: './free-content-page.component.css'
 })
 export class FreeContentPageComponent {
 

@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
 
   ],
   templateUrl: './public-feed-page.component.html',
-  styleUrl: './public-feed-page.component.css'
 })
 export class PublicFeedPageComponent {
 

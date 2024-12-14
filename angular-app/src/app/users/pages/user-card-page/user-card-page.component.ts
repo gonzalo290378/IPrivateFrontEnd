@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserDTO } from '../../../dto/user-dto';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatList } from '@angular/material/list';
 import { MatChip, MatChipListbox } from '@angular/material/chips';
-import { MatDivider } from '@angular/material/divider';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
