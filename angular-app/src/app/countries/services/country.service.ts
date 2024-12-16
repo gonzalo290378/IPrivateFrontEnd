@@ -13,7 +13,6 @@ export class CountryService {
   }
 
 
-
   private getCountriesRequest( url: string ): Observable<Country[]> {
     return this.http.get<Country[]>( url )
       .pipe(
