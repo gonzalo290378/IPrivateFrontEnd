@@ -8,7 +8,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class UserService {
 
-  private baseUrl = `http://localhost:8001/`;
+  private baseUrl = `http://localhost:8090/ms-users/`;
 
   constructor(private http: HttpClient) {}
 
