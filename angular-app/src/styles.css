@@ -15,7 +15,7 @@ body {
     font-family: 'Playfair Display', serif;
     font-size: 60px;
     font-weight: 700;
-    color: #0b0b6f;
+    color: #1856de;
     text-transform: none;
     letter-spacing: 2px;
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
@@ -37,10 +37,10 @@ body {
     font-style: italic;
 }
 
-.app-name:hover {
+/* .app-name:hover {
     color: #054093;
     transform: scale(1.1);
-}
+} */
 
 /* Scroll Infinite*/
 div[infinite-scroll] {

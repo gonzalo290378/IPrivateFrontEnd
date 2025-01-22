@@ -1,63 +1,58 @@
-<!-- <mat-sidenav-container class="example-container" style="height: 85%;"> -->
-<mat-sidenav-container class="col-10 m-1 col-sm-12 col-md-12 p-1">
-  <mat-sidenav #drawer mode="side" class="flex flex-column justify-content-center" [opened]="false">
+@if(authenticated){
+<mat-sidenav-container>
 
-    <mat-toolbar color="primary">
-
-      <button mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>close</mat-icon>
-      </button>
-      <span>Close</span>
-    </mat-toolbar>
-
-    <mat-nav-list class="flex-container">
-      <a mat-list-item [routerLink]="['/']">
-        <span class="entry">
-          <mat-icon class="icon">house</mat-icon>
-          <span class="text">Inicio</span>
-        </span>
-      </a>
-
-      <a mat-list-item [routerLink]="['/', 'username', 'messages']">
-        <span class="entry">
-          <mat-icon class="icon">chat</mat-icon>
-          <span class="text">Mis Mensajes</span>
-        </span>
-      </a>
-
-      <a mat-list-item [routerLink]="['/', 'username', 'suscriptions']">
-        <span class="entry">
-          <mat-icon class="icon">house</mat-icon>
-          <span class="text">Mis Suscripciones</span>
-        </span>
-      </a>
-
-      <a mat-list-item [routerLink]="['/', 'username', 'suscriptions']">
-        <span class="entry">
-          <mat-icon class="icon">circle_notifications</mat-icon>
-          <span class="text">Te quiere decir algo</span>
-        </span>
-      </a>
-
-      <a mat-list-item [routerLink]="['/edit', 'username']">
-        <span class="entry">
-          <mat-icon class="icon">settings</mat-icon>
-          <span class="text">Mi Cuenta</span>
-        </span>
-      </a>
-    </mat-nav-list>
-
-  </mat-sidenav>
-
-  <mat-toolbar color="primary">
-    <button mat-icon-button (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
+  <div class="flex flex-center">
+    <button mat-button mat-raised color="primary">
+      <mat-icon>account_circle</mat-icon> {{user.username}}
     </button>
+  </div>
 
-    <span>Menu</span>
+  <mat-nav-list class="flex-container">
+    <a mat-list-item [routerLink]="['/']">
+      <span class="entry">
+        <mat-icon class="icon">house</mat-icon>
+        <span class="text">Inicio</span>
+      </span>
+    </a>
 
-  </mat-toolbar>
+    <a mat-list-item [routerLink]="['/', 'username', 'messages']">
+      <span class="entry">
+        <mat-icon class="icon">chat</mat-icon>
+        <span class="text">Mis Mensajes</span>
+      </span>
+    </a>
 
-  <app-filter-page></app-filter-page>
+    <a mat-list-item [routerLink]="['/', 'username', 'suscriptions']">
+      <span class="entry">
+        <mat-icon class="icon">house</mat-icon>
+        <span class="text">Mis Suscripciones</span>
+      </span>
+    </a>
+
+    <a mat-list-item [routerLink]="['/', 'username', 'suscriptions']">
+      <span class="entry">
+        <mat-icon class="icon">notifications</mat-icon>
+        <span class="text">Te quiere decir algo</span>
+      </span>
+    </a>
+
+    <a mat-list-item [routerLink]="['/edit', 'username']">
+      <span class="entry">
+        <mat-icon class="icon">settings</mat-icon>
+        <span class="text">Mi Cuenta</span>
+      </span>
+    </a>
+
+    <a mat-list-item (click)="handlerLogout()" [routerLink]="['/']">
+      <span class="entry">
+        <mat-icon class="icon">logout</mat-icon>
+        <span class="text">Logout</span>
+      </span>
+    </a>
+  </mat-nav-list>
 
 </mat-sidenav-container>
+
+}
+
+<app-filter-page></app-filter-page>
