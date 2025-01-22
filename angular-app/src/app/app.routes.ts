@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -36,7 +37,6 @@ export const routes: Routes = [
             './home/pages/public-feed-page/public-feed-page.component'
           ).then((m) => m.PublicFeedPageComponent),
       },
-
     ],
   },
 
@@ -117,6 +117,7 @@ export const routes: Routes = [
   },
   {
     path: ':username/messages',
+    //canActivate: [authGuard],
     loadComponent: () =>
       import('./users/pages/message-page/message-page.component').then(
         (m) => m.MessagePageComponent

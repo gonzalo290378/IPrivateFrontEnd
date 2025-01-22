@@ -1,54 +1,80 @@
-// import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-// import { Observable, tap, of, map, catchError } from 'rxjs';
+@Injectable({
+  providedIn: 'root',
+})
 
-// import { environments } from '../../../environments/environments';
-// import { User } from '../interfaces/user.interface';
+export class AuthService {
 
-// @Injectable({providedIn: 'root'})
-// export class AuthService {
+  private url: string = 'http://localhost:8001/login';
 
-//   private baseUrl = environments.baseUrl;
-//   private user?: User;
+  private _token: string | undefined;
 
-//   constructor(private http: HttpClient) { }
+  private _handlerLoginEventEmitter = new EventEmitter();
 
-//   get currentUser():User|undefined {
-//     if ( !this.user ) return undefined;
-//     return structuredClone( this.user );
-//   }
+  private _user: any = {
+    isAuth: false,
+    user: undefined,
+  };
 
-//   login( email: string, password: string ):Observable<User> {
-//     // http.post('login',{ email, password });
-//     return this.http.get<User>(`${ this.baseUrl }/users/1`)
-//       .pipe(
-//         tap( user => this.user = user ),
-//         tap( user => localStorage.setItem('token', 'aASDgjhasda.asdasd.aadsf123k' )),
-//       );
-//   }
+  constructor(private http: HttpClient) {}
 
-//   checkAuthentication(): Observable<boolean> {
+  get user() {
+    if (this._user.isAuth) {
+      return this._user;
+    } else if (sessionStorage.getItem('login') != null) {
+      this._user = JSON.parse(sessionStorage.getItem('login') || '{}');
+      return this._user;
+    }
+    return this._user;
+  }
 
-//     if ( !localStorage.getItem('token') ) return of(false);
+  set user(user: any) {
+    this._user = user;
+    sessionStorage.setItem('login', JSON.stringify(user));
+  }
 
-//     const token = localStorage.getItem('token');
+  set token(token: string) {
+    this._token = token;
+    sessionStorage.setItem('token', token);
+  }
 
-//     return this.http.get<User>(`${ this.baseUrl }/users/1`)
-//       .pipe(
-//         tap( user => this.user = user ),
-//         map( user => !!user ),
-//         catchError( err => of(false) )
-//       );
+  get token() {
+    if (this._token != undefined) {
+      return this._token;
+    } else if (sessionStorage.getItem('token') != null) {
+      this._token = sessionStorage.getItem('token') || '';
+      return this._token;
+    }
+    return this._token!;
+  }
 
-//   }
+  get handlerLoginEventEmitter() {
+    return this._handlerLoginEventEmitter;
+  }
 
+  loginUser({ username, password }: any): Observable<any> {
+    return this.http.post<any>(this.url, { username, password });
+  }
 
-//   logout() {
-//     this.user = undefined;
-//     localStorage.clear();
-//   }
+  getPayload(token: string) {
+    if (token != null) {
+      return JSON.parse(atob(token.split('.')[1]));
+    }
+    return null;
+  }
 
+  authenticated(){
+    return this.user.isAuth;
+  }
 
+  logout(){
+    this._token = undefined;
+    this._user = {  isAuth: false, user: undefined };
+    sessionStorage.removeItem('login');
+    sessionStorage.removeItem('token');
+  }
 
-// }
+}

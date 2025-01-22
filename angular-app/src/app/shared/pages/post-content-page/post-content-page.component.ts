@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../users/services/auth.service';
 
 @Component({
   selector: 'app-post-content-page',
@@ -15,6 +16,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './post-content-page.component.css'
 })
 export class PostContentPageComponent {
+
+  constructor(private authService: AuthService) {}
+
   
   uploadedImages: string[] = [];
   textComment: string = '';
@@ -61,5 +65,10 @@ export class PostContentPageComponent {
     console.log('Imágenes subidas:', this.uploadedImages);
     console.log('Comentario:', this.textComment);
   }
+
+  
+    get authenticated(){
+      return this.authService.authenticated();
+    }
 
 }
