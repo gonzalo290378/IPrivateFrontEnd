@@ -1,10 +1,11 @@
 <div class="example-container m-1">
     <mat-list class="flex flex-column justify-content-center" style="gap: 20px;">
+        <h6 class="flex flex-column align-items-center">Buscador</h6>
 
         <app-by-country-page></app-by-country-page>
         <app-by-state-page></app-by-state-page>
         <app-by-city-page></app-by-city-page>
-        
+
         <mat-list-item>
             <div class="flex justify-content-between gap-2" style="width: 100%;">
                 <mat-form-field appearance="fill" style="flex: 1;">
@@ -17,7 +18,7 @@
                     <input matInput type="text" [(ngModel)]="filters.maxAge">
                 </mat-form-field>
             </div>
-        </mat-list-item> 
+        </mat-list-item>
 
         <mat-list-item>
             <mat-form-field appearance="fill" style="width: 100%;">

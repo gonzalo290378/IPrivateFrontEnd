@@ -16,6 +16,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatMenuModule} from '@angular/material/menu';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   imports: [
@@ -37,7 +39,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatToolbarModule,
     MatListItem,
     MatMenuModule,
-
+    MatStepperModule,
+    ReactiveFormsModule, 
   ],
   exports: [
     MatSlideToggleModule,
@@ -58,7 +61,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatToolbarModule,
     MatListItem,
     MatMenuModule,
-
+    MatStepperModule,
+    ReactiveFormsModule, 
   ],
 })
 export class MaterialModule {}

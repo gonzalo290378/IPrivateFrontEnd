@@ -1,31 +1,90 @@
 <div class="flex flex-column align-items-center" style="max-width: 80%; margin: 0 auto;">
-    <div class="col-12 md:col-3" style="height: 110%; background-color: #f5f5f5; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <!-- El resto del contenido permanece igual -->
-        <div class="flex-container m-5">
-            <a>Crear Cuenta</a>
-        </div>
+  <div class="col-12 md:col-3"
+    style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h2>Crear Cuenta</h2>
 
-        <mat-form-field style="width: 100%;">
+    <mat-horizontal-stepper [linear]="true">
+
+      <mat-step [stepControl]="userForm">
+        <form [formGroup]="userForm">
+          <h3>Tus datos</h3>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput formControlName="username" required />
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
             <mat-label>Email</mat-label>
-            <input type="text" matInput placeholder="Email">
-        </mat-form-field>
-
-        <mat-form-field style="width: 100%;">
+            <input matInput formControlName="email" type="email" required />
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Género</mat-label>
+            <mat-select formControlName="gender" required>
+              <mat-option value="H">Hombre</mat-option>
+              <mat-option value="M">Mujer</mat-option>
+              <mat-option value="T">Transgénero</mat-option>
+              <mat-option value="NB">No binario</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Fecha de nacimiento</mat-label>
+            <input matInput formControlName="birthdate" type="date" required />
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
             <mat-label>Contraseña</mat-label>
-            <input type="password" matInput placeholder="Contraseña">
-        </mat-form-field>
+            <input matInput formControlName="password" type="password" required />
+          </mat-form-field>
+          <div class="step-buttons">
+            <button mat-button matStepperNext>Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
 
-        <button mat-button mat-flat-button color="accent" style="width: 100%;">
-            Ingresar 
-        </button>
 
-        <div class="flex justify-content-center mt-3">
-            <a [routerLink]="['/', 'account', 'login']" class="link">Ya tienes cuenta?</a>
-        </div>
-        
-        <div class="flex justify-content-center mt-3">
-            <a [routerLink]="['/']" class="link">Pagina Principal</a>
-        </div>
+      <mat-step [stepControl]="locationForm">
+        <form [formGroup]="locationForm">
+          <h3>Localidad</h3>
+          <app-by-country-page (countrySelected)="onCountryChange($event)"></app-by-country-page>
+          <app-by-state-page (stateSelected)="onStateChange($event)"></app-by-state-page>
+          <app-by-city-page (citySelected)="onCityChange($event)"></app-by-city-page>
 
-    </div>
+          <div class="step-buttons">
+            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-button matStepperNext>Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+
+
+      <mat-step [stepControl]="preferencesForm">
+        <form [formGroup]="preferencesForm">
+          <h3>Tus preferencias</h3>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Género preferido</mat-label>
+            <mat-select formControlName="preferredGender" required>
+              <mat-option value="H">Hombre</mat-option>
+              <mat-option value="M">Mujer</mat-option>
+              <mat-option value="T">Transgénero</mat-option>
+              <mat-option value="NB">No binario</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Edad desde</mat-label>
+            <input matInput formControlName="ageFrom" type="number" required />
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Edad hasta</mat-label>
+            <input matInput formControlName="ageTo" type="number" required />
+          </mat-form-field>
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="description" rows="3" required></textarea>
+          </mat-form-field>
+          <div class="step-buttons">
+            <button mat-button matStepperPrevious>Anterior</button>
+            <button mat-button (click)="submit()" [disabled]="!preferencesForm.valid">Registrar</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SearchBoxComponent } from '../../../shared/pages/search-box/search-box.component';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +19,9 @@ import { StateTableComponent } from '../../components/state-table/state-table.co
   templateUrl: './by-state-page.component.html',
 })
 export class ByStatePageComponent implements OnInit {
+
+    @Output() stateSelected = new EventEmitter<string>();
+  
   public initialValue: string = '';
   public states: State[] = [];
   public selectedState: string = '';
@@ -40,5 +43,6 @@ export class ByStatePageComponent implements OnInit {
 
   updateSearchBox(stateName: string): void {
     this.selectedState = stateName;
+    this.stateSelected.emit(stateName);
   }
 }
