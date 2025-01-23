@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { City } from '../../interfaces/city';
 import { CityService } from '../../services/city.service';
 import { SearchBoxComponent } from '../../../shared/pages/search-box/search-box.component';
@@ -20,7 +20,9 @@ import { State } from '../../interfaces/state';
   ],
   templateUrl: './by-city-page.component.html',
 })
-export class ByCityPageComponent {
+export class ByCityPageComponent implements OnInit {
+
+  @Output() citySelected = new EventEmitter<string>();
 
   public initialValue: string = '';
   public cities: City[] = [];
@@ -32,6 +34,9 @@ export class ByCityPageComponent {
     private cityService: CityService
   ) {}
 
+  ngOnInit(): void {
+    this.cities = [];
+  }
 
   searchByCity(term: string): void {
     this.cityService.cities$.subscribe((cities) => {
@@ -44,5 +49,7 @@ export class ByCityPageComponent {
 
   updateSearchBox(cityName: string): void {
     this.selectedCity = cityName;
+    this.citySelected.emit(cityName);
+
   }
 }
