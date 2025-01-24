@@ -37,8 +37,8 @@ export class LoginPageComponent {
   onSubmit() {
     if (!this.user.username || !this.user.password) {
       Swal.fire(
-        'Validation Error!',
-        'Username y password are required!',
+        'Error de validación!',
+        'Nombre de usuario y password son requeridos!',
         'error'
       );
     } else {

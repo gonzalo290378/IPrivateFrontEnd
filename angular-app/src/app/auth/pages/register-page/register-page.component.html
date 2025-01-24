@@ -8,31 +8,57 @@
       <mat-step [stepControl]="userForm">
         <form [formGroup]="userForm">
           <h3>Tus datos</h3>
+
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Nombre de usuario</mat-label>
+            <mat-label>Elige un nombre de usuario</mat-label>
             <input matInput formControlName="username" required />
+            <mat-error *ngIf="userForm.get('username')?.hasError('required')">El nombre de usuario es
+              obligatorio.</mat-error>
+            <mat-error *ngIf="userForm.get('username')?.hasError('minlength')">Debe tener al menos 5
+              caracteres.</mat-error>
+            <mat-error *ngIf="userForm.get('username')?.hasError('maxlength')">No puede exceder los 10
+              caracteres.</mat-error>
           </mat-form-field>
+
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Email</mat-label>
+            <mat-label>Tu email</mat-label>
             <input matInput formControlName="email" type="email" required />
+            <mat-error *ngIf="userForm.get('email')?.hasError('required')">El email es obligatorio.</mat-error>
+            <mat-error *ngIf="userForm.get('email')?.hasError('email')">El email no es válido.</mat-error>
           </mat-form-field>
+
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Género</mat-label>
-            <mat-select formControlName="gender" required>
+            <mat-label>Tu género</mat-label>
+            <mat-select formControlName="sex" required>
               <mat-option value="H">Hombre</mat-option>
               <mat-option value="M">Mujer</mat-option>
               <mat-option value="T">Transgénero</mat-option>
               <mat-option value="NB">No binario</mat-option>
             </mat-select>
+            <mat-error *ngIf="userForm.get('sex')?.hasError('required')">Seleccionar un género es
+              obligatorio.</mat-error>
           </mat-form-field>
+
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Fecha de nacimiento</mat-label>
+            <mat-label>Tu fecha de nacimiento</mat-label>
             <input matInput formControlName="birthdate" type="date" required />
+            <mat-error *ngIf="userForm.get('birthdate')?.hasError('required')">La fecha de nacimiento es
+              obligatoria.</mat-error>
+            <mat-error *ngIf="userForm.get('birthdate')?.hasError('ageRange')">
+              Debes tener entre 18 y 90 años.
+            </mat-error>
           </mat-form-field>
+
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Contraseña</mat-label>
-            <input matInput formControlName="password" type="password" required />
+            <mat-label>Elige una contraseña</mat-label>
+            <input matInput formControlName="password" type="password" required autocomplete/>
+            <mat-error *ngIf="userForm.get('password')?.hasError('required')">La contraseña es obligatoria.</mat-error>
+            <mat-error *ngIf="userForm.get('password')?.hasError('minlength')">Debe tener al menos 6
+              caracteres.</mat-error>
+            <mat-error *ngIf="userForm.get('password')?.hasError('maxlength')">No puede exceder los 256
+              caracteres.</mat-error>
           </mat-form-field>
+
           <div class="step-buttons">
             <button mat-button matStepperNext>Siguiente</button>
           </div>
@@ -58,31 +84,55 @@
       <mat-step [stepControl]="preferencesForm">
         <form [formGroup]="preferencesForm">
           <h3>Tus preferencias</h3>
+
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Género preferido</mat-label>
-            <mat-select formControlName="preferredGender" required>
+            <mat-label>Te gustaría conocer a: </mat-label>
+            <mat-select formControlName="sexPreference" required>
               <mat-option value="H">Hombre</mat-option>
               <mat-option value="M">Mujer</mat-option>
               <mat-option value="T">Transgénero</mat-option>
               <mat-option value="NB">No binario</mat-option>
             </mat-select>
+            <mat-error *ngIf="preferencesForm.get('sexPreference')?.hasError('required')">
+              Por favor, selecciona un género preferido.
+            </mat-error>
           </mat-form-field>
+
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Edad desde</mat-label>
+            <mat-label>Edad desde(de tu match)</mat-label>
             <input matInput formControlName="ageFrom" type="number" required />
+            <mat-error *ngIf="preferencesForm.get('ageFrom')?.hasError('required')">
+              La edad mínima es requerida.
+            </mat-error>
+            <mat-error *ngIf="preferencesForm.get('ageFrom')?.hasError('min')">
+              La edad mínima permitida es 18 años.
+            </mat-error>
           </mat-form-field>
+
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Edad hasta</mat-label>
+            <mat-label>Edad hasta(de tu match)</mat-label>
             <input matInput formControlName="ageTo" type="number" required />
+            <mat-error *ngIf="preferencesForm.get('ageTo')?.hasError('required')">
+              La edad máxima es requerida.
+            </mat-error>
+            <mat-error *ngIf="preferencesForm.get('ageTo')?.hasError('max')">
+              La edad máxima permitida es 90 años.
+            </mat-error>
           </mat-form-field>
+
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Descripción</mat-label>
+            <mat-label>Tu descripción</mat-label>
             <textarea matInput formControlName="description" rows="3" required></textarea>
+            <mat-error *ngIf="preferencesForm.get('description')?.hasError('required')">
+              Por favor, añade una descripción.
+            </mat-error>
           </mat-form-field>
+
           <div class="step-buttons">
             <button mat-button matStepperPrevious>Anterior</button>
             <button mat-button (click)="submit()" [disabled]="!preferencesForm.valid">Registrar</button>
           </div>
+          
         </form>
       </mat-step>
     </mat-horizontal-stepper>

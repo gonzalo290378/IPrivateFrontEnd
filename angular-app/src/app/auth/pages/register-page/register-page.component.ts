@@ -6,16 +6,20 @@ import { ByCountryPageComponent } from '../../../countries/pages/by-country-page
 import { ByStatePageComponent } from '../../../countries/pages/by-state-page/by-state-page.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { UserService } from '../../../users/services/user.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
   imports: [
     MaterialModule,
-    RouterLink,
     ByCityPageComponent,
     ByCountryPageComponent,
     ByStatePageComponent,
+    CommonModule,
   ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
@@ -26,7 +30,7 @@ export class RegisterPageComponent implements OnInit {
   preferencesForm!: FormGroup;
   filteredStates: string[] = [];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.userForm = this.fb.group({
@@ -39,7 +43,7 @@ export class RegisterPageComponent implements OnInit {
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
-      gender: ['', Validators.required],
+      sex: ['', Validators.required],
       birthdate: ['', [Validators.required, this.ageRangeValidator]],
       password: [
         '',
@@ -57,31 +61,25 @@ export class RegisterPageComponent implements OnInit {
       city: ['', Validators.required],
     });
 
-    this.preferencesForm = this.fb.group(
-      {
-        preferredGender: ['', Validators.required],
-        ageFrom: ['', [Validators.required, Validators.min(18)]],
-        ageTo: ['', [Validators.required, Validators.max(90)]],
-        description: ['', Validators.required],
-      },
-    );
+    this.preferencesForm = this.fb.group({
+      sexPreference: ['', Validators.required],
+      ageFrom: ['', [Validators.required, Validators.min(18)]],
+      ageTo: ['', [Validators.required, Validators.max(90)]],
+      description: ['', Validators.required],
+    });
 
     this.filteredStates = [];
   }
-  
 
   onCountryChange(country: string): void {
-    console.log('Country:', country);
     this.locationForm.get('country')?.setValue(country);
   }
 
   onStateChange(state: string): void {
-    console.log('State:', state);
     this.locationForm.get('state')?.setValue(state);
   }
 
   onCityChange(city: string): void {
-    console.log('City:', city);
     this.locationForm.get('city')?.setValue(city);
   }
 
@@ -114,5 +112,25 @@ export class RegisterPageComponent implements OnInit {
       ...this.preferencesForm.value,
     };
     console.log('Datos del registro:', userData);
+
+    this.userService.save(userData).subscribe((response) => {
+      if (response) {
+        Swal.fire(
+          'Usuario creado exitosamente!',
+          'El usuario ha sido creado correctamente.',
+          'success'
+        ).then(() => {
+          setTimeout(() => {
+            this.router.navigate(['/']);
+          }, 2000);
+        });
+      } else {
+        Swal.fire(
+          'Error!',
+          'Hubo un problema al crear el usuario. Inténtalo nuevamente.',
+          'error'
+        );
+      }
+    });
   }
 }

@@ -24,9 +24,9 @@ export class FilterPageComponent {
     country: '',
     state: '',
     city: '',
-    minAge: null,
-    maxAge: null,
-    gender: '',
+    ageFrom: null,
+    ageTo: null,
+    sexPreference: '',
   };
 
   applyFilters() {
@@ -38,9 +38,9 @@ export class FilterPageComponent {
       country: '',
       state: '',
       city: '',
-      minAge: null,
-      maxAge: null,
-      gender: '',
+      ageFrom: null,
+      ageTo: null,
+      sexPreference: '',
     };
     console.log('Filtros restablecidos');
   }
