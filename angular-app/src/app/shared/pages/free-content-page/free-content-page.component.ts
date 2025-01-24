@@ -12,23 +12,22 @@ import { UserImagePipe } from "../../../users/pipes/user-image.pipe";
 import { MaterialModule } from '../../../material/material-module';
 
 @Component({
-  selector: 'app-free-content-page',
-  standalone: true,
-  imports: [
-    MatGridList,
-    MatGridTile,
-    MatProgressSpinner,
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    MatList,
-    MatListItem,
-    CommonModule,
-    UserImagePipe,
-    MaterialModule,
-],
-  templateUrl: './free-content-page.component.html',
+    selector: 'app-free-content-page',
+    imports: [
+        MatGridList,
+        MatGridTile,
+        MatProgressSpinner,
+        MatCard,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardContent,
+        MatList,
+        MatListItem,
+        CommonModule,
+        UserImagePipe,
+        MaterialModule,
+    ],
+    templateUrl: './free-content-page.component.html'
 })
 export class FreeContentPageComponent {
 

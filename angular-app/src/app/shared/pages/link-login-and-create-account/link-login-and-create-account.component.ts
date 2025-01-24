@@ -5,14 +5,12 @@ import { AuthService } from '../../../users/services/auth.service';
 import { User } from '../../../models/user';
 
 @Component({
-  selector: 'app-link-login-and-create-account',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    RouterLink,
-  
-  ],
-  templateUrl: './link-login-and-create-account.component.html',
+    selector: 'app-link-login-and-create-account',
+    imports: [
+        MaterialModule,
+        RouterLink,
+    ],
+    templateUrl: './link-login-and-create-account.component.html'
 })
 export class LinkLoginAndCreateAccountComponent {
 

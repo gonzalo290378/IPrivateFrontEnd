@@ -6,16 +6,15 @@ import { ByCityPageComponent } from "../../../countries/pages/by-city-page/by-ci
 import { ByStatePageComponent } from "../../../countries/pages/by-state-page/by-state-page.component";
 
 @Component({
-  selector: 'app-filter-page',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    FormsModule,
-    ByCountryPageComponent,
-    ByCityPageComponent,
-    ByStatePageComponent
-],
-  templateUrl: './filter-page.component.html',
+    selector: 'app-filter-page',
+    imports: [
+        MaterialModule,
+        FormsModule,
+        ByCountryPageComponent,
+        ByCityPageComponent,
+        ByStatePageComponent
+    ],
+    templateUrl: './filter-page.component.html'
 })
 
 export class FilterPageComponent {

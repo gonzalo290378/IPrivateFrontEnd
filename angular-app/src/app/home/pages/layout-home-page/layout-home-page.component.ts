@@ -7,17 +7,16 @@ import { MaterialModule } from '../../../material/material-module';
 import { LinkLoginAndCreateAccountComponent } from "../../../shared/pages/link-login-and-create-account/link-login-and-create-account.component";
 
 @Component({
-  selector: 'app-layout-home-page',
-  standalone: true,
-  imports: [
-    MeetingRoomPageComponent,
-    PublicFeedPageComponent,
-    NavbarPageComponent,
-    PostContentPageComponent,
-    MaterialModule,
-    LinkLoginAndCreateAccountComponent
-],
-  templateUrl: './layout-home-page.component.html',
+    selector: 'app-layout-home-page',
+    imports: [
+        MeetingRoomPageComponent,
+        PublicFeedPageComponent,
+        NavbarPageComponent,
+        PostContentPageComponent,
+        MaterialModule,
+        LinkLoginAndCreateAccountComponent
+    ],
+    templateUrl: './layout-home-page.component.html'
 })
 export class LayoutHomePageComponent {
 

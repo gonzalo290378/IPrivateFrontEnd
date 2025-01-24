@@ -6,10 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { CityService } from '../../services/city.service';
 
 @Component({
-  selector: 'app-city-table',
-  standalone: true,
-  imports: [CommonModule, MaterialModule, FormsModule],
-  templateUrl: './city-table.component.html',
+    selector: 'app-city-table',
+    imports: [CommonModule, MaterialModule, FormsModule],
+    templateUrl: './city-table.component.html'
 })
 export class CityTableComponent {
   @Input()

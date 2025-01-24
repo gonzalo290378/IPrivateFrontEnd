@@ -7,16 +7,15 @@ import { CountryService } from '../../services/country.service';
 import { Country } from '../../interfaces/country';
 
 @Component({
-  selector: 'app-by-country-page',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    SearchBoxComponent,
-    CountryTableComponent,
-    FormsModule,
-  ],
-  templateUrl: './by-country-page.component.html',
-  styles: [],
+    selector: 'app-by-country-page',
+    imports: [
+        MaterialModule,
+        SearchBoxComponent,
+        CountryTableComponent,
+        FormsModule,
+    ],
+    templateUrl: './by-country-page.component.html',
+    styles: []
 })
 export class ByCountryPageComponent implements OnInit {
 

@@ -5,15 +5,14 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../users/services/auth.service';
 
 @Component({
-  selector: 'app-post-content-page',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    CommonModule,
-    FormsModule,
-  ],
-  templateUrl: './post-content-page.component.html',
-  styleUrl: './post-content-page.component.css'
+    selector: 'app-post-content-page',
+    imports: [
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+    ],
+    templateUrl: './post-content-page.component.html',
+    styleUrl: './post-content-page.component.css'
 })
 export class PostContentPageComponent {
 

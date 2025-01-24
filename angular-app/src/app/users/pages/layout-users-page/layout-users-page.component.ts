@@ -10,17 +10,16 @@ import { switchMap } from 'rxjs';
 import { UserDTO } from '../../../dto/user-dto';
 
 @Component({
-  selector: 'app-layout-users-page',
-  standalone: true,
-  imports: [
-    NavbarPageComponent,
-    FreeContentPageComponent,
-    SuggestionPageComponent,
-    MatCard,
-    LinkLoginAndCreateAccountComponent,
-  ],
-  templateUrl: './layout-users-page.component.html',
-  styleUrl: './layout-users-page.component.css',
+    selector: 'app-layout-users-page',
+    imports: [
+        NavbarPageComponent,
+        FreeContentPageComponent,
+        SuggestionPageComponent,
+        MatCard,
+        LinkLoginAndCreateAccountComponent,
+    ],
+    templateUrl: './layout-users-page.component.html',
+    styleUrl: './layout-users-page.component.css'
 })
 export class LayoutUsersPageComponent implements OnInit {
   public user?: UserDTO;

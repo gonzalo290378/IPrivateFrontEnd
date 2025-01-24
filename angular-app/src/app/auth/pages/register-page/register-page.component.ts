@@ -12,17 +12,16 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register-page',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    ByCityPageComponent,
-    ByCountryPageComponent,
-    ByStatePageComponent,
-    CommonModule,
-  ],
-  templateUrl: './register-page.component.html',
-  styleUrl: './register-page.component.css',
+    selector: 'app-register-page',
+    imports: [
+        MaterialModule,
+        ByCityPageComponent,
+        ByCountryPageComponent,
+        ByStatePageComponent,
+        CommonModule,
+    ],
+    templateUrl: './register-page.component.html',
+    styleUrl: './register-page.component.css'
 })
 export class RegisterPageComponent implements OnInit {
   userForm!: FormGroup;
