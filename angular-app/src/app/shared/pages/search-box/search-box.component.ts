@@ -3,15 +3,12 @@ import { Subject, debounceTime, Subscription } from 'rxjs';
 import { MaterialModule } from '../../../material/material-module';
 
 @Component({
-  selector: 'shared-search-box',
-  standalone: true,
-  imports:[
-    MaterialModule,
-
-  ],
-  templateUrl: './search-box.component.html',
-  styles: [
-  ]
+    selector: 'shared-search-box',
+    imports: [
+        MaterialModule,
+    ],
+    templateUrl: './search-box.component.html',
+    styles: []
 })
 export class SearchBoxComponent implements OnInit, OnDestroy {
 

@@ -8,13 +8,10 @@ import { StateService } from '../../services/state.service';
 import { CityService } from '../../services/city.service';
 
 @Component({
-  selector: 'app-country-table',
-  standalone: true,
-  imports: [MaterialModule, CommonModule, FormsModule],
-  templateUrl: './country-table.component.html',
-  styles: [
-      
-  ],
+    selector: 'app-country-table',
+    imports: [MaterialModule, CommonModule, FormsModule],
+    templateUrl: './country-table.component.html',
+    styles: []
 })
 export class CountryTableComponent {
   

@@ -6,11 +6,10 @@ import { FilterPageComponent } from '../../../home/pages/filter-page/filter-page
 import { AuthService } from '../../../users/services/auth.service';
 
 @Component({
-  selector: 'app-navbar-page',
-  standalone: true,
-  imports: [MaterialModule, RouterLink, FormsModule, FilterPageComponent],
-  templateUrl: './navbar-page.component.html',
-  styleUrl: './navbar-page.component.css',
+    selector: 'app-navbar-page',
+    imports: [MaterialModule, RouterLink, FormsModule, FilterPageComponent],
+    templateUrl: './navbar-page.component.html',
+    styleUrl: './navbar-page.component.css'
 })
 export class NavbarPageComponent {
   constructor(private authService: AuthService, private router: Router) {}

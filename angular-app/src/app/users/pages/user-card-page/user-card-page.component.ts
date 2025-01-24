@@ -10,25 +10,23 @@ import { UserImagePipe } from '../../pipes/user-image.pipe';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-user-card-page',
-  standalone: true,
-  imports: [
-    MatCardContent,
-    MatCard,
-    MatCardHeader,
-    MatGridListModule,
-    MatChipListbox,
-    MatChip,
-    MatCardActions,
-    MatButton,
-    MatIcon,
-    RouterLink,
-    UserImagePipe,
-    CommonModule,
-    
-  ],
-  templateUrl: './user-card-page.component.html',
-  styleUrl: './user-card-page.component.css'
+    selector: 'app-user-card-page',
+    imports: [
+        MatCardContent,
+        MatCard,
+        MatCardHeader,
+        MatGridListModule,
+        MatChipListbox,
+        MatChip,
+        MatCardActions,
+        MatButton,
+        MatIcon,
+        RouterLink,
+        UserImagePipe,
+        CommonModule,
+    ],
+    templateUrl: './user-card-page.component.html',
+    styleUrl: './user-card-page.component.css'
 })
 export class UserCardPageComponent implements OnInit{
 

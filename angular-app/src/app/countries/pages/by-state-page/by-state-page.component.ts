@@ -7,16 +7,15 @@ import { StateService } from '../../services/state.service';
 import { StateTableComponent } from '../../components/state-table/state-table.component';
 
 @Component({
-  selector: 'app-by-state-page',
-  standalone: true,
-  imports: [
-    SearchBoxComponent,
-    MaterialModule,
-    SearchBoxComponent,
-    FormsModule,
-    StateTableComponent,
-  ],
-  templateUrl: './by-state-page.component.html',
+    selector: 'app-by-state-page',
+    imports: [
+        SearchBoxComponent,
+        MaterialModule,
+        SearchBoxComponent,
+        FormsModule,
+        StateTableComponent,
+    ],
+    templateUrl: './by-state-page.component.html'
 })
 export class ByStatePageComponent implements OnInit {
 
