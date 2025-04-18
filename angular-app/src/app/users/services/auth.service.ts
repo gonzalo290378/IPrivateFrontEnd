@@ -9,11 +9,8 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   private url: string = 'http://localhost:8001/login';
-
   private _token: string | undefined;
-
   private _handlerLoginEventEmitter = new EventEmitter();
-
   private _user: any = {
     isAuth: false,
     user: undefined,
@@ -55,8 +52,8 @@ export class AuthService {
     return this._handlerLoginEventEmitter;
   }
 
-  loginUser({ username, password }: any): Observable<any> {
-    return this.http.post<any>(this.url, { username, password });
+  loginUser({ email, password }: any): Observable<any> {
+    return this.http.post<any>(this.url, { email, password });
   }
 
   getPayload(token: string) {
@@ -76,5 +73,4 @@ export class AuthService {
     sessionStorage.removeItem('login');
     sessionStorage.removeItem('token');
   }
-
 }

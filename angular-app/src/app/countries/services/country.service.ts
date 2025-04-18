@@ -20,7 +20,6 @@ export class CountryService {
       );
   }
 
-    //EventtEmitter
   searchCountry( term: string ): Observable<Country[]> {
     const url = `${this.apiUrl}countries?name=${term}`;
     return this.getCountriesRequest(url)

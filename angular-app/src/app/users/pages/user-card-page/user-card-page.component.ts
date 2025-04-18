@@ -14,10 +14,7 @@ import { CommonModule } from '@angular/common';
     imports: [
         MatCardContent,
         MatCard,
-        MatCardHeader,
         MatGridListModule,
-        MatChipListbox,
-        MatChip,
         MatCardActions,
         MatButton,
         MatIcon,
