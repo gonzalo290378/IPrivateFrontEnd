@@ -8,14 +8,14 @@
         <form (ngSubmit)="onSubmit()">
 
             <mat-form-field style="width: 100%;">
-                <mat-label>Username</mat-label>
+                <mat-label>Email</mat-label>
                 <input 
-                    name="username" 
+                    name="email" 
                     type="text" 
                     matInput 
-                    placeholder="Username" 
-                    [(ngModel)]="user.username" 
-                    autocomplete="username">
+                    placeholder="Email" 
+                    [(ngModel)]="user.email" 
+                    autocomplete="email">
             </mat-form-field>
         
             <mat-form-field style="width: 100%;">
@@ -37,11 +37,11 @@
         
 
         <div class="flex justify-content-center mt-3">
-            <a [routerLink]="['/', 'new-account', 'register-page']" class="link">Registrate</a>
+            <a style="font-size: 0.875rem; color: blue; text-decoration: none;" [routerLink]="['/', 'new-account', 'register-page']" class="link">Registrate</a>
         </div>
 
         <div class="flex justify-content-center mt-3">
-            <a [routerLink]="['/']" class="link">Pagina Principal</a>
+            <a style="font-size: 0.875rem; color: blue; text-decoration: none;" [routerLink]="['/']" class="link">Pagina Principal</a>
         </div>
 
     </div>

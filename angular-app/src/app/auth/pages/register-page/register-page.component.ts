@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
-import { RouterLink } from '@angular/router';
 import { ByCityPageComponent } from '../../../countries/pages/by-city-page/by-city-page.component';
 import { ByCountryPageComponent } from '../../../countries/pages/by-country-page/by-country-page.component';
 import { ByStatePageComponent } from '../../../countries/pages/by-state-page/by-state-page.component';
@@ -9,7 +8,7 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../users/services/user.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-register-page',
@@ -19,6 +18,7 @@ import { Router } from '@angular/router';
         ByCountryPageComponent,
         ByStatePageComponent,
         CommonModule,
+        RouterModule,
     ],
     templateUrl: './register-page.component.html',
     styleUrl: './register-page.component.css'
@@ -104,6 +104,17 @@ export class RegisterPageComponent implements OnInit {
     return null;
   }
 
+  filterNumbers(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/[^0-9]/g, '');
+    
+    const formControlName = input.getAttribute('formControlName');
+    if (formControlName) {
+      this.preferencesForm.get(formControlName)?.setValue(input.value);
+    }
+  }
+  
+
   submit() {
     const userData = {
       ...this.userForm.value,
@@ -130,6 +141,7 @@ export class RegisterPageComponent implements OnInit {
           'error'
         );
       }
-    });
+    }
+  );
   }
 }

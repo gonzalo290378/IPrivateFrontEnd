@@ -7,10 +7,10 @@
 
       <mat-step [stepControl]="userForm">
         <form [formGroup]="userForm">
-          <h3>Tus datos</h3>
+          <h4>Tus datos</h4>
 
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Elige un nombre de usuario</mat-label>
+            <mat-label>Nombre de usuario</mat-label>
             <input matInput formControlName="username" required />
             <mat-error *ngIf="userForm.get('username')?.hasError('required')">El nombre de usuario es
               obligatorio.</mat-error>
@@ -51,7 +51,7 @@
 
           <mat-form-field appearance="fill" style="width: 100%;">
             <mat-label>Elige una contraseña</mat-label>
-            <input matInput formControlName="password" type="password" required autocomplete/>
+            <input matInput formControlName="password" type="password" required autocomplete />
             <mat-error *ngIf="userForm.get('password')?.hasError('required')">La contraseña es obligatoria.</mat-error>
             <mat-error *ngIf="userForm.get('password')?.hasError('minlength')">Debe tener al menos 6
               caracteres.</mat-error>
@@ -68,7 +68,7 @@
 
       <mat-step [stepControl]="locationForm">
         <form [formGroup]="locationForm">
-          <h3>Localidad</h3>
+          <h4>Localidad</h4>
           <app-by-country-page (countrySelected)="onCountryChange($event)"></app-by-country-page>
           <app-by-state-page (stateSelected)="onStateChange($event)"></app-by-state-page>
           <app-by-city-page (citySelected)="onCityChange($event)"></app-by-city-page>
@@ -83,10 +83,10 @@
 
       <mat-step [stepControl]="preferencesForm">
         <form [formGroup]="preferencesForm">
-          <h3>Tus preferencias</h3>
+          <h4>Tus preferencias</h4>
 
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Te gustaría conocer a: </mat-label>
+            <mat-label>Quiero conocer: </mat-label>
             <mat-select formControlName="sexPreference" required>
               <mat-option value="H">Hombre</mat-option>
               <mat-option value="M">Mujer</mat-option>
@@ -99,8 +99,13 @@
           </mat-form-field>
 
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Edad desde(de tu match)</mat-label>
-            <input matInput formControlName="ageFrom" type="number" required />
+            <mat-label>Edad desde (de tu match)</mat-label>
+            <input 
+              matInput 
+              formControlName="ageFrom" 
+              required 
+              (input)="filterNumbers($event)" 
+            />
             <mat-error *ngIf="preferencesForm.get('ageFrom')?.hasError('required')">
               La edad mínima es requerida.
             </mat-error>
@@ -108,10 +113,15 @@
               La edad mínima permitida es 18 años.
             </mat-error>
           </mat-form-field>
-
+          
           <mat-form-field appearance="fill" style="width: 100%;">
-            <mat-label>Edad hasta(de tu match)</mat-label>
-            <input matInput formControlName="ageTo" type="number" required />
+            <mat-label>Edad hasta (de tu match)</mat-label>
+            <input 
+              matInput 
+              formControlName="ageTo" 
+              required 
+              (input)="filterNumbers($event)" 
+            />
             <mat-error *ngIf="preferencesForm.get('ageTo')?.hasError('required')">
               La edad máxima es requerida.
             </mat-error>
@@ -119,6 +129,7 @@
               La edad máxima permitida es 90 años.
             </mat-error>
           </mat-form-field>
+          
 
           <mat-form-field appearance="fill" style="width: 100%;">
             <mat-label>Tu descripción</mat-label>
@@ -132,9 +143,32 @@
             <button mat-button matStepperPrevious>Anterior</button>
             <button mat-button (click)="submit()" [disabled]="!preferencesForm.valid">Registrar</button>
           </div>
-          
+
         </form>
       </mat-step>
+      
     </mat-horizontal-stepper>
+
   </div>
+
+  <div style="text-align: center; margin-top: 1rem;">
+    <a 
+      [routerLink]="['/', 'account', 'login']" 
+      class="link" 
+      style="font-size: 0.875rem; color: blue; text-decoration: none;"
+    >
+      ¿Ya tienes cuenta?
+    </a>
+  </div>
+  <div style="text-align: center; margin: 1rem 0;">
+    <a 
+      [routerLink]="['/']" 
+      class="link" 
+      style="font-size: 0.875rem; color: blue; text-decoration: none;"
+    >
+      Página Principal
+    </a>
+  </div>
+  
+  
 </div>

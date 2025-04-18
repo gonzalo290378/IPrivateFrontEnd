@@ -34,20 +34,19 @@ export class LoginPageComponent {
   }
 
   onSubmit() {
-    if (!this.user.username || !this.user.password) {
+    if (!this.user.email || !this.user.password) {
       Swal.fire(
         'Error de validación!',
-        'Nombre de usuario y password son requeridos!',
+        'Email y password son requeridos!',
         'error'
       );
     } else {
-      const username = this.user.username;
+      const email = this.user.email;
       const password = this.user.password;
 
-      this.authService.loginUser({ username, password }).subscribe({
+      this.authService.loginUser({ email, password }).subscribe({
         next: (response) => {
           const token = response.token;
-          console.log(token);
           const payload = this.authService.getPayload(token);
 
           const user = { username: payload.sub };

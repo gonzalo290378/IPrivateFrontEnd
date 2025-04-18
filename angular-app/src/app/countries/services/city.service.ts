@@ -14,7 +14,6 @@ export class CityService {
 
   constructor(private http: HttpClient) {}
 
-  //ESTAMOS ACA
   getCities(term: string): Observable<City[]> {
     const selectedCountry = this.getSelectedCountry();
     const url = `${this.apiUrl}cities/citiesByStates?name=${term}&country=${selectedCountry}`;

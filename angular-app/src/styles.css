@@ -4,6 +4,10 @@ body {
     width: 100%;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -13,9 +17,9 @@ body {
 /* Logo IPrivado */
 .app-name {
     font-family: 'Playfair Display', serif;
-    font-size: 60px;
+    font-size: 40px;
     font-weight: 700;
-    color: #1856de;
+    color: #251f9f;
     text-transform: none;
     letter-spacing: 2px;
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
@@ -134,3 +138,21 @@ mat-card-actions {
     justify-content: flex-end;
     margin-top: 16px;
 }
+
+/* Iniciar Sesion y Crear una nueva cuenta */
+.link-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.link-button:hover {
+    background-color: #0056b3;
+}
+

@@ -1,4 +1,4 @@
-<!-- <div class="row">
+<div class="row">
   <div class="col">
     <shared-search-box (onDebounce)="searchByCountry($event)" [initialValue]="selectedCountry"
       placeholder="Pais"></shared-search-box>
@@ -8,24 +8,5 @@
 <div class="row">
   <div class="col">
     <app-country-table [countries]="countries" (countrySelected)="updateSearchBox($event)">></app-country-table>
-  </div>
-</div> -->
-
-<div class="row">
-  <div class="col">
-    <shared-search-box
-      (onDebounce)="searchByCountry($event)"
-      [initialValue]="selectedCountry"
-      placeholder="Pais"
-    ></shared-search-box>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col">
-    <app-country-table
-      [countries]="countries"
-      (countrySelected)="updateSearchBox($event)">
-    </app-country-table>
   </div>
 </div>

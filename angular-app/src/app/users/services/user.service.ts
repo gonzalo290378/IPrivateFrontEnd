@@ -36,6 +36,4 @@ export class UserService {
     return this.http.post<User>(`${this.baseUrl}`, userFormDTO)
       .pipe(catchError(error => of(undefined)));
   }
-  
-  
 }
