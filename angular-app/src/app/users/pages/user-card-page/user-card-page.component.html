@@ -32,7 +32,7 @@
 
 
     <mat-card-actions>
-      <button mat-button mat-raised color="primary" [routerLink]="['/', user?.username]">
+      <button mat-button mat-raised color="primary" [routerLink]="['/', user?.username, '/']">
         <mat-icon>account_circle</mat-icon> Ver Perfil
       </button>
       <button mat-button mat-raised color="primary" [routerLink]="['/chat', user?.id]">
