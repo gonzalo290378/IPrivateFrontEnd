@@ -23,7 +23,6 @@ import { CommonModule } from '@angular/common';
         CommonModule,
     ],
     templateUrl: './user-card-page.component.html',
-    styleUrl: './user-card-page.component.css'
 })
 export class UserCardPageComponent implements OnInit{
 

@@ -41,19 +41,12 @@ export const routes: Routes = [
   },
 
   {
-    path: ':username',
+    path: ':username/',
     loadComponent: () =>
       import(
         './users/pages/layout-users-page/layout-users-page.component'
       ).then((m) => m.LayoutUsersPageComponent),
     children: [
-      {
-        path: '',
-        loadComponent: () =>
-          import('./auth/pages/login-page/login-page.component').then(
-            (m) => m.LoginPageComponent
-          ),
-      },
       {
         path: '',
         loadComponent: () =>
@@ -69,7 +62,7 @@ export const routes: Routes = [
           ).then((m) => m.FreeContentPageComponent),
       },
       {
-        path: 'private-content-page',
+        path: 'private-content-page/:username',
         loadComponent: () =>
           import(
             './users/pages/private-content-page/private-content-page.component'
@@ -124,10 +117,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'account/login',
+    path: 'authorized',
     loadComponent: () =>
-      import('./auth/pages/login-page/login-page.component').then(
-        (m) => m.LoginPageComponent
+      import('./auth/pages/authorized-page/authorized-page.component').then(
+        (m) => m.AuthorizedComponent
       ),
   },
   {
@@ -137,9 +130,9 @@ export const routes: Routes = [
         (m) => m.RegisterPageComponent
       ),
   },
-
   {
     path: '**',
     redirectTo: '',
+    pathMatch: 'full',
   },
 ];

@@ -1,9 +1,9 @@
-@if(!authenticated){
+<!-- @if(!authenticated){ -->
     <div class="flex flex-column m-5">
-        <a [routerLink]="['/', 'account', 'login']" class="link-button">Iniciar Sesión</a>
+        <a  class="link-button" (click)="onLogin()">Iniciar Sesión</a>
     </div>
     <div class="flex flex-column m-5">
         <a [routerLink]="['/', 'new-account', 'register-page']" class="link-button">Crear una nueva cuenta</a>
     </div>
-    
-}
+
+<!-- } -->
