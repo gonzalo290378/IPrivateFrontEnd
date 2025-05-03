@@ -41,7 +41,7 @@ export const routes: Routes = [
   },
 
   {
-    path: ':username/',
+    path: ':username/:id',
     loadComponent: () =>
       import(
         './users/pages/layout-users-page/layout-users-page.component'
@@ -124,7 +124,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'new-account/register-page',
+    path: 'new-account',
     loadComponent: () =>
       import('./auth/pages/register-page/register-page.component').then(
         (m) => m.RegisterPageComponent
