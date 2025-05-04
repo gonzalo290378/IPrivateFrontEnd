@@ -5,6 +5,7 @@ import { User } from '../../../models/user';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../users/services/auth.service';
+import { TokenService } from '../../../users/services/token.services';
 
 @Component({
   selector: 'authorized-page',
@@ -17,13 +18,28 @@ export class AuthorizedComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private tokenService: TokenService,
   ) {}
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((data) => {
       this.code = data['code'];
+      this.getToken();
     });
+  }
+
+  getToken(): void{
+    this.authService.getToken(this.code).subscribe(
+      data => {
+        this.tokenService.setTokens(data.access_token, data.refresh_token);
+      },
+      error => {
+        console.log(error);
+
+      }
+    );
+
   }
 
   // this.user = {

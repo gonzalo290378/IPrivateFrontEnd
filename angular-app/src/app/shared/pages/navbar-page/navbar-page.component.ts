@@ -19,10 +19,11 @@ export class NavbarPageComponent {
   }
 
   get user(){
-    return this.authService.user.user;
+    return null;
+    //return this.authService.user.user;
   }
 
   handlerLogout() {
-    this.authService.logout();
+    //this.authService.logout();
   }
 }
