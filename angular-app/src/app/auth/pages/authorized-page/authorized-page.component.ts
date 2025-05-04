@@ -5,7 +5,7 @@ import { User } from '../../../models/user';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../users/services/auth.service';
-import { TokenService } from '../../../users/services/token.services';
+import { TokenService } from '../../../users/services/token.service';
 
 @Component({
   selector: 'authorized-page',
@@ -32,6 +32,7 @@ export class AuthorizedComponent implements OnInit {
   getToken(): void{
     this.authService.getToken(this.code).subscribe(
       data => {
+        console.log(data);
         this.tokenService.setTokens(data.access_token, data.refresh_token);
       },
       error => {
