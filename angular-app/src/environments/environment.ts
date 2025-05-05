@@ -11,4 +11,5 @@ export const environment = {
     code_verified: 'ZNaGna1GXmBKljnPBkiCFcYd7TIUmscc8CAzHrRSp9p',
     token_url: 'http://localhost:9000/oauth2/token',
     resource_url: 'http://localhost:8080/resource/',
+    logout_url: 'http://localhost:9000/logout',
 }
