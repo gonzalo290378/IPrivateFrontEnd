@@ -124,6 +124,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'logout',
+    loadComponent: () =>
+      import('./auth/pages/logout-page/logout-page.component').then(
+        (m) => m.LogoutPageComponent
+      ),
+  },
+  {
     path: 'new-account',
     loadComponent: () =>
       import('./auth/pages/register-page/register-page.component').then(

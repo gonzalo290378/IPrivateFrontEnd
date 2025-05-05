@@ -20,6 +20,7 @@ export class AuthorizedComponent implements OnInit {
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private tokenService: TokenService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -34,6 +35,7 @@ export class AuthorizedComponent implements OnInit {
       data => {
         console.log(data);
         this.tokenService.setTokens(data.access_token, data.refresh_token);
+        this.router.navigate(['/']);
       },
       error => {
         console.log(error);

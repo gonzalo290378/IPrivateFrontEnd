@@ -1,8 +1,13 @@
 <!-- @if(!authenticated){ -->
-    <div class="flex flex-column m-5">
+    <div class="flex flex-column m-2">
         <a  class="link-button" (click)="onLogin()">Iniciar Sesión</a>
     </div>
-    <div class="flex flex-column m-5">
+
+    <div class="flex flex-column m-2">
+        <a  class="link-button" (click)="onLogout()">Cerrar Sesión</a>
+    </div>
+
+    <div class="flex flex-column m-2">
         <a [routerLink]="['/', 'new-account']" class="link-button">Crear una nueva cuenta</a>
     </div>
 

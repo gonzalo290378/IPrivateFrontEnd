@@ -27,6 +27,7 @@ export class LinkLoginAndCreateAccountComponent implements OnInit{
       code_challenge_method: environment.code_challenge_method,
       code_challenge: environment.code_challenge,
     };
+    logout_url = environment.logout_url;
 
   constructor( private router: Router, private authService: AuthService) {}
 
@@ -42,6 +43,11 @@ export class LinkLoginAndCreateAccountComponent implements OnInit{
      const htmlParams = new HttpParams({fromObject: this.params});
      const codeUrl = this.authorize_uri + htmlParams.toString();
      location.href = codeUrl;
+
+   }
+
+   onLogout(): void {
+    location.href = this.logout_url;
 
    }
   
