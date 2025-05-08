@@ -16,35 +16,9 @@ body {
 
 /* Logo IPrivado */
 .app-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 40px;
-    font-weight: 700;
-    color: #251f9f;
-    text-transform: none;
-    letter-spacing: 2px;
-    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
     display: inline-block;
+    text-align: center;
 }
-
-.app-name .i-letter {
-    font-family: 'Poppins', sans-serif;
-    color: #300f8b;
-    font-size: 70px;
-    letter-spacing: 0;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.app-name .privado {
-    font-family: 'Playfair Display', serif;
-    font-weight: 400;
-    font-style: italic;
-}
-
-/* .app-name:hover {
-    color: #054093;
-    transform: scale(1.1);
-} */
 
 /* Scroll Infinite*/
 div[infinite-scroll] {
@@ -155,4 +129,3 @@ mat-card-actions {
 .link-button:hover {
     background-color: #0056b3;
 }
-
