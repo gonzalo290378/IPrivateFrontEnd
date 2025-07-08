@@ -30,13 +30,7 @@ export const routes: Routes = [
             './home/pages/meeting-room-page/meeting-room-page.component'
           ).then((m) => m.MeetingRoomPageComponent),
       },
-      {
-        path: '',
-        loadComponent: () =>
-          import(
-            './home/pages/public-feed-page/public-feed-page.component'
-          ).then((m) => m.PublicFeedPageComponent),
-      },
+    
     ],
   },
 
