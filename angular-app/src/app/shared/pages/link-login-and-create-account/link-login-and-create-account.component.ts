@@ -54,6 +54,7 @@ export class LinkLoginAndCreateAccountComponent implements OnInit{
    onLogout(): void {
     this.tokenService.clear()
     location.href = this.logout_url;
+    location.href = 'http://localhost:4200'
    }
 
    getLogged(): void {

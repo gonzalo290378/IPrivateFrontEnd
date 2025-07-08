@@ -1,13 +1,13 @@
 @if(isLogged){
 <mat-sidenav-container>
 
-  <!-- <div class="flex flex-center">
+  <div class="flex flex-center">
     <button mat-button mat-raised color="primary">
       <mat-icon>account_circle</mat-icon> {{user.username}} 
     </button>
-  </div> -->
+  </div>
 
-  <!-- <mat-nav-list class="flex-container">
+   <mat-nav-list class="flex-container">
     <a mat-list-item [routerLink]="['/']">
       <span class="entry">
         <mat-icon class="icon">house</mat-icon>
@@ -43,20 +43,13 @@
       </span>
     </a>
 
-    <a mat-list-item (click)="handlerLogout()" [routerLink]="['/']">
-      <span class="entry">
-        <mat-icon class="icon">logout</mat-icon>
-        <span class="text">Logout</span>
-      </span>
-    </a>
-  </mat-nav-list> -->
+  </mat-nav-list>
 
 </mat-sidenav-container>
-
 }
 
-<div class="container">
-  <h1>{{message}}</h1>
-</div>
+<!-- <div class="container">
+  <h1>hola</h1>
+</div> -->
 
 <app-filter-page></app-filter-page>

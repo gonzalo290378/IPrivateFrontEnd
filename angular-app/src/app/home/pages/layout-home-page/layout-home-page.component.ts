@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MeetingRoomPageComponent } from '../meeting-room-page/meeting-room-page.component';
-import { PublicFeedPageComponent } from '../public-feed-page/public-feed-page.component';
 import { NavbarPageComponent } from '../../../shared/pages/navbar-page/navbar-page.component';
 import { PostContentPageComponent } from '../../../shared/pages/post-content-page/post-content-page.component';
 import { MaterialModule } from '../../../material/material-module';
@@ -10,7 +9,6 @@ import { LinkLoginAndCreateAccountComponent } from "../../../shared/pages/link-l
     selector: 'app-layout-home-page',
     imports: [
         MeetingRoomPageComponent,
-        PublicFeedPageComponent,
         NavbarPageComponent,
         PostContentPageComponent,
         MaterialModule,
