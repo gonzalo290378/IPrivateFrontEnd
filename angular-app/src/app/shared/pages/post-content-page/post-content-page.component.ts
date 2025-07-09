@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../users/services/auth.service';
+import { TokenService } from '../../../users/services/token.service';
 
 @Component({
     selector: 'app-post-content-page',
@@ -11,17 +12,21 @@ import { AuthService } from '../../../users/services/auth.service';
         CommonModule,
         FormsModule,
     ],
-    templateUrl: './post-content-page.component.html',
-    styleUrl: './post-content-page.component.css'
+    templateUrl: './post-content-page.component.html'
 })
-export class PostContentPageComponent {
+export class PostContentPageComponent implements OnInit{
 
-  constructor(private authService: AuthService) {}
-
+  constructor(
+    private authService: AuthService,
+    private tokenService: TokenService
+  
+  ) {}
   
   uploadedImages: string[] = [];
   textComment: string = '';
   isDragOver = false;
+  isLogged: boolean = false;
+  isUser: boolean = false;
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -65,9 +70,21 @@ export class PostContentPageComponent {
     console.log('Comentario:', this.textComment);
   }
 
+    ngOnInit(): void {
+    this.authService.user().subscribe(
+      (data) => {
+        //this.message = data;
+        this.getLogged();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
   
-    get authenticated(){
-      return this.authService.authenticated();
-    }
+   getLogged(): void {
+    this.isLogged = this.tokenService.isLogged();
+    this.isUser = this.tokenService.isUser();
+  }
 
 }

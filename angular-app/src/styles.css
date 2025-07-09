@@ -85,15 +85,17 @@ mat-card-actions {
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
+    gap: 10px;
     width: 100%;
 }
 
-.grid-item {
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+mat-card.main-profile-card {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 12px;
+    padding: 1rem;
+    background-color: transparent;
 }
-
 
 .status {
     font-weight: bold;
