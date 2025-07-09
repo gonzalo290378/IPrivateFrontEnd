@@ -6,19 +6,17 @@
     </mat-grid-list>
 </ng-template>
 
-
 <div *ngIf="user; else divLoading">
-    <mat-card>
+    <mat-card class="main-profile-card">
         <mat-card-header>
             <mat-card-title>
                 <h2>{{ user.username }}</h2>
             </mat-card-title>
         </mat-card-header>
 
-
         <mat-card>
             <div class="grid-container">
-                <mat-card-content class="grid-item">
+                <mat-card-content>
 
                     <div class="user-info">
                         <div>

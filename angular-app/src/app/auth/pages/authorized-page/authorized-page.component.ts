@@ -12,7 +12,6 @@ import { TokenService } from '../../../users/services/token.service';
   templateUrl: './authorized-page.component.html',
 })
 export class AuthorizedComponent implements OnInit {
-  // user: User;
   code = '';
 
   constructor(
@@ -34,7 +33,6 @@ export class AuthorizedComponent implements OnInit {
   getToken(code: string, code_verifier: string): void{
     this.authService.getToken(code, code_verifier).subscribe(
       data => {
-        console.log(data);
         this.tokenService.setTokens(data.access_token, data.refresh_token);
         this.router.navigate(['/']);
       },
@@ -49,59 +47,4 @@ export class AuthorizedComponent implements OnInit {
   });
 
   }
-
-  // this.user = {
-  //   username: '',
-  //   age: 0,
-  //   sex: '',
-  //   email: '',
-  //   birthdate: '',
-  //   description: '',
-  //   isEnabled: false,
-  //   password: '',
-  //   idFreeArea: undefined,
-  //   idPrivateArea: undefined,
-  //   preference: undefined,
-  //   country: undefined,
-  //   city: undefined,
-  // };
-  //}
-
-  // onSubmit() {
-  //   if (!this.user.email || !this.user.password) {
-  //     Swal.fire(
-  //       'Error de validación!',
-  //       'Email y password son requeridos!',
-  //       'error'
-  //     );
-  //   } else {
-  //     const email = this.user.email;
-  //     const password = this.user.password;
-
-  //     this.authService.loginUser({ email, password }).subscribe({
-  //       next: (response) => {
-  //         const token = response.token;
-  //         const payload = this.authService.getPayload(token);
-
-  //         const user = { username: payload.sub };
-  //         const login = {
-  //           user,
-  //           isAuth: true,
-  //         };
-
-  //         this.authService.token = token;
-  //         this.authService.user = login;
-  //         this.router.navigate(['/']);
-  //       },
-  //       error: (error) => {
-  //         if (error.status == 401) {
-  //           console.log(error.error);
-  //           Swal.fire('Login error', error.error.message, 'error');
-  //         } else {
-  //           throw error;
-  //         }
-  //       },
-  //     });
-  //   }
-  // }
 }
