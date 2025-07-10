@@ -62,14 +62,6 @@ export const routes: Routes = [
             './users/pages/private-content-page/private-content-page.component'
           ).then((m) => m.PrivateContentPageComponent),
       },
-
-      {
-        path: 'suggestion-content-page',
-        loadComponent: () =>
-          import(
-            './shared/pages/suggestion-page/suggestion-page.component'
-          ).then((m) => m.SuggestionPageComponent),
-      },
     ],
   },
   {

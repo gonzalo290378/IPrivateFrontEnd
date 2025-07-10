@@ -1,31 +1,12 @@
-<!-- <div class="row">
-  <div class="col">
-    <shared-search-box (onDebounce)="searchByState($event)" [initialValue]="selectedState"
-      placeholder="Estado - Provincia"></shared-search-box>
-  </div>
+<div class="row">
+  <shared-search-box
+    (onDebounce)="searchByState($event)"
+    [initialValue]="selectedState"
+    placeholder="Provincia"
+  ></shared-search-box>
 </div>
 
 <div class="row">
-  <div class="col">
-    <app-state-table [states]="states" (stateSelected)="updateSearchBox($event)">></app-state-table>
-  </div>
-</div> -->
-
-<div class="row">
-  <div class="col">
-    <shared-search-box
-      (onDebounce)="searchByState($event)"
-      [initialValue]="selectedState"
-      placeholder="Provincia"
-    ></shared-search-box>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col">
-    <app-state-table
-      [states]="states"
-      (stateSelected)="updateSearchBox($event)">
-    </app-state-table>
-  </div>
+  <app-state-table [states]="states" (stateSelected)="updateSearchBox($event)">
+  </app-state-table>
 </div>

@@ -10,7 +10,6 @@ import { LinkLoginAndCreateAccountComponent } from "../../../shared/pages/link-l
     imports: [
         MeetingRoomPageComponent,
         NavbarPageComponent,
-        PostContentPageComponent,
         MaterialModule,
         LinkLoginAndCreateAccountComponent
     ],

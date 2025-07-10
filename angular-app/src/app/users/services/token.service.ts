@@ -55,7 +55,6 @@ export class TokenService {
     localStorage.setItem(CODE_VERIFIER, encrypted.toString());
   }
 
-
   getVerifier(): string {
     const encrypted = localStorage.getItem(CODE_VERIFIER);
     if (!encrypted) {
@@ -64,9 +63,6 @@ export class TokenService {
     const decrypted = CryptoJS.AES.decrypt(encrypted, environment.secret_pkce);
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
-
-
-
 
   deleteVerifier(): void {
     localStorage.removeItem(CODE_VERIFIER);

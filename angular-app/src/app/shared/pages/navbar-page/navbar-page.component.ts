@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { FilterPageComponent } from '../../../home/pages/filter-page/filter-page.component';
-import { AuthService } from '../../../users/services/auth.service';
 import { TokenService } from '../../../users/services/token.service';
+import { ResourceService } from '../../../users/services/resource.service';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-navbar-page',
@@ -12,35 +13,31 @@ import { TokenService } from '../../../users/services/token.service';
   templateUrl: './navbar-page.component.html',
 })
 export class NavbarPageComponent implements OnInit {
-  message = '';
+  user: User | undefined;
   isLogged: boolean = false;
   isUser: boolean = false;
 
   constructor(
-    private authService: AuthService,
-    private router: Router,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private resourceService: ResourceService
   ) {}
 
   ngOnInit(): void {
-    this.authService.user().subscribe(
-      (data) => {
-        this.message = data;
-        this.getLogged();
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.resourceService.user().subscribe(
+  (data) => {
+      console.log('DATA DEL USUARIO:', data);
+    this.user = data;
+    this.getLogged();
+  },
+  (err) => {
+    console.log('Error al obtener el usuario:', err);
+  }
+);
+
   }
 
   getLogged(): void {
     this.isLogged = this.tokenService.isLogged();
     this.isUser = this.tokenService.isUser();
-  }
-
-  get user(): any {
-    console.log("ACA TENGO LOS DATOS DEL USUARIO", this.message);
-    return null;
   }
 }

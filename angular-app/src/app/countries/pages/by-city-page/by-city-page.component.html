@@ -1,31 +1,12 @@
-<!-- <div class="row">
-    <div class="col">
-      <shared-search-box (onDebounce)="searchByCity($event)" [initialValue]="selectedCity"
-        placeholder="Ciudad"></shared-search-box>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col">
-      <app-city-table [cities]="cities" (citySelected)="updateSearchBox($event)">></app-city-table>
-    </div>
-  </div> -->
+<div class="row">
+  <shared-search-box
+    (onDebounce)="searchByCity($event)"
+    [initialValue]="selectedCity"
+    placeholder="Ciudad"
+  ></shared-search-box>
+</div>
 
-  <div class="row">
-    <div class="col">
-      <shared-search-box
-        (onDebounce)="searchByCity($event)"
-        [initialValue]="selectedCity"
-        placeholder="Ciudad"
-      ></shared-search-box>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col">
-      <app-city-table
-        [cities]="cities"
-        (citySelected)="updateSearchBox($event)">
-      </app-city-table>
-    </div>
-  </div>
+<div class="row">
+  <app-city-table [cities]="cities" (citySelected)="updateSearchBox($event)">
+  </app-city-table>
+</div>

@@ -18,7 +18,7 @@ export class AuthorizedComponent implements OnInit {
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private tokenService: TokenService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -30,21 +30,22 @@ export class AuthorizedComponent implements OnInit {
     });
   }
 
-  getToken(code: string, code_verifier: string): void{
+  getToken(code: string, code_verifier: string): void {
     this.authService.getToken(code, code_verifier).subscribe(
-      data => {
+      (data) => {
         this.tokenService.setTokens(data.access_token, data.refresh_token);
+        console.log(data);
         this.router.navigate(['/']);
       },
-      error => {
+      (error) => {
         console.log(error);
         if (error.status == 409) {
-                    console.log(error.error);
-                    Swal.fire('Login error', error.error.message, 'error');
-                  } else {
-                    throw error;
+          console.log(error.error);
+          Swal.fire('Login error', error.error.message, 'error');
+        } else {
+          throw error;
+        }
       }
-  });
-
+    );
   }
 }
