@@ -10,6 +10,7 @@ import { UserDTO } from '../../../dto/user-dto';
 import { CommonModule } from '@angular/common';
 import { UserImagePipe } from "../../../users/pipes/user-image.pipe";
 import { MaterialModule } from '../../../material/material-module';
+import { PostContentPageComponent } from '../post-content-page/post-content-page.component';
 
 @Component({
     selector: 'app-free-content-page',
@@ -26,6 +27,7 @@ import { MaterialModule } from '../../../material/material-module';
         CommonModule,
         UserImagePipe,
         MaterialModule,
+        PostContentPageComponent,
     ],
     templateUrl: './free-content-page.component.html'
 })

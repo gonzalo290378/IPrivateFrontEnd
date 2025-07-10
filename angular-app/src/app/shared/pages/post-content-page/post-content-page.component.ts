@@ -2,31 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../users/services/auth.service';
 import { TokenService } from '../../../users/services/token.service';
+import { ResourceService } from '../../../users/services/resource.service';
 
 @Component({
-    selector: 'app-post-content-page',
-    imports: [
-        MaterialModule,
-        CommonModule,
-        FormsModule,
-    ],
-    templateUrl: './post-content-page.component.html'
+  selector: 'app-post-content-page',
+  imports: [MaterialModule, CommonModule, FormsModule],
+  templateUrl: './post-content-page.component.html',
 })
-export class PostContentPageComponent implements OnInit{
-
-  constructor(
-    private authService: AuthService,
-    private tokenService: TokenService
-  
-  ) {}
-  
+export class PostContentPageComponent implements OnInit {
   uploadedImages: string[] = [];
   textComment: string = '';
   isDragOver = false;
   isLogged: boolean = false;
   isUser: boolean = false;
+  message = '';
+
+  constructor(
+    private tokenService: TokenService,
+    private resourceService: ResourceService
+  ) {}
+
+  ngOnInit(): void {
+    this.resourceService.user().subscribe(
+      (data) => {
+        this.message = data;
+        this.getLogged();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -70,21 +77,8 @@ export class PostContentPageComponent implements OnInit{
     console.log('Comentario:', this.textComment);
   }
 
-    ngOnInit(): void {
-    this.authService.user().subscribe(
-      (data) => {
-        //this.message = data;
-        this.getLogged();
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-  
-   getLogged(): void {
+  getLogged(): void {
     this.isLogged = this.tokenService.isLogged();
     this.isUser = this.tokenService.isUser();
   }
-
 }
