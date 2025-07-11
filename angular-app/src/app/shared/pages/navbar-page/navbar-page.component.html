@@ -2,7 +2,7 @@
 <mat-sidenav-container>
   <div class="flex flex-center">
     <button mat-button mat-raised color="primary">
-      <mat-icon>account_circle</mat-icon> Hola {{ user?.username }}!
+      <mat-icon>account_circle</mat-icon> {{ user?.username }}
     </button>
   </div>
 
@@ -35,7 +35,7 @@
       </span>
     </a>
 
-    <a mat-list-item [routerLink]="['/edit', 'username']">
+    <a mat-list-item [routerLink]="['/edit', user?.username]">
       <span class="entry">
         <mat-icon class="icon">settings</mat-icon>
         <span class="text">Mi Cuenta</span>

@@ -25,8 +25,8 @@ export class NavbarPageComponent implements OnInit {
   ngOnInit(): void {
     this.resourceService.user().subscribe(
       (data) => {
-        console.log('DATA DEL USUARIO:', data);
         this.user = data;
+        console.log('user:', data);
         this.getLogged();
       },
       (err) => {
