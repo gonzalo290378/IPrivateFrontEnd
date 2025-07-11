@@ -7,13 +7,11 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class ResourceService {
-
   resourceUrl = environment.resource_url;
 
-  constructor(private httpClient: HttpClient){}
+  constructor(private httpClient: HttpClient) {}
 
-  public user(): Observable<any>{
+  public user(): Observable<any> {
     return this.httpClient.get<any>(this.resourceUrl + 'user');
   }
-
 }

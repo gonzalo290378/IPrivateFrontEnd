@@ -7,11 +7,10 @@ const REFRESH_TOKEN = 'refresh_token';
 const CODE_VERIFIER = 'code_verifier';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenService {
-
-  constructor() { }
+  constructor() {}
 
   setTokens(access_token: string, refresh_token: string): void {
     localStorage.removeItem(ACCESS_TOKEN);
@@ -38,20 +37,23 @@ export class TokenService {
   }
 
   isUser(): boolean {
-    if(!this.isLogged()) return false;
+    if (!this.isLogged()) return false;
     const token = this.getAccessToken() as string;
     const payload = token!.split('.')[1];
     const decodedPayload = JSON.parse(atob(payload));
     const roles = decodedPayload.roles;
-    if(roles.indexOf('ROLE_USER') < 0) return false;
+    if (roles.indexOf('ROLE_USER') < 0) return false;
     return true;
   }
 
   setVerifier(code_verifier: string): void {
-    if(localStorage.getItem(CODE_VERIFIER)) {
-      this.deleteVerifier
+    if (localStorage.getItem(CODE_VERIFIER)) {
+      this.deleteVerifier;
     }
-    const encrypted = CryptoJS.AES.encrypt(code_verifier, environment.secret_pkce);
+    const encrypted = CryptoJS.AES.encrypt(
+      code_verifier,
+      environment.secret_pkce
+    );
     localStorage.setItem(CODE_VERIFIER, encrypted.toString());
   }
 
@@ -67,6 +69,4 @@ export class TokenService {
   deleteVerifier(): void {
     localStorage.removeItem(CODE_VERIFIER);
   }
-
-  
 }

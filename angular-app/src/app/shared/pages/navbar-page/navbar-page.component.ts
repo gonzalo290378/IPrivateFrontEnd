@@ -24,16 +24,15 @@ export class NavbarPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.resourceService.user().subscribe(
-  (data) => {
-      console.log('DATA DEL USUARIO:', data);
-    this.user = data;
-    this.getLogged();
-  },
-  (err) => {
-    console.log('Error al obtener el usuario:', err);
-  }
-);
-
+      (data) => {
+        console.log('DATA DEL USUARIO:', data);
+        this.user = data;
+        this.getLogged();
+      },
+      (err) => {
+        console.log('Error al obtener el usuario:', err);
+      }
+    );
   }
 
   getLogged(): void {
