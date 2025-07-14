@@ -26,7 +26,7 @@ export class NavbarPageComponent implements OnInit {
     this.resourceService.user().subscribe(
       (data) => {
         this.user = data;
-        console.log('user:', data);
+        console.log(this.user);
         this.getLogged();
       },
       (err) => {

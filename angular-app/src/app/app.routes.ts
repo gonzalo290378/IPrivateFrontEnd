@@ -8,32 +8,30 @@ export const routes: Routes = [
       import('./home/pages/layout-home-page/layout-home-page.component').then(
         (m) => m.LayoutHomePageComponent
       ),
+  },
+  {
+    path: 'edit/:username',
+    loadComponent: () =>
+      import(
+        './users/pages/edit-profile-page/edit-profile-page.component'
+      ).then((m) => m.EditProfilePageComponent),
     children: [
       {
-        path: '',
-        loadComponent: () =>
-          import('./shared/pages/navbar-page/navbar-page.component').then(
-            (m) => m.NavbarPageComponent
-          ),
-      },
-      {
-        path: '',
+        path: 'edit-public-content-page',
         loadComponent: () =>
           import(
-            './shared/pages/post-content-page/post-content-page.component'
-          ).then((m) => m.PostContentPageComponent),
+            './users/pages/edit-public-content-page/edit-public-content-page.component'
+          ).then((m) => m.EditPublicContentPageComponent),
       },
       {
-        path: '',
+        path: 'edit-private-content-page',
         loadComponent: () =>
           import(
-            './home/pages/meeting-room-page/meeting-room-page.component'
-          ).then((m) => m.MeetingRoomPageComponent),
+            './users/pages/edit-private-content-page/edit-private-content-page.component'
+          ).then((m) => m.EditPrivateContentPageComponent),
       },
-    
     ],
   },
-
   {
     path: ':username/:id',
     loadComponent: () =>
@@ -61,29 +59,6 @@ export const routes: Routes = [
           import(
             './users/pages/private-content-page/private-content-page.component'
           ).then((m) => m.PrivateContentPageComponent),
-      },
-    ],
-  },
-  {
-    path: 'edit/:username',
-    loadComponent: () =>
-      import(
-        './users/pages/edit-profile-page/edit-profile-page.component'
-      ).then((m) => m.EditProfilePageComponent),
-    children: [
-      {
-        path: 'edit-public-content-page',
-        loadComponent: () =>
-          import(
-            './users/pages/edit-public-content-page/edit-public-content-page.component'
-          ).then((m) => m.EditPublicContentPageComponent),
-      },
-      {
-        path: 'edit-private-content-page',
-        loadComponent: () =>
-          import(
-            './users/pages/edit-private-content-page/edit-private-content-page.component'
-          ).then((m) => m.EditPrivateContentPageComponent),
       },
     ],
   },
