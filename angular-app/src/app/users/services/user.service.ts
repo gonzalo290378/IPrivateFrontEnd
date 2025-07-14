@@ -9,7 +9,6 @@ import { User } from '../../models/user';
   providedIn: 'root',
 })
 export class UserService {
-
   private baseUrl = `http://localhost:8090/ms-users/`;
 
   constructor(private http: HttpClient) {}
@@ -27,18 +26,21 @@ export class UserService {
     return this.http.get<UserDTO[]>(this.baseUrl, { params });
   }
 
-  getUserByUsername(username: string): Observable<UserDTO | undefined>{
-    return this.http.get<UserDTO>(`${this.baseUrl}${username}`)
-    .pipe(catchError(error => of(undefined)));
+  getUserByUsername(username: string): Observable<UserDTO | undefined> {
+    return this.http
+      .get<UserDTO>(`${this.baseUrl}${username}`)
+      .pipe(catchError((error) => of(undefined)));
   }
 
   save(userFormDTO: UserFormDTO): Observable<User | undefined> {
-    return this.http.post<User>(`${this.baseUrl}`, userFormDTO)
-      .pipe(catchError(error => of(undefined)));
+    return this.http
+      .post<User>(`${this.baseUrl}`, userFormDTO)
+      .pipe(catchError((error) => of(undefined)));
   }
 
   update(user: UserDTO): Observable<UserDTO | undefined> {
-  return this.http.put<UserDTO>(`${this.baseUrl}edit/${user.id}`, user)
-    .pipe(catchError(error => of(undefined)));
-}
+    return this.http
+      .put<UserDTO>(`${this.baseUrl}edit/${user.id}`, user)
+      .pipe(catchError((error) => of(undefined)));
+  }
 }
