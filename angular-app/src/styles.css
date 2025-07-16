@@ -1,133 +1,130 @@
 html,
 body {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    width: 95%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  width: 95%;
 }
 
 /* Logo IPrivate */
 .app-name {
-    display: inline-block;
-    text-align: center;
+  display: inline-block;
+  text-align: center;
 }
 
 /* Scroll Infinite*/
 div[infinite-scroll] {
-    min-height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    width: 100%;
-    box-sizing: border-box;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
-
 
 /* user card (home)*/
 .user-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
 }
 
 .profile-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 70%;
-    object-fit: cover;
-    border: 4px solid white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100px;
+  height: 100px;
+  border-radius: 70%;
+  object-fit: cover;
+  border: 4px solid white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
 .status {
-    margin-top: 0.5rem;
-    padding: 0.3rem 0.6rem;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    text-transform: uppercase;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
 }
 
 mat-card-actions {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .shadow-lg {
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
 }
-
 
 /* free content (home)*/
 .profile-image-container-free-content {
-    align-items: center;
-    padding: 1rem;
-    max-width: 90%;
-    border-radius: 50%;
+  align-items: center;
+  padding: 1rem;
+  max-width: 90%;
+  border-radius: 50%;
 }
 
 .user-info {
-    text-align: center;
+  text-align: center;
 }
 
 .description {
-    font-style: italic;
-    font-size: 0.9rem;
-    color: #555;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 10px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+  width: 100%;
 }
 
 mat-card.main-profile-card {
-    max-width: 100%;
-    width: 95%;
-    border-radius: 12px;
-    padding: 1rem;
-    background-color: transparent;
+  max-width: 100%;
+  width: 95%;
+  border-radius: 12px;
+  padding: 1rem;
+  background-color: transparent;
 }
 
 .status {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .status.active {
-    color: green;
+  color: green;
 }
 
 .status.inactive {
-    color: red;
+  color: red;
 }
 
 mat-card-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
 }
 
 /* Iniciar Sesion y Crear una nueva cuenta */
 .link-button {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 999px;
-    font-size: 0.875rem;
-    text-align: center;
-    transition: background-color 0.3s ease;
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
 .link-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }

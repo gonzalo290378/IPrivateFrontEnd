@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserDTO } from '../../../dto/user-dto';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+} from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatChip, MatChipListbox } from '@angular/material/chips';
 import { MatButton } from '@angular/material/button';
@@ -10,26 +15,25 @@ import { UserImagePipe } from '../../pipes/user-image.pipe';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-user-card-page',
-    imports: [
-        MatCardContent,
-        MatCard,
-        MatGridListModule,
-        MatCardActions,
-        MatButton,
-        MatIcon,
-        RouterLink,
-        UserImagePipe,
-        CommonModule,
-    ],
-    templateUrl: './user-card-page.component.html',
+  selector: 'app-user-card-page',
+  imports: [
+    MatCardContent,
+    MatCard,
+    MatGridListModule,
+    MatCardActions,
+    MatButton,
+    MatIcon,
+    RouterLink,
+    UserImagePipe,
+    CommonModule,
+  ],
+  templateUrl: './user-card-page.component.html',
 })
-export class UserCardPageComponent implements OnInit{
-
+export class UserCardPageComponent implements OnInit {
   @Input()
   user?: UserDTO;
 
   ngOnInit(): void {
-    if(!this.user) throw Error('User is required')
+    if (!this.user) throw Error('User is required');
   }
 }
