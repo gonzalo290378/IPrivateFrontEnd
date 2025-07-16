@@ -3,12 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-layout-auth-page',
   standalone: true,
-  imports: [
-    
-  ],
+  imports: [],
   templateUrl: './layout-auth-page.component.html',
-  styleUrl: './layout-auth-page.component.css'
+  styleUrl: './layout-auth-page.component.css',
 })
-export class LayoutAuthPageComponent {
-
-}
+export class LayoutAuthPageComponent {}

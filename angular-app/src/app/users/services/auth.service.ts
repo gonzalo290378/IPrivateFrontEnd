@@ -8,7 +8,6 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-
   token_url = environment.token_url;
   resource_url = environment.resource_url;
 
@@ -32,7 +31,7 @@ export class AuthService {
     return this.http.post(this.token_url, body, httpOptions);
   }
 
-  public user():Observable<any> {
+  public user(): Observable<any> {
     return this.http.get<any>(this.resource_url + 'user');
   }
 }

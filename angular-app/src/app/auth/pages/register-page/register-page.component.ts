@@ -11,17 +11,17 @@ import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
-    selector: 'app-register-page',
-    imports: [
-        MaterialModule,
-        ByCityPageComponent,
-        ByCountryPageComponent,
-        ByStatePageComponent,
-        CommonModule,
-        RouterModule,
-    ],
-    templateUrl: './register-page.component.html',
-    styleUrl: './register-page.component.css'
+  selector: 'app-register-page',
+  imports: [
+    MaterialModule,
+    ByCityPageComponent,
+    ByCountryPageComponent,
+    ByStatePageComponent,
+    CommonModule,
+    RouterModule,
+  ],
+  templateUrl: './register-page.component.html',
+  styleUrl: './register-page.component.css',
 })
 export class RegisterPageComponent implements OnInit {
   userForm!: FormGroup;
@@ -29,7 +29,11 @@ export class RegisterPageComponent implements OnInit {
   preferencesForm!: FormGroup;
   filteredStates: string[] = [];
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.userForm = this.fb.group({
@@ -107,13 +111,12 @@ export class RegisterPageComponent implements OnInit {
   filterNumbers(event: Event): void {
     const input = event.target as HTMLInputElement;
     input.value = input.value.replace(/[^0-9]/g, '');
-    
+
     const formControlName = input.getAttribute('formControlName');
     if (formControlName) {
       this.preferencesForm.get(formControlName)?.setValue(input.value);
     }
   }
-  
 
   submit() {
     const userData = {
@@ -141,7 +144,6 @@ export class RegisterPageComponent implements OnInit {
           'error'
         );
       }
-    }
-  );
+    });
   }
 }

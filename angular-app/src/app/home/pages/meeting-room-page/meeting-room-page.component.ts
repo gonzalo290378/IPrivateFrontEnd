@@ -6,9 +6,9 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { UserCardPageComponent } from '../../../users/pages/user-card-page/user-card-page.component';
 
 @Component({
-    selector: 'app-meeting-room-page',
-    imports: [CommonModule, InfiniteScrollDirective, UserCardPageComponent],
-    templateUrl: './meeting-room-page.component.html'
+  selector: 'app-meeting-room-page',
+  imports: [CommonModule, InfiniteScrollDirective, UserCardPageComponent],
+  templateUrl: './meeting-room-page.component.html',
 })
 export class MeetingRoomPageComponent implements OnInit {
   constructor(private userService: UserService) {}

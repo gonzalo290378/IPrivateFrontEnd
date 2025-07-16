@@ -1,15 +1,15 @@
 @if(!isLogged){
-    <div class="flex flex-column m-2">
-        <a  class="link-button" (click)="onLogin()">Iniciar Sesión</a>
-    </div>
+<div class="flex flex-column m-2">
+  <a class="link-button" (click)="onLogin()">Iniciar Sesión</a>
+</div>
 
-    <div class="flex flex-column m-2">
-        <a [routerLink]="['/', 'new-account']" class="link-button">Crear una nueva cuenta</a>
-    </div>
+<div class="flex flex-column m-2">
+  <a [routerLink]="['/', 'new-account']" class="link-button"
+    >Crear una nueva cuenta</a
+  >
+</div>
+} @else {
+<div class="flex flex-column m-2">
+  <a class="link-button" (click)="onLogout()">Cerrar Sesión</a>
+</div>
 }
-@else {
-    <div class="flex flex-column m-2">
-        <a  class="link-button" (click)="onLogout()">Cerrar Sesión</a>
-    </div>
-  }
-

@@ -5,19 +5,12 @@ import { Router } from '@angular/router';
   selector: 'app-logout-page',
   imports: [],
   templateUrl: './logout-page.component.html',
-  styleUrl: './logout-page.component.css'
+  styleUrl: './logout-page.component.css',
 })
 export class LogoutPageComponent {
-
-  constructor(
-    private router: Router,
-  ) { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.router.navigate(['']);
   }
 }
-
-
-
-

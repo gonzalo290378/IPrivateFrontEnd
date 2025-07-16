@@ -1,14 +1,12 @@
-<mat-list-item>
-  <div class="flex justify-content-between gap-2" style="width: 100%;">
-      <mat-form-field appearance="fill" style="flex: 1;">
-        <input
+<div class="flex justify-content-between gap-2" style="width: 100%">
+    <mat-form-field appearance="outline" style="flex: 1" class="mt-1">
+      <input
         matInput
         class="form-control"
         [value]="initialValue"
         [placeholder]="placeholder"
-        (keyup)="onKeyPress( txtInput.value )"
+        (keyup)="onKeyPress(txtInput.value)"
         #txtInput
-      >
-      </mat-form-field>
+      />
+    </mat-form-field>
   </div>
-</mat-list-item> 

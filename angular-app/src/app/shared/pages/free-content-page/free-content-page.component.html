@@ -8,72 +8,95 @@
 
 <app-post-content-page></app-post-content-page>
 
-<div *ngIf="user; else divLoading">
+<div
+  *ngIf="user; else divLoading"
+  class="flex flex-column align-items-center"
+  style="width: 100%"
+>
   <mat-card class="main-profile-card">
-    <mat-card-header>
-      <mat-card-title>
-        <h2>{{ user.username }}</h2>
-      </mat-card-title>
-    </mat-card-header>
+    <h2>{{ user.username }}</h2>
 
     <mat-card>
       <div class="grid-container">
         <mat-card-content>
           <div class="user-info">
-            <div>
-              <img
-                class="profile-image-container-free-content"
-                [src]="user! | userImage"
-                [alt]="user.username"
-              />
-            </div>
-
-            <div>
-              <span
-                class="status"
-                [class.active]="user.isEnabled"
-                [class.inactive]="!user.isEnabled"
-              >
-                {{ user.isEnabled ? "Activo" : "Inactivo" }}
-              </span>
-            </div>
-
-            <p class="user-details">
-              <span class="age">{{ user.age }} años - </span>
-              <span class="city">{{ user.cityDTO?.city }}</span>
-            </p>
+            <img
+              class="profile-image-container-free-content"
+              [src]="user! | userImage"
+              [alt]="user.username"
+            />
+            <span
+              class="status"
+              [class.active]="user.isEnabled"
+              [class.inactive]="!user.isEnabled"
+            >
+              <div>{{ user.isEnabled ? "Activo" : "Inactivo" }}</div>
+            </span>
           </div>
         </mat-card-content>
 
         <mat-card-content class="grid-item">
           <mat-list>
-            <div class="flex flex-column align-items-center mb-3">
-              <button mat-raised-button color="warn" (click)="goBack()">
-                <i class="bi bi-person"></i>
-                Ingresar Perfil Privado
-              </button>
+            <div *ngIf="!isEditMode" class="m-3">
+              Ciudad: {{ user.cityDTO?.city }}
             </div>
 
-            <div class="flex flex-column align-items-center">
-              <button mat-raised-button color="primary">
-                <mat-icon>chat_bubble</mat-icon>
-                Enviar mensaje
-              </button>
+            <div *ngIf="!isEditMode" class="m-3">
+              Pais: {{ user.countryDTO?.country }}
             </div>
 
-            <br />
-            <mat-list-item>
-              <mat-icon matListIcon>location_on</mat-icon>
-              {{ user.cityDTO?.city }}, {{ user.countryDTO?.country }}
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon matListIcon>person</mat-icon>
-              Edad: {{ user.age }} años
-            </mat-list-item>
-            <div class="description">
-              <mat-icon matListIcon>description</mat-icon>
+            <mat-form-field
+              appearance="outline"
+              style="flex: 1"
+              *ngIf="isEditMode"
+              class="mt-1"
+            >
+              <input
+                matInput
+                type="text"
+                [(ngModel)]="user.countryDTO!.country"
+              />
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="outline"
+              style="flex: 1"
+              *ngIf="isEditMode"
+              class="mt-1"
+            >
+              <input matInput type="text" [(ngModel)]="user.cityDTO!.city" />
+            </mat-form-field>
+
+            <div *ngIf="!isEditMode" class="m-3">Edad: {{ user.age }} años</div>
+
+            <mat-form-field
+              appearance="outline"
+              style="flex: 1"
+              *ngIf="isEditMode"
+              class="mt-5"
+            >
+              <input matInput type="number" [(ngModel)]="user.age" />
+            </mat-form-field>
+
+            <div *ngIf="!isEditMode" class="m-3">
               {{ user.description }}
             </div>
+
+            <mat-form-field
+              appearance="outline"
+              style="width: 90%; margin: 1rem 0"
+              *ngIf="isEditMode"
+            >
+              <mat-label>Descripción</mat-label>
+              <textarea
+                matInput
+                [(ngModel)]="user.description"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="10"
+                placeholder="Escribe tu descripción"
+              ></textarea>
+            </mat-form-field>
           </mat-list>
 
           <mat-card-actions class="actions-container">
@@ -82,9 +105,19 @@
               Regresar
             </button>
 
-            <button mat-raised-button color="warn">
+            <button mat-raised-button color="warn" *ngIf="!isEditMode">
               <mat-icon>block</mat-icon>
               Bloquear
+            </button>
+
+            <button
+              mat-raised-button
+              color="accent"
+              *ngIf="isEditMode"
+              (click)="save()"
+            >
+              <mat-icon>save</mat-icon>
+              Guardar cambios
             </button>
           </mat-card-actions>
         </mat-card-content>
@@ -92,7 +125,3 @@
     </mat-card>
   </mat-card>
 </div>
-
-<ng-template #divLoading>
-  <p>Cargando información del perfil...</p>
-</ng-template>

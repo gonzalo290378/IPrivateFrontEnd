@@ -1,17 +1,21 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Subject, debounceTime, Subscription } from 'rxjs';
 import { MaterialModule } from '../../../material/material-module';
 
 @Component({
-    selector: 'shared-search-box',
-    imports: [
-        MaterialModule,
-    ],
-    templateUrl: './search-box.component.html',
-    styles: []
+  selector: 'shared-search-box',
+  imports: [MaterialModule],
+  templateUrl: './search-box.component.html',
+  styles: [],
 })
 export class SearchBoxComponent implements OnInit, OnDestroy {
-
   private debouncer: Subject<string> = new Subject<string>();
   private debouncerSuscription?: Subscription;
 
@@ -29,24 +33,21 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.debouncerSuscription = this.debouncer
-    .pipe(
-      debounceTime(300)
-    )
-    .subscribe( value => {
-      this.onDebounce.emit( value );
-    });
+      .pipe(debounceTime(300))
+      .subscribe((value) => {
+        this.onDebounce.emit(value);
+      });
   }
 
   ngOnDestroy(): void {
     this.debouncerSuscription?.unsubscribe();
   }
 
-  emitValue( value: string ):void {
-    this.onValue.emit( value );
+  emitValue(value: string): void {
+    this.onValue.emit(value);
   }
 
-  onKeyPress( searchTerm: string ) {
-    this.debouncer.next( searchTerm );
+  onKeyPress(searchTerm: string) {
+    this.debouncer.next(searchTerm);
   }
-
 }
