@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { OwnerGuard } from './guards/owner.guard';
 
 export const routes: Routes = [
   {
@@ -11,7 +12,7 @@ export const routes: Routes = [
   },
   {
     path: 'edit/:username',
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, OwnerGuard],
     loadComponent: () =>
       import(
         './users/pages/layout-users-page/layout-users-page.component'
