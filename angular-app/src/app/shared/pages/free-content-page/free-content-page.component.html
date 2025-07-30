@@ -69,6 +69,16 @@
 
             <div *ngIf="!isEditMode" class="m-3">Edad: {{ user.age }} años</div>
 
+            <mat-form-field appearance="outline" *ngIf="isEditMode">
+              <mat-label>Género</mat-label>
+              <mat-select>
+                <mat-option value="male">Hombres</mat-option>
+                <mat-option value="female">Mujeres</mat-option>
+                <mat-option value="female">Transgénero</mat-option>
+                <mat-option value="female">No binario</mat-option>
+              </mat-select>
+            </mat-form-field>
+
             <mat-form-field
               appearance="outline"
               style="flex: 1"
