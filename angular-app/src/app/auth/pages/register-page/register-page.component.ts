@@ -49,7 +49,14 @@ export class RegisterPageComponent implements OnInit {
       ],
       email: ['', [Validators.required, Validators.email]],
       sex: ['', Validators.required],
-      birthdate: ['', [Validators.required, this.ageRangeValidator]],
+      birthdate: [
+        '',
+        [
+          Validators.required,
+          this.ageRangeValidator,
+          this.validYearLengthValidator,
+        ],
+      ],
       password: [
         '',
         [
@@ -105,6 +112,19 @@ export class RegisterPageComponent implements OnInit {
 
     if (age < 18 || age > 90) {
       return { ageRange: true };
+    }
+
+    return null;
+  }
+
+  validYearLengthValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) return null;
+
+    const date = new Date(control.value);
+    const year = date.getFullYear().toString();
+
+    if (year.length !== 4) {
+      return { invalidYearLength: true };
     }
 
     return null;

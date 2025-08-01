@@ -70,13 +70,27 @@
           <mat-form-field appearance="fill" style="width: 100%">
             <mat-label>Tu fecha de nacimiento</mat-label>
             <input matInput formControlName="birthdate" type="date" required />
-            <mat-error *ngIf="userForm.get('birthdate')?.hasError('required')"
-              >La fecha de nacimiento es obligatoria.</mat-error
-            >
+
+            <mat-error *ngIf="userForm.get('birthdate')?.hasError('required')">
+              La fecha de nacimiento es obligatoria.
+            </mat-error>
+
             <mat-error *ngIf="userForm.get('birthdate')?.hasError('ageRange')">
               Debes tener entre 18 y 90 años.
             </mat-error>
+
+            <mat-error
+              *ngIf="userForm.get('birthdate')?.hasError('invalidYearLength')"
+            >
+              El año debe tener exactamente 4 dígitos.
+            </mat-error>
           </mat-form-field>
+
+          <mat-error
+            *ngIf="userForm.get('birthdate')?.hasError('invalidYearLength')"
+          >
+            El año debe tener exactamente 4 dígitos.
+          </mat-error>
 
           <mat-form-field appearance="fill" style="width: 100%">
             <mat-label>Elige una contraseña</mat-label>
@@ -99,7 +113,9 @@
           </mat-form-field>
 
           <div class="step-buttons">
-            <button mat-button (click)="validateUsernameAndProceed(stepper)">Siguiente</button>
+            <button mat-button (click)="validateUsernameAndProceed(stepper)">
+              Siguiente
+            </button>
           </div>
         </form>
       </mat-step>
