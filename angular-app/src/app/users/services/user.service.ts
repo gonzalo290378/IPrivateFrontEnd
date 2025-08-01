@@ -43,4 +43,12 @@ export class UserService {
       .put<UserDTO>(`${this.baseUrl}edit/${user.id}`, user)
       .pipe(catchError((error) => of(undefined)));
   }
+
+  checkUsernameAvailability(
+    username: string
+  ): Observable<{ available: boolean }> {
+    return this.http.get<{ available: boolean }>(
+      `${this.baseUrl}/check-availability/${username}`
+    );
+  }
 }

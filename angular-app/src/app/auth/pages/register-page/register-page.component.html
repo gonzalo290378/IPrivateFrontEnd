@@ -13,14 +13,20 @@
   >
     <h2>Crear Cuenta</h2>
 
-    <mat-horizontal-stepper [linear]="true">
+    <!-- <mat-horizontal-stepper [linear]="true"> -->
+    <mat-horizontal-stepper #stepper [linear]="true">
       <mat-step [stepControl]="userForm">
         <form [formGroup]="userForm">
           <h4>Tus datos</h4>
 
           <mat-form-field appearance="fill" style="width: 100%">
             <mat-label>Nombre de usuario</mat-label>
-            <input matInput formControlName="username" required />
+            <input
+              matInput
+              placeholder="Nombre de usuario"
+              formControlName="username"
+              required
+            />
             <mat-error *ngIf="userForm.get('username')?.hasError('required')"
               >El nombre de usuario es obligatorio.</mat-error
             >
@@ -28,8 +34,13 @@
               >Debe tener al menos 5 caracteres.</mat-error
             >
             <mat-error *ngIf="userForm.get('username')?.hasError('maxlength')"
-              >No puede exceder los 10 caracteres.</mat-error
+              >No puede exceder los 15 caracteres.</mat-error
             >
+            <mat-error
+              *ngIf="userForm.get('username')?.hasError('usernameTaken')"
+            >
+              Este nombre de usuario ya está en uso.
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="fill" style="width: 100%">
@@ -88,7 +99,7 @@
           </mat-form-field>
 
           <div class="step-buttons">
-            <button mat-button matStepperNext>Siguiente</button>
+            <button mat-button (click)="validateUsernameAndProceed(stepper)">Siguiente</button>
           </div>
         </form>
       </mat-step>
