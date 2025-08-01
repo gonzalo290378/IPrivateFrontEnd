@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../../users/services/user.service';
 import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
+import { MatStepper } from '@angular/material/stepper';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register-page',
@@ -42,7 +44,7 @@ export class RegisterPageComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(5),
-          Validators.maxLength(10),
+          Validators.maxLength(15),
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
@@ -144,6 +146,38 @@ export class RegisterPageComponent implements OnInit {
           'error'
         );
       }
+    });
+  }
+
+  validateUsernameAndProceed(stepper: MatStepper): void {
+    if (this.userForm.invalid) return;
+
+    const username = this.userForm.get('username')?.value;
+    if (!username) return;
+
+    this.userService.checkUsernameAvailability(username).subscribe({
+      next: (response) => {
+        console.log('Username availability response:', response);
+        if (response.available) {
+          this.userForm.get('username')?.setErrors(null);
+          stepper.next();
+        } else {
+          this.userForm.get('username')?.setErrors({ usernameTaken: true });
+          Swal.fire({
+            icon: 'error',
+            title: 'Nombre de usuario en uso',
+            text: 'Por favor elige otro nombre de usuario.',
+          });
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error checking username availability:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error del servidor',
+          text: 'No se pudo validar el nombre de usuario. Intenta nuevamente más tarde.',
+        });
+      },
     });
   }
 }
