@@ -52,6 +52,11 @@
             <mat-error *ngIf="userForm.get('email')?.hasError('email')"
               >El email no es válido.</mat-error
             >
+            <mat-error
+              *ngIf="userForm.get('email')?.hasError('emailTaken')"
+            >
+              Este email ya está en uso.
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="fill" style="width: 100%">
@@ -113,7 +118,7 @@
           </mat-form-field>
 
           <div class="step-buttons">
-            <button mat-button (click)="validateUsernameAndProceed(stepper)">
+            <button mat-button (click)="validateUsernameAndEmail(stepper)">
               Siguiente
             </button>
           </div>

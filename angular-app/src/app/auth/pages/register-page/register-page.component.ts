@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { HttpErrorResponse } from '@angular/common/http';
+import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-register-page',
@@ -169,35 +170,87 @@ export class RegisterPageComponent implements OnInit {
     });
   }
 
-  validateUsernameAndProceed(stepper: MatStepper): void {
+  // validateUsernameAndEmail(stepper: MatStepper): void {
+  //   if (this.userForm.invalid) return;
+
+  //   const username = this.userForm.get('username')?.value;
+  //   if (!username) return;
+
+  //   this.userService.checkUsernameAvailability(username).subscribe({
+  //     next: (response) => {
+  //       console.log('Username availability response:', response);
+  //       if (response.available) {
+  //         this.userForm.get('username')?.setErrors(null);
+  //         stepper.next();
+  //       } else {
+  //         this.userForm.get('username')?.setErrors({ usernameTaken: true });
+  //         Swal.fire({
+  //           icon: 'error',
+  //           title: 'Nombre de usuario en uso',
+  //           text: 'Por favor elige otro nombre de usuario.',
+  //         });
+  //       }
+  //     },
+  //     error: (err: HttpErrorResponse) => {
+  //       console.error('Error checking username availability:', err);
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: 'Error del servidor',
+  //         text: 'No se pudo validar el nombre de usuario. Intenta nuevamente más tarde.',
+  //       });
+  //     },
+  //   });
+  // }
+
+  validateUsernameAndEmail(stepper: MatStepper): void {
     if (this.userForm.invalid) return;
 
     const username = this.userForm.get('username')?.value;
-    if (!username) return;
+    const email = this.userForm.get('email')?.value;
 
-    this.userService.checkUsernameAvailability(username).subscribe({
-      next: (response) => {
-        console.log('Username availability response:', response);
-        if (response.available) {
-          this.userForm.get('username')?.setErrors(null);
-          stepper.next();
+    if (!username || !email) return;
+
+    this.userService
+      .checkUsernameAvailability(username)
+      .pipe(
+        switchMap((usernameResponse) => {
+          if (!usernameResponse.available) {
+            this.userForm.get('username')?.setErrors({ usernameTaken: true });
+            // Swal.fire({
+            //   icon: 'error',
+            //   title: 'Nombre de usuario en uso',
+            //   text: 'Por favor elige otro nombre de usuario.',
+            // });
+            return of(null); // Detiene el flujo
+          } else {
+            this.userForm.get('username')?.setErrors(null);
+            return this.userService.checkEmailAvailability(email);
+          }
+        }),
+        catchError((err: HttpErrorResponse) => {
+          console.error('Error checking availability:', err);
+          // Swal.fire({
+          //   icon: 'error',
+          //   title: 'Error del servidor',
+          //   text: 'No se pudo validar los datos. Intenta nuevamente más tarde.',
+          // });
+          return of(null); // Evita romper el flujo
+        })
+      )
+      .subscribe((emailResponse) => {
+        if (emailResponse === null) return;
+
+        if (!emailResponse.available) {
+          this.userForm.get('email')?.setErrors({ emailTaken: true });
+          // Swal.fire({
+          //   icon: 'error',
+          //   title: 'Email en uso',
+          //   text: 'Por favor utiliza otro correo electrónico.',
+          // });
         } else {
-          this.userForm.get('username')?.setErrors({ usernameTaken: true });
-          Swal.fire({
-            icon: 'error',
-            title: 'Nombre de usuario en uso',
-            text: 'Por favor elige otro nombre de usuario.',
-          });
+          this.userForm.get('email')?.setErrors(null);
+          stepper.next();
         }
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error('Error checking username availability:', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error del servidor',
-          text: 'No se pudo validar el nombre de usuario. Intenta nuevamente más tarde.',
-        });
-      },
-    });
+      });
   }
 }

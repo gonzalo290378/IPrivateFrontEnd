@@ -48,7 +48,15 @@ export class UserService {
     username: string
   ): Observable<{ available: boolean }> {
     return this.http.get<{ available: boolean }>(
-      `${this.baseUrl}/check-availability/${username}`
+      `${this.baseUrl}/check-availability-username/${username}`
+    );
+  }
+
+  checkEmailAvailability(
+    email: string
+  ): Observable<{ available: boolean }> {
+    return this.http.get<{ available: boolean }>(
+      `${this.baseUrl}/check-availability-email/${email}`
     );
   }
 }
