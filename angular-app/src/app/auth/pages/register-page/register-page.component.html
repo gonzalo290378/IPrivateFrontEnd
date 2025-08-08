@@ -52,9 +52,7 @@
             <mat-error *ngIf="userForm.get('email')?.hasError('email')"
               >El email no es válido.</mat-error
             >
-            <mat-error
-              *ngIf="userForm.get('email')?.hasError('emailTaken')"
-            >
+            <mat-error *ngIf="userForm.get('email')?.hasError('emailTaken')">
               Este email ya está en uso.
             </mat-error>
           </mat-form-field>
@@ -110,10 +108,10 @@
               >La contraseña es obligatoria.</mat-error
             >
             <mat-error *ngIf="userForm.get('password')?.hasError('minlength')"
-              >Debe tener al menos 6 caracteres.</mat-error
+              >Debe tener al menos 5 caracteres.</mat-error
             >
             <mat-error *ngIf="userForm.get('password')?.hasError('maxlength')"
-              >No puede exceder los 256 caracteres.</mat-error
+              >No puede exceder los 14 caracteres.</mat-error
             >
           </mat-form-field>
 
@@ -180,6 +178,9 @@
             <mat-error *ngIf="preferencesForm.get('ageFrom')?.hasError('min')">
               La edad mínima permitida es 18 años.
             </mat-error>
+            <mat-error *ngIf="preferencesForm.get('ageFrom')?.hasError('max')">
+              La edad máxima permitida es 89 años.
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="fill" style="width: 100%">
@@ -195,6 +196,9 @@
             >
               La edad máxima es requerida.
             </mat-error>
+            <mat-error *ngIf="preferencesForm.get('ageFrom')?.hasError('max')">
+              La edad mínima permitida es 19 años.
+            </mat-error>
             <mat-error *ngIf="preferencesForm.get('ageTo')?.hasError('max')">
               La edad máxima permitida es 90 años.
             </mat-error>
@@ -207,6 +211,7 @@
               formControlName="description"
               rows="3"
               required
+              maxlength="140" 
             ></textarea>
             <mat-error
               *ngIf="preferencesForm.get('description')?.hasError('required')"
