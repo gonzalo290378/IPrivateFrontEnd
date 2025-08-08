@@ -62,8 +62,8 @@ export class RegisterPageComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(256),
+          Validators.minLength(5),
+          Validators.maxLength(14),
         ],
       ],
     });
@@ -76,9 +76,15 @@ export class RegisterPageComponent implements OnInit {
 
     this.preferencesForm = this.fb.group({
       sexPreference: ['', Validators.required],
-      ageFrom: ['', [Validators.required, Validators.min(18)]],
-      ageTo: ['', [Validators.required, Validators.max(90)]],
-      description: ['', Validators.required],
+      ageFrom: [
+        '',
+        [Validators.required, Validators.min(18), Validators.max(89)],
+      ],
+      ageTo: [
+        '',
+        [Validators.required, Validators.min(19), Validators.max(90)],
+      ],
+      description: ['', [Validators.required, Validators.maxLength(140)]],
     });
 
     this.filteredStates = [];
@@ -170,38 +176,6 @@ export class RegisterPageComponent implements OnInit {
     });
   }
 
-  // validateUsernameAndEmail(stepper: MatStepper): void {
-  //   if (this.userForm.invalid) return;
-
-  //   const username = this.userForm.get('username')?.value;
-  //   if (!username) return;
-
-  //   this.userService.checkUsernameAvailability(username).subscribe({
-  //     next: (response) => {
-  //       console.log('Username availability response:', response);
-  //       if (response.available) {
-  //         this.userForm.get('username')?.setErrors(null);
-  //         stepper.next();
-  //       } else {
-  //         this.userForm.get('username')?.setErrors({ usernameTaken: true });
-  //         Swal.fire({
-  //           icon: 'error',
-  //           title: 'Nombre de usuario en uso',
-  //           text: 'Por favor elige otro nombre de usuario.',
-  //         });
-  //       }
-  //     },
-  //     error: (err: HttpErrorResponse) => {
-  //       console.error('Error checking username availability:', err);
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Error del servidor',
-  //         text: 'No se pudo validar el nombre de usuario. Intenta nuevamente más tarde.',
-  //       });
-  //     },
-  //   });
-  // }
-
   validateUsernameAndEmail(stepper: MatStepper): void {
     if (this.userForm.invalid) return;
 
@@ -216,12 +190,7 @@ export class RegisterPageComponent implements OnInit {
         switchMap((usernameResponse) => {
           if (!usernameResponse.available) {
             this.userForm.get('username')?.setErrors({ usernameTaken: true });
-            // Swal.fire({
-            //   icon: 'error',
-            //   title: 'Nombre de usuario en uso',
-            //   text: 'Por favor elige otro nombre de usuario.',
-            // });
-            return of(null); // Detiene el flujo
+            return of(null);
           } else {
             this.userForm.get('username')?.setErrors(null);
             return this.userService.checkEmailAvailability(email);
@@ -229,12 +198,7 @@ export class RegisterPageComponent implements OnInit {
         }),
         catchError((err: HttpErrorResponse) => {
           console.error('Error checking availability:', err);
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Error del servidor',
-          //   text: 'No se pudo validar los datos. Intenta nuevamente más tarde.',
-          // });
-          return of(null); // Evita romper el flujo
+          return of(null);
         })
       )
       .subscribe((emailResponse) => {
@@ -242,11 +206,6 @@ export class RegisterPageComponent implements OnInit {
 
         if (!emailResponse.available) {
           this.userForm.get('email')?.setErrors({ emailTaken: true });
-          // Swal.fire({
-          //   icon: 'error',
-          //   title: 'Email en uso',
-          //   text: 'Por favor utiliza otro correo electrónico.',
-          // });
         } else {
           this.userForm.get('email')?.setErrors(null);
           stepper.next();
