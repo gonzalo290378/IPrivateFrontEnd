@@ -5,7 +5,7 @@ import { State } from '../interfaces/state';
 
 @Injectable({ providedIn: 'root' })
 export class StateService {
-  private apiUrl: string = 'http://localhost:8004/api/v1/';
+  private apiUrl: string = 'http://localhost:8090/ms-api-ext/api/v1/';
   private statesSubject = new BehaviorSubject<State[]>([]);
   public states$ = this.statesSubject.asObservable();
 

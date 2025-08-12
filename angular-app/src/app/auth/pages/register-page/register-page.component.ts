@@ -7,7 +7,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../users/services/user.service';
-import Swal from 'sweetalert2';
 import { Router, RouterModule } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -153,26 +152,27 @@ export class RegisterPageComponent implements OnInit {
       ...this.locationForm.value,
       ...this.preferencesForm.value,
     };
-    console.log('Datos del registro:', userData);
 
-    this.userService.save(userData).subscribe((response) => {
-      if (response) {
-        Swal.fire(
-          'Usuario creado exitosamente!',
-          'El usuario ha sido creado correctamente.',
-          'success'
-        ).then(() => {
-          setTimeout(() => {
-            this.router.navigate(['/']);
-          }, 2000);
-        });
-      } else {
-        Swal.fire(
-          'Error!',
-          'Hubo un problema al crear el usuario. Inténtalo nuevamente.',
-          'error'
-        );
-      }
+    const payload = {
+      ...userData,
+      ageFrom: +userData.ageFrom,
+      ageTo: +userData.ageTo,
+    };
+
+    console.log('Datos del registro:', payload);
+
+    this.userService.save(payload).subscribe({
+      next: (response) => {
+        if (response) {
+          this.router.navigate(['/register-success']);
+        } else {
+          alert('Hubo un problema al crear el usuario.');
+        }
+      },
+      error: (err) => {
+        console.error('Error al crear usuario:', err);
+        alert('Hubo un problema al crear el usuario.');
+      },
     });
   }
 

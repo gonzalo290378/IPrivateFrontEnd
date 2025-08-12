@@ -5,8 +5,7 @@ import { City } from '../interfaces/city';
 
 @Injectable({ providedIn: 'root' })
 export class CityService {
-  
-  private apiUrl: string = 'http://localhost:8004/api/v1/';
+  private apiUrl: string = 'http://localhost:8090/ms-api-ext/api/v1/';
   private citiesSubject = new BehaviorSubject<City[]>([]);
   public cities$ = this.citiesSubject.asObservable();
   private selectedCountrySubject = new BehaviorSubject<string | null>(null);

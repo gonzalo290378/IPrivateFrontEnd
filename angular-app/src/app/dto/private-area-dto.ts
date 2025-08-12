@@ -1,4 +1,4 @@
-import { PrivateContentDTO } from "./private-content-dto";
+import { PrivateContentDTO } from './private-content-dto';
 
 export class PrivateAreaDTO {
   id?: number;

@@ -60,8 +60,8 @@
           <mat-form-field appearance="fill" style="width: 100%">
             <mat-label>Tu género</mat-label>
             <mat-select formControlName="sex" required>
-              <mat-option value="H">Hombre</mat-option>
-              <mat-option value="M">Mujer</mat-option>
+              <mat-option value="M">Hombre</mat-option>
+              <mat-option value="F">Mujer</mat-option>
               <mat-option value="T">Transgénero</mat-option>
               <mat-option value="NB">No binario</mat-option>
             </mat-select>
@@ -150,8 +150,8 @@
           <mat-form-field appearance="fill" style="width: 100%">
             <mat-label>Quiero conocer: </mat-label>
             <mat-select formControlName="sexPreference" required>
-              <mat-option value="H">Hombre</mat-option>
-              <mat-option value="M">Mujer</mat-option>
+              <mat-option value="M">Hombre</mat-option>
+              <mat-option value="F">Mujer</mat-option>
               <mat-option value="T">Transgénero</mat-option>
               <mat-option value="NB">No binario</mat-option>
             </mat-select>
@@ -211,7 +211,7 @@
               formControlName="description"
               rows="3"
               required
-              maxlength="140" 
+              maxlength="140"
             ></textarea>
             <mat-error
               *ngIf="preferencesForm.get('description')?.hasError('required')"

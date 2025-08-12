@@ -7,35 +7,33 @@ import { CountryService } from '../../services/country.service';
 import { Country } from '../../interfaces/country';
 
 @Component({
-    selector: 'app-by-country-page',
-    imports: [
-        MaterialModule,
-        SearchBoxComponent,
-        CountryTableComponent,
-        FormsModule,
-    ],
-    templateUrl: './by-country-page.component.html',
-    styles: []
+  selector: 'app-by-country-page',
+  imports: [
+    MaterialModule,
+    SearchBoxComponent,
+    CountryTableComponent,
+    FormsModule,
+  ],
+  templateUrl: './by-country-page.component.html',
+  styles: [],
 })
 export class ByCountryPageComponent implements OnInit {
-
   @Output() countrySelected = new EventEmitter<string>();
-  
+
   public initialValue: string = '';
   public countries: Country[] = [];
   public selectedCountry: string = '';
 
-  constructor( private countryService: CountryService ) {}
+  constructor(private countryService: CountryService) {}
 
   ngOnInit(): void {
     this.countries = [];
   }
 
-  searchByCountry( term: string ):void  {
-    this.countryService.searchCountry( term )
-      .subscribe( countries => {
-        this.countries = countries;
-      });
+  searchByCountry(term: string): void {
+    this.countryService.searchCountry(term).subscribe((countries) => {
+      this.countries = countries;
+    });
   }
 
   updateSearchBox(countryName: string): void {

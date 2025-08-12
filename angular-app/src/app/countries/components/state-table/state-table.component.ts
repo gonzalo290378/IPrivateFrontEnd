@@ -7,9 +7,9 @@ import { CityService } from '../../services/city.service';
 import { City } from '../../interfaces/city';
 
 @Component({
-    selector: 'app-state-table',
-    imports: [CommonModule, MaterialModule, FormsModule],
-    templateUrl: './state-table.component.html'
+  selector: 'app-state-table',
+  imports: [CommonModule, MaterialModule, FormsModule],
+  templateUrl: './state-table.component.html',
 })
 export class StateTableComponent {
   @Input()

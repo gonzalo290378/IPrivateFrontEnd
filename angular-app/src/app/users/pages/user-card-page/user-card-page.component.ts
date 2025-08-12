@@ -4,10 +4,8 @@ import {
   MatCard,
   MatCardActions,
   MatCardContent,
-  MatCardHeader,
 } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatChip, MatChipListbox } from '@angular/material/chips';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';

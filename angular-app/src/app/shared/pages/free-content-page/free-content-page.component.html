@@ -6,7 +6,7 @@
   </mat-grid-list>
 </ng-template>
 
-<app-post-content-page></app-post-content-page>
+<app-post-content-page *ngIf="isOwner"></app-post-content-page>
 
 <div
   *ngIf="user; else divLoading"

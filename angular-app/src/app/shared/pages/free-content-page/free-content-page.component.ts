@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import {
-  MatCard,
-  MatCardContent
-} from '@angular/material/card';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
-import { MatList, MatListItem } from '@angular/material/list';
+import { MatList } from '@angular/material/list';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { UserService } from '../../../users/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +12,7 @@ import { UserImagePipe } from '../../../users/pipes/user-image.pipe';
 import { MaterialModule } from '../../../material/material-module';
 import { PostContentPageComponent } from '../post-content-page/post-content-page.component';
 import { FormsModule } from '@angular/forms';
+import { TokenService } from '../../../users/services/token.service';
 
 @Component({
   selector: 'app-free-content-page',
@@ -37,11 +35,13 @@ import { FormsModule } from '@angular/forms';
 export class FreeContentPageComponent {
   user?: UserDTO;
   isEditMode: boolean = false;
+  isOwner: boolean = false;
 
   constructor(
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
@@ -54,9 +54,12 @@ export class FreeContentPageComponent {
           this.userService.getUserByUsername(username)
         )
       )
+
       .subscribe((user) => {
         if (!user) return this.router.navigate(['/']);
         this.user = user;
+        const loggedUsername = this.tokenService.getUsernameFromToken();
+        this.isOwner = loggedUsername === user.username;
         return;
       });
   }

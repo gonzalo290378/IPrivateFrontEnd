@@ -1,9 +1,8 @@
-import { CityDTO } from "./city-dto";
-import { CountryDTO } from "./country-dto";
-import { FreeAreaDTO } from "./free-area-dto";
-import { PreferenceDTO } from "./preference-dto";
-import { PrivateAreaDTO } from "./private-area-dto";
-
+import { CityDTO } from './city-dto';
+import { CountryDTO } from './country-dto';
+import { FreeAreaDTO } from './free-area-dto';
+import { PreferenceDTO } from './preference-dto';
+import { PrivateAreaDTO } from './private-area-dto';
 
 export class FilterDTO {
   id?: number;
