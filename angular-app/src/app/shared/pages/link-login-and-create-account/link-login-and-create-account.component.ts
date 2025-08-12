@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { AuthService } from '../../../users/services/auth.service';

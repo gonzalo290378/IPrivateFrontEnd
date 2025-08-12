@@ -71,16 +71,16 @@ export class TokenService {
   }
 
   getUsernameFromToken(): string | null {
-  const token = this.getAccessToken();
-  if (!token) return null;
+    const token = this.getAccessToken();
+    if (!token) return null;
 
-  try {
-    const payload = token.split('.')[1];
-    const decodedPayload = JSON.parse(atob(payload));
-    return decodedPayload.sub || null;
-  } catch (error) {
-    console.error('Error decoding token:', error);
-    return null;
+    try {
+      const payload = token.split('.')[1];
+      const decodedPayload = JSON.parse(atob(payload));
+      return decodedPayload.sub || null;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
   }
-}
 }

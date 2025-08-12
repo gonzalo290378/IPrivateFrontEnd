@@ -52,9 +52,7 @@ export class UserService {
     );
   }
 
-  checkEmailAvailability(
-    email: string
-  ): Observable<{ available: boolean }> {
+  checkEmailAvailability(email: string): Observable<{ available: boolean }> {
     return this.http.get<{ available: boolean }>(
       `${this.baseUrl}/check-availability-email/${email}`
     );

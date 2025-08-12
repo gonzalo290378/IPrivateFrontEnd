@@ -8,16 +8,15 @@ import { StateService } from '../../services/state.service';
 import { CityService } from '../../services/city.service';
 
 @Component({
-    selector: 'app-country-table',
-    imports: [MaterialModule, CommonModule, FormsModule],
-    templateUrl: './country-table.component.html',
-    styles: []
+  selector: 'app-country-table',
+  imports: [MaterialModule, CommonModule, FormsModule],
+  templateUrl: './country-table.component.html',
+  styles: [],
 })
 export class CountryTableComponent {
-  
   constructor(
     private stateService: StateService,
-    private cityService: CityService,
+    private cityService: CityService
   ) {}
 
   @Input()
@@ -37,9 +36,8 @@ export class CountryTableComponent {
       this.states = states;
       this.stateService.setStates(this.states);
     });
-  
+
     this.countries = [];
     this.states = [];
   }
-  
 }

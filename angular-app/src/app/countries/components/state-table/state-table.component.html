@@ -1,11 +1,12 @@
-<div *ngIf="states.length === 0; else table" class="alert alert-warning text-center">
-</div>
+<div
+  *ngIf="states.length === 0; else table"
+  class="alert alert-warning text-center"
+></div>
 
 <ng-template #table>
   <table class="table table-hover flex flex-column align-items-center">
     <thead>
-      <tr>
-      </tr>
+      <tr></tr>
     </thead>
     <tbody>
       <tr *ngFor="let state of states; let i = index">

@@ -26,6 +26,13 @@ export const routes: Routes = [
       ).then((m) => m.LayoutUsersPageComponent),
   },
   {
+    path: 'register-success',
+    loadComponent: () =>
+      import(
+        './auth/pages/register-success/register-success-page.component'
+      ).then((m) => m.RegisterSuccessPageComponent),
+  },
+  {
     path: ':username/suscriptions',
     loadComponent: () =>
       import('./users/pages/suscription-page/suscription-page.component').then(

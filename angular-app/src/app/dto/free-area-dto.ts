@@ -1,5 +1,5 @@
-import { PrincipalPhotoDTO } from "./principal-photo-dto";
-import { PublicContentDTO } from "./public-content-dto";
+import { PrincipalPhotoDTO } from './principal-photo-dto';
+import { PublicContentDTO } from './public-content-dto';
 
 export class FreeAreaDTO {
   id?: number;

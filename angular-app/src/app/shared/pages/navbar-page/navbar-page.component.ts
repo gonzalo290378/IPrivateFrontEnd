@@ -23,20 +23,34 @@ export class NavbarPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.resourceService.user().subscribe(
-      (data) => {
-        this.user = data;
-        console.log('User:', this.user);
-        this.getLogged();
-      },
-      (err) => {
-        console.log('Error al obtener el usuario:', err);
-      }
-    );
+    this.getLogged();
+
+    if (this.isLogged) {
+      this.resourceService.user().subscribe({
+        next: (data) => {
+          this.user = data.user;
+          console.log('User:', this.user);
+        },
+        error: (err) => {
+          console.log('Error al obtener el usuario:', err);
+          this.handleAuthError();
+        },
+      });
+    } else {
+      console.log(
+        'Usuario no autenticado - no se carga información del usuario'
+      );
+    }
   }
 
   getLogged(): void {
     this.isLogged = this.tokenService.isLogged();
     this.isUser = this.tokenService.isUser();
+  }
+
+  private handleAuthError(): void {
+    this.user = undefined;
+    this.isLogged = false;
+    this.isUser = false;
   }
 }

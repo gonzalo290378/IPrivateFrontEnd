@@ -1,5 +1,4 @@
 export class PrincipalPhotoDTO {
-    id?: number;
-    url!: string;
-  }
-  
+  id?: number;
+  url!: string;
+}

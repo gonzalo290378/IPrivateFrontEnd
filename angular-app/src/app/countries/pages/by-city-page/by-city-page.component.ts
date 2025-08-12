@@ -9,18 +9,17 @@ import { StateService } from '../../services/state.service';
 import { State } from '../../interfaces/state';
 
 @Component({
-    selector: 'app-by-city-page',
-    imports: [
-        SearchBoxComponent,
-        CityTableComponent,
-        MaterialModule,
-        SearchBoxComponent,
-        FormsModule,
-    ],
-    templateUrl: './by-city-page.component.html'
+  selector: 'app-by-city-page',
+  imports: [
+    SearchBoxComponent,
+    CityTableComponent,
+    MaterialModule,
+    SearchBoxComponent,
+    FormsModule,
+  ],
+  templateUrl: './by-city-page.component.html',
 })
 export class ByCityPageComponent implements OnInit {
-
   @Output() citySelected = new EventEmitter<string>();
 
   public initialValue: string = '';
@@ -49,6 +48,5 @@ export class ByCityPageComponent implements OnInit {
   updateSearchBox(cityName: string): void {
     this.selectedCity = cityName;
     this.citySelected.emit(cityName);
-
   }
 }

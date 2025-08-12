@@ -1,5 +1,3 @@
-
-
 export class UserFormDTO {
   id?: number;
   username!: string;
