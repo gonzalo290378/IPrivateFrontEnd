@@ -213,10 +213,23 @@
               required
               maxlength="140"
             ></textarea>
+
             <mat-error
               *ngIf="preferencesForm.get('description')?.hasError('required')"
             >
               Por favor, añade una descripción.
+            </mat-error>
+
+            <mat-error
+              *ngIf="preferencesForm.get('description')?.hasError('minlength')"
+            >
+              La descripción debe tener al menos 4 caracteres.
+            </mat-error>
+
+            <mat-error
+              *ngIf="preferencesForm.get('description')?.hasError('maxlength')"
+            >
+              La descripción no puede superar los 140 caracteres.
             </mat-error>
           </mat-form-field>
 
