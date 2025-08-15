@@ -83,7 +83,14 @@ export class RegisterPageComponent implements OnInit {
         '',
         [Validators.required, Validators.min(19), Validators.max(90)],
       ],
-      description: ['', [Validators.required, Validators.maxLength(140)]],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(140),
+        ],
+      ],
     });
 
     this.filteredStates = [];
