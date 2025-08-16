@@ -21,16 +21,18 @@
 
     <mat-card-content>
       <div class="user-info">
-        <div class="user-header">
-          <h6 [routerLink]="['/', user?.username]">{{ user?.username }}</h6>
-          <span class="status" [class.active]="user?.isEnabled">
-            {{ user?.isEnabled ? "Activo" : "Inactivo" }}
-          </span>
-        </div>
+        <h6 [routerLink]="['/', user?.username]">{{ user?.username }}</h6>
+        <span class="status" [class.active]="user?.isEnabled">
+          <mat-icon class="status-icon" *ngIf="user?.isEnabled"
+            >check_circle</mat-icon
+          >
+          <span>{{ user?.isEnabled ? "Activo" : "Inactivo" }}</span>
+        </span>
 
         <p>
           <span class="age">{{ user?.age }} años - </span>
-          <span class="city">{{ user?.cityDTO?.city }}</span>
+          <span class="city">{{ user?.countryDTO?.country }} </span>
+          <span class="city">({{ user?.cityDTO?.city }})</span>
         </p>
 
         <p class="description" *ngIf="user?.description">

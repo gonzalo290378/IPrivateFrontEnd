@@ -89,7 +89,9 @@ mat-card-actions {
 }
 
 .user-info {
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .description {
@@ -117,6 +119,9 @@ mat-card.main-profile-card {
 
 .status {
   font-weight: bold;
+  display: flex;
+  align-items: center; 
+  gap: 5px;
 }
 
 .status.active {
