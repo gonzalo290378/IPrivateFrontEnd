@@ -36,6 +36,15 @@ div[infinite-scroll] {
   box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
 }
 
+.user-header h6 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .profile-image {
   width: 100px;
   height: 100px;
@@ -63,11 +72,20 @@ mat-card-actions {
 }
 
 /* free content (home)*/
-.profile-image-container-free-content {
-  align-items: center;
-  padding: 1rem;
-  max-width: 90%;
-  border-radius: 50%;
+.profile-image-wrapper {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 4px solid #d1d1dc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 1rem auto;
+}
+
+.profile-image-free-content {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .user-info {
@@ -83,8 +101,10 @@ mat-card-actions {
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 10px;
+  gap: 20px;
   width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 mat-card.main-profile-card {
@@ -111,6 +131,47 @@ mat-card-actions {
   display: flex;
   justify-content: flex-end;
   margin-top: 16px;
+}
+
+.info-container {
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.subtle-shadow {
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+.status-icon.active-icon {
+  color: green;
+  font-size: 16px;
+}
+
+.status-icon.inactive-icon {
+  color: red;
+  font-size: 16px;
+}
+
+.grid-container {
+  gap: 40px;
+}
+
+.status-text {
+  margin: 0;
+}
+
+.user-data b {
+    font-weight: 500; /* Un estilo menos pesado que el 'bold' por defecto */
+    color: #333; /* Un color de texto oscuro para mayor contraste */
 }
 
 /* Iniciar Sesion y Crear una nueva cuenta */

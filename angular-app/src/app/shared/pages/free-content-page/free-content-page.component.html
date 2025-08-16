@@ -20,29 +20,41 @@
       <div class="grid-container">
         <mat-card-content>
           <div class="user-info">
-            <img
-              class="profile-image-container-free-content"
-              [src]="user! | userImage"
-              [alt]="user.username"
-            />
+            <div class="profile-image-wrapper">
+              <img
+                class="profile-image-free-content"
+                [src]="user! | userImage"
+                [alt]="user.username"
+              />
+            </div>
             <span
               class="status"
               [class.active]="user.isEnabled"
               [class.inactive]="!user.isEnabled"
             >
-              <div>{{ user.isEnabled ? "Activo" : "Inactivo" }}</div>
+              <mat-icon *ngIf="user.isEnabled" class="status-icon active-icon"
+                >check_circle</mat-icon
+              >
+              <mat-icon
+                *ngIf="!user.isEnabled"
+                class="status-icon inactive-icon"
+                >error</mat-icon
+              >
+              <div class="status-text">
+                {{ user.isEnabled ? "Activo" : "Inactivo" }}
+              </div>
             </span>
           </div>
         </mat-card-content>
 
-        <mat-card-content class="grid-item">
+        <mat-card-content class="grid-item info-container subtle-shadow">
           <mat-list>
             <div *ngIf="!isEditMode" class="m-3">
-              Ciudad: {{ user.cityDTO?.city }}
+              <b>Ciudad:</b> {{ user.cityDTO?.city }}
             </div>
 
             <div *ngIf="!isEditMode" class="m-3">
-              Pais: {{ user.countryDTO?.country }}
+              <b>Pais:</b> {{ user.countryDTO?.country }}
             </div>
 
             <mat-form-field
@@ -67,7 +79,7 @@
               <input matInput type="text" [(ngModel)]="user.cityDTO!.city" />
             </mat-form-field>
 
-            <div *ngIf="!isEditMode" class="m-3">Edad: {{ user.age }} años</div>
+            <div *ngIf="!isEditMode" class="m-3"><b>Edad:</b> {{ user.age }} años</div>
 
             <mat-form-field appearance="outline" *ngIf="isEditMode">
               <mat-label>Género</mat-label>
