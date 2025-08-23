@@ -73,25 +73,39 @@ mat-card-actions {
 
 /* free content (home)*/
 .profile-image-wrapper {
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 4px solid #d1d1dc;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    margin: 1rem auto;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 4px solid #d1d1dc;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 1rem auto;
 }
 
 .profile-image-free-content {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.username {
+  font-size: 16px;
+  color: #2c3e50;
+  text-transform: capitalize;
+  margin: 8px 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.username:hover {
+  color: #233a52;
+  font-weight: bolder;
 }
 
 .description {
@@ -120,7 +134,7 @@ mat-card.main-profile-card {
 .status {
   font-weight: bold;
   display: flex;
-  align-items: center; 
+  align-items: center;
   gap: 5px;
 }
 
@@ -175,8 +189,8 @@ mat-card-actions {
 }
 
 .user-data b {
-    font-weight: 500; /* Un estilo menos pesado que el 'bold' por defecto */
-    color: #333; /* Un color de texto oscuro para mayor contraste */
+  font-weight: 500; /* Un estilo menos pesado que el 'bold' por defecto */
+  color: #333; /* Un color de texto oscuro para mayor contraste */
 }
 
 /* Iniciar Sesion y Crear una nueva cuenta */
