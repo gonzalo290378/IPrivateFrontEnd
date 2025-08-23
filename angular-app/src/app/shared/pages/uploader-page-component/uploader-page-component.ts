@@ -6,11 +6,11 @@ import { TokenService } from '../../../users/services/token.service';
 import { ResourceService } from '../../../users/services/resource.service';
 
 @Component({
-  selector: 'app-post-content-page',
+  selector: 'app-upload-content-page',
   imports: [MaterialModule, CommonModule, FormsModule],
-  templateUrl: './post-content-page.component.html',
+  templateUrl: './uploader-page-component.html',
 })
-export class PostContentPageComponent implements OnInit {
+export class UploadContentPageComponent implements OnInit {
   uploadedImages: string[] = [];
   textComment: string = '';
   isDragOver = false;
