@@ -10,9 +10,9 @@ import { UserDTO } from '../../../dto/user-dto';
 import { CommonModule } from '@angular/common';
 import { UserImagePipe } from '../../../users/pipes/user-image.pipe';
 import { MaterialModule } from '../../../material/material-module';
-import { PostContentPageComponent } from '../post-content-page/post-content-page.component';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../../users/services/token.service';
+import { UploadContentPageComponent } from '../uploader-page-component/uploader-page-component';
 
 @Component({
   selector: 'app-free-content-page',
@@ -28,7 +28,7 @@ import { TokenService } from '../../../users/services/token.service';
     FormsModule,
     UserImagePipe,
     MaterialModule,
-    PostContentPageComponent,
+    UploadContentPageComponent,
   ],
   templateUrl: './free-content-page.component.html',
 })
