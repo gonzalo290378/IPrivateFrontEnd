@@ -24,10 +24,12 @@ export class PostContentPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const username = this.tokenService.getUsernameFromToken();
     this.resourceService.user().subscribe(
       (data) => {
         this.message = data;
         this.getLogged();
+        console.log('User',username)
       },
       (err) => {
         console.log(err);
@@ -75,6 +77,8 @@ export class PostContentPageComponent implements OnInit {
   submit(): void {
     console.log('Imágenes subidas:', this.uploadedImages);
     console.log('Comentario:', this.textComment);
+    console.log('user:', this.textComment);
+    
   }
 
   getLogged(): void {
