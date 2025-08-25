@@ -29,17 +29,15 @@ export class NavbarPageComponent implements OnInit {
       this.resourceService.user().subscribe({
         next: (data) => {
           this.user = data.user;
-          console.log('User:', this.user);
+          console.log('User from Navbar:', this.user);
         },
         error: (err) => {
-          console.log('Error al obtener el usuario:', err);
+          console.log('Error to get User:', err);
           this.handleAuthError();
         },
       });
     } else {
-      console.log(
-        'Usuario no autenticado - no se carga información del usuario'
-      );
+      console.log('Usuario not authenticated');
     }
   }
 

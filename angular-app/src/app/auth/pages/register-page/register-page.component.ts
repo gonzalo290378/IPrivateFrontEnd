@@ -166,7 +166,7 @@ export class RegisterPageComponent implements OnInit {
       ageTo: +userData.ageTo,
     };
 
-    console.log('Datos del registro:', payload);
+    console.log('Payload from RegisterPage:', payload);
 
     this.userService.save(payload).subscribe({
       next: (response) => {
