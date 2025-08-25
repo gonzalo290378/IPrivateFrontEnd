@@ -57,6 +57,7 @@ export class FreeContentPageComponent {
 
       .subscribe((user) => {
         if (!user) return this.router.navigate(['/']);
+        console.log('User en FreeContentPage', user);
         this.user = user;
         const loggedUsername = this.tokenService.getUsernameFromToken();
         this.isOwner = loggedUsername === user.username;

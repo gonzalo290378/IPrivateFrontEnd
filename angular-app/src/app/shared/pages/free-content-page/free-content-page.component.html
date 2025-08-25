@@ -79,7 +79,9 @@
               <input matInput type="text" [(ngModel)]="user.cityDTO!.city" />
             </mat-form-field>
 
-            <div *ngIf="!isEditMode" class="m-3"><b>Edad:</b> {{ user.age }} años</div>
+            <div *ngIf="!isEditMode" class="m-3">
+              <b>Edad:</b> {{ user.age }} años
+            </div>
 
             <mat-form-field appearance="outline" *ngIf="isEditMode">
               <mat-label>Género</mat-label>

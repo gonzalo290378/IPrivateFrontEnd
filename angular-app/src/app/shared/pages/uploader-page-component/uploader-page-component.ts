@@ -29,7 +29,7 @@ export class UploadContentPageComponent implements OnInit {
       (data) => {
         this.message = data;
         this.getLogged();
-        console.log('User',username)
+        console.log('User from Uploader', username);
       },
       (err) => {
         console.log(err);
@@ -78,7 +78,6 @@ export class UploadContentPageComponent implements OnInit {
     console.log('Imágenes subidas:', this.uploadedImages);
     console.log('Comentario:', this.textComment);
     console.log('user:', this.textComment);
-    
   }
 
   getLogged(): void {

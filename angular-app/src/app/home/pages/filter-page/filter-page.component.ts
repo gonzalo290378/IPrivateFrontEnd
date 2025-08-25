@@ -27,7 +27,7 @@ export class FilterPageComponent {
   };
 
   applyFilters() {
-    console.log('Filtros aplicados:', this.filters);
+    console.log('Filters from FilterPage:', this.filters);
   }
 
   resetFilters() {
