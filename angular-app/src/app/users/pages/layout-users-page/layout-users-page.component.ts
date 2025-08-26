@@ -30,12 +30,13 @@ export class LayoutUsersPageComponent implements OnInit {
     this.activatedRoute.params
       .pipe(
         switchMap(({ username }) =>
-          this.userService.getUserByUsername(username)
+          this.userService.checkAvailabilityUsername(username)
         )
       )
       .subscribe((user) => {
+        console.log("User from Layout-users", user);
         if (!user) return this.router.navigate(['/']);
-        this.user = user;
+        //this.user = user;
         return;
       });
   }

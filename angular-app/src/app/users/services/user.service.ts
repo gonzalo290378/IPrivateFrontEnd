@@ -26,9 +26,9 @@ export class UserService {
     return this.http.get<UserDTO[]>(this.baseUrl, { params });
   }
 
-  getUserByUsername(username: string): Observable<UserDTO | undefined> {
+  checkAvailabilityUsername(username: string): Observable<UserDTO | undefined> {
     return this.http
-      .get<UserDTO>(`${this.baseUrl}${username}`)
+      .get<UserDTO>(`${this.baseUrl}check-availability-username/${username}`)
       .pipe(catchError((error) => of(undefined)));
   }
 

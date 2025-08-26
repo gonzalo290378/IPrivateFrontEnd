@@ -47,21 +47,24 @@ export class FreeContentPageComponent {
   ngOnInit(): void {
     const isEditUrl = this.router.url.startsWith('/edit/');
     this.isEditMode = isEditUrl;
+    const loggedUsername = this.tokenService.getUsernameFromToken();
 
     this.activatedRoute.params
       .pipe(
         switchMap(({ username }) =>
-          this.userService.getUserByUsername(username)
+          this.userService.checkAvailabilityUsername(username)
         )
       )
 
-      .subscribe((user) => {
-        if (!user) return this.router.navigate(['/']);
-        console.log('User en FreeContentPage', user);
-        this.user = user;
-        const loggedUsername = this.tokenService.getUsernameFromToken();
-        this.isOwner = loggedUsername === user.username;
-        return;
+      .subscribe((userExits) => {
+        if (!userExits) {
+          return this.router.navigate(['/']);
+        } else {
+          //ACA TENGO QUE HACER UNA LLAMADA PARA QUE TRAIGA ENTERO EL USER
+          this.user = userExits;
+          this.isOwner = loggedUsername === userExits.username;
+          return;
+        }
       });
   }
 
