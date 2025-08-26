@@ -36,7 +36,6 @@ export class LayoutUsersPageComponent implements OnInit {
       .subscribe((user) => {
         console.log("User from Layout-users", user);
         if (!user) return this.router.navigate(['/']);
-        //this.user = user;
         return;
       });
   }
