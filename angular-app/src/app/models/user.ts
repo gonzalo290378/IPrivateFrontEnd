@@ -12,7 +12,7 @@ export interface User {
   registerDate?: string;
   description: string;
   isEnabled: boolean;
-  password: string;
+  //password: string;
   idFreeArea?: number;
   idPrivateArea?: number;
   preference?: Preference;
