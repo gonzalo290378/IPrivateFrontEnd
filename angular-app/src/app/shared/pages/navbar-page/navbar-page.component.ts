@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { FilterPageComponent } from '../../../home/pages/filter-page/filter-page.component';
 import { TokenService } from '../../../users/services/token.service';
 import { ResourceService } from '../../../users/services/resource.service';
-import { User } from '../../../models/user';
+import { UserProfile } from '../../../models/user-profle';
 
 @Component({
   selector: 'app-navbar-page',
@@ -13,7 +13,7 @@ import { User } from '../../../models/user';
   templateUrl: './navbar-page.component.html',
 })
 export class NavbarPageComponent implements OnInit {
-  user: User | undefined;
+  userProfile: UserProfile | undefined;
   isLogged: boolean = false;
   isUser: boolean = false;
 
@@ -28,8 +28,8 @@ export class NavbarPageComponent implements OnInit {
     if (this.isLogged) {
       this.resourceService.user().subscribe({
         next: (data) => {
-          this.user = data.user;
-          console.log('User from Navbar:', this.user);
+          this.userProfile = data.user;
+          console.log('User from Navbar:', this.userProfile);
         },
         error: (err) => {
           console.log('Error to get User:', err);
@@ -47,7 +47,7 @@ export class NavbarPageComponent implements OnInit {
   }
 
   private handleAuthError(): void {
-    this.user = undefined;
+    this.userProfile = undefined;
     this.isLogged = false;
     this.isUser = false;
   }
