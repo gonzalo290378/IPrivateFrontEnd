@@ -1,0 +1,7 @@
+<div *ngIf="freeArea as area" class="flex flex-column p-4">
+  <h2>{{ area }}</h2>
+  <p>{{ area }}</p>
+</div>
+<div *ngIf="!freeArea" class="p-4">
+  <p>Cargando...</p>
+</div>

@@ -17,6 +17,7 @@
     <h2>{{ user.username }}</h2>
 
     <mat-card>
+      
       <div class="grid-container">
         <mat-card-content>
           <div class="user-info">
@@ -46,9 +47,13 @@
             </span>
           </div>
         </mat-card-content>
+        
 
         <mat-card-content class="grid-item info-container subtle-shadow">
           <mat-list>
+                  <h4>Editar Perfil</h4>
+
+                  
             <div *ngIf="!isEditMode" class="m-3">
               <b>Ciudad:</b> {{ user.cityDTO?.city }}
             </div>
@@ -148,4 +153,6 @@
       </div>
     </mat-card>
   </mat-card>
+  <app-profile-feed-content-page></app-profile-feed-content-page>
+
 </div>

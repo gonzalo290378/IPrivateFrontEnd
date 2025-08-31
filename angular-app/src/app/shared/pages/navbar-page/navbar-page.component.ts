@@ -6,10 +6,12 @@ import { FilterPageComponent } from '../../../home/pages/filter-page/filter-page
 import { TokenService } from '../../../users/services/token.service';
 import { ResourceService } from '../../../users/services/resource.service';
 import { UserProfile } from '../../../models/user-profle';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar-page',
-  imports: [MaterialModule, FormsModule, FilterPageComponent, RouterLink],
+  imports: [MaterialModule, FormsModule, FilterPageComponent, RouterLink, CommonModule ],
   templateUrl: './navbar-page.component.html',
 })
 export class NavbarPageComponent implements OnInit {

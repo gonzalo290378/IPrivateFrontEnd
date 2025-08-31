@@ -18,6 +18,14 @@ export class UserService {
     return this.http.get<any>(this.baseUrl, { params });
   }
 
+  getEntityByUsername(username: string): Observable<UserDTO | undefined> {
+    return this.http
+      .get<UserDTO>(`${this.baseUrl}username`, {
+        params: { username },
+      })
+      .pipe(catchError(() => of(undefined)));
+  }
+
   filter(page: number, size: number): Observable<UserDTO[]> {
     const params = {
       page: page,

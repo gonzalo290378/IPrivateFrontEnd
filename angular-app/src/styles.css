@@ -203,11 +203,51 @@ mat-card-actions {
   border-radius: 999px;
   font-size: 0.875rem;
   text-align: center;
-  transition: background-color 0.3s ease;
 }
 
 .link-button:hover {
   background-color: #0056b3;
 }
+
+/* Menu de navegacion*/
+
+.entry {
+  display: flex;
+  align-items: center;     /* Centra verticalmente */
+  justify-content: left; /* Centra horizontalmente si hace falta */
+  gap: 8px;                /* Espacio entre icono y texto */
+  font-size: 16px;         /* Tamaño del texto */
+  font-weight: 500;        /* Un poco más marcado */
+  cursor: pointer;         /* Para que parezca clicable */
+  padding: 6px 12px;       /* Espaciado interno */
+  border-radius: 8px;      /* Bordes redondeados */
+}
+
+
+.icon {
+  font-size: 20px;         /* Tamaño del ícono */
+  color: #1976d2;          /* Azul Material */
+}
+
+.text {
+  color: #333;             /* Color del texto */
+}
+
+/* Activo*/
+
+.status-text {
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+.active-status {
+  color: green;
+}
+
+.inactive-status {
+  color: red;
+}
+
+
 
 

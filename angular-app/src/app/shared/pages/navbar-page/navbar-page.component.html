@@ -3,6 +3,13 @@
   <div class="flex flex-center">
     <button mat-button mat-raised color="primary">
       <mat-icon>account_circle</mat-icon> {{ userProfile?.username }}
+
+      <span
+        class="status-text"
+        [ngClass]="{ 'active-status': isLogged, 'inactive-status': !isLogged }"
+      >
+        {{ isLogged ? "Sin notificaciones" : "Notificaciones" }}
+      </span>
     </button>
   </div>
 
@@ -24,23 +31,23 @@
     <a mat-list-item [routerLink]="['/', 'username', 'suscriptions']">
       <span class="entry">
         <mat-icon class="icon">house</mat-icon>
-        <span class="text">Mis Suscripciones</span>
-      </span>
-    </a>
-
-    <a mat-list-item [routerLink]="['/', 'username', 'suscriptions']">
-      <span class="entry">
-        <mat-icon class="icon">notifications</mat-icon>
-        <span class="text">Te quiere decir algo</span>
+        <span class="text">Suscripciones</span>
       </span>
     </a>
 
     <a mat-list-item [routerLink]="['/edit', userProfile?.username]">
       <span class="entry">
         <mat-icon class="icon">settings</mat-icon>
-        <span class="text">Mi Cuenta</span>
+        <span class="text">Mi Perfil Publico</span>
       </span>
     </a>
+
+    <!-- <a mat-list-item [routerLink]="['/', 'username', 'suscriptions']">
+      <span class="entry">
+        <mat-icon class="icon">notifications</mat-icon>
+        <span class="text">ESTE SACALO</span>
+      </span>
+    </a> -->
   </mat-nav-list>
 </mat-sidenav-container>
 }

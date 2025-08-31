@@ -17,6 +17,7 @@ export class UploadContentPageComponent implements OnInit {
   isLogged: boolean = false;
   isUser: boolean = false;
   message = '';
+  username: string | null = null; 
 
   constructor(
     private tokenService: TokenService,
@@ -25,6 +26,7 @@ export class UploadContentPageComponent implements OnInit {
 
   ngOnInit(): void {
     const username = this.tokenService.getUsernameFromToken();
+    this.username = username;
     this.resourceService.user().subscribe(
       (data) => {
         this.message = data;
@@ -77,7 +79,7 @@ export class UploadContentPageComponent implements OnInit {
   submit(): void {
     console.log('Imágenes subidas:', this.uploadedImages);
     console.log('Comentario:', this.textComment);
-    console.log('user:', this.textComment);
+    console.log('user:', this.username);
   }
 
   getLogged(): void {
