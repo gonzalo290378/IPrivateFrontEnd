@@ -1,4 +1,11 @@
-<div class="example-container m-1">
+<div class="example-container m-5">
+
+    <div class="flex justify-content-center">
+    <button mat-raised-button color="primary" (click)="applyFilters()">
+      Filtra ahora
+    </button>
+  </div>
+
   <mat-list class="flex flex-column justify-content-center" style="gap: 10px">
     <app-by-country-page></app-by-country-page>
     <app-by-state-page></app-by-state-page>
@@ -26,10 +33,4 @@
       </mat-select>
     </mat-form-field>
   </mat-list>
-
-  <div class="flex justify-content-center">
-    <button mat-raised-button color="primary" (click)="applyFilters()">
-      Buscar ahora!
-    </button>
-  </div>
 </div>

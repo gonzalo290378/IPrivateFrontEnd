@@ -195,7 +195,7 @@ export class RegisterPageComponent implements OnInit {
       .checkUsernameAvailability(username)
       .pipe(
         switchMap((usernameResponse) => {
-          if (!usernameResponse.available) {
+          if (usernameResponse.available) {
             this.userForm.get('username')?.setErrors({ usernameTaken: true });
             return of(null);
           } else {

@@ -13,6 +13,7 @@ import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../../users/services/token.service';
 import { UploadContentPageComponent } from '../uploader-page-component/uploader-page-component';
+import { ProfileFeedContentPage } from '../../../users/pages/profile-feed-page/profile-feed-content-page.component';
 
 @Component({
   selector: 'app-free-content-page',
@@ -29,6 +30,7 @@ import { UploadContentPageComponent } from '../uploader-page-component/uploader-
     UserImagePipe,
     MaterialModule,
     UploadContentPageComponent,
+    ProfileFeedContentPage,
   ],
   templateUrl: './free-content-page.component.html',
 })
@@ -52,19 +54,16 @@ export class FreeContentPageComponent {
     this.activatedRoute.params
       .pipe(
         switchMap(({ username }) =>
-          this.userService.checkAvailabilityUsername(username)
+          this.userService.getEntityByUsername(username)
         )
       )
 
-      .subscribe((userExits) => {
-        if (!userExits) {
-          return this.router.navigate(['/']);
-        } else {
-          //ACA TENGO QUE HACER UNA LLAMADA PARA QUE TRAIGA ENTERO EL USER
-          this.user = userExits;
-          this.isOwner = loggedUsername === userExits.username;
-          return;
-        }
+     .subscribe((user) => {
+        if (!user) return this.router.navigate(['/']);
+        this.user = user;
+        const loggedUsername = this.tokenService.getUsernameFromToken();
+        this.isOwner = loggedUsername === user.username;
+        return;
       });
   }
 

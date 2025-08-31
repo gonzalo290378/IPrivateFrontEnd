@@ -7,14 +7,13 @@ export interface User {
   username: string;
   age: number;
   sex: string;
-  email: string;
+  //email: string;
   birthdate: string;
   registerDate?: string;
   description: string;
   isEnabled: boolean;
-  //password: string;
   idFreeArea?: number;
-  idPrivateArea?: number;
+  //idPrivateArea?: number;
   preference?: Preference;
   country?: Country;
   city?: City;
