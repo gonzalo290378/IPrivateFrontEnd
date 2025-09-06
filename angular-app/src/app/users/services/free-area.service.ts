@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { UserFormDTO } from '../../dto/user-form-dto.model';
 import { User } from '../../models/user';
 import { FreeAreaDTO } from '../../dto/free-area-dto';
+import { PrincipalPhotoDTO } from '../../dto/principal-photo-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +17,17 @@ export class FreeAreaService {
 
   findById(id: number): Observable<any> {
     return this.http
-    .get<FreeAreaDTO>(`${this.baseUrl}api/v1/free-area/${id}`)
-    .pipe(catchError((error) => of(undefined)));
+      .get<FreeAreaDTO>(`${this.baseUrl}api/v1/free-area/${id}`)
+      .pipe(catchError((error) => of(undefined)));
+  }
+
+  uploadContent(formData: FormData): Observable<PrincipalPhotoDTO | undefined> {
+    return this.http
+      .post<PrincipalPhotoDTO>(
+        `${this.baseUrl}api/v1/free-area/principal-photo/upload`,
+        formData
+      )
+      .pipe(catchError(() => of(undefined)));
   }
 
   // filter(page: number, size: number): Observable<UserDTO[]> {
