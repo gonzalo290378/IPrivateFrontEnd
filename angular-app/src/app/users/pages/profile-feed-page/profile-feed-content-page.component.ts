@@ -58,20 +58,19 @@ export class ProfileFeedContentPage implements OnInit {
       });
   }
 
-private loadFreeArea(id: number | undefined): void {
-  if (id === undefined) {
-    console.log('No se proporcionó un id de FreeArea válido');
-    return;
-  }
-
-  this.freeAreaService.findById(id).subscribe((freeArea) => {
-    if (freeArea) {
-      console.log(`FreeArea`, freeArea);
-      this.freeArea = freeArea;
-    } else {
-      console.log(`FreeArea con id ${id} no encontrada`);
+  private loadFreeArea(id: number | undefined): void {
+    if (id === undefined) {
+      console.log('No se proporcionó un id de FreeArea válido');
+      return;
     }
-  });
-}
 
+    this.freeAreaService.findById(id).subscribe((freeArea) => {
+      if (freeArea) {
+        console.log(`FreeArea`, freeArea);
+        this.freeArea = freeArea;
+      } else {
+        console.log(`FreeArea con id ${id} no encontrada`);
+      }
+    });
+  }
 }

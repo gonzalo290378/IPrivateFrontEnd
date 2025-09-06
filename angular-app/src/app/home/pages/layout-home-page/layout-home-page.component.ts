@@ -3,7 +3,7 @@ import { MeetingRoomPageComponent } from '../meeting-room-page/meeting-room-page
 import { NavbarPageComponent } from '../../../shared/pages/navbar-page/navbar-page.component';
 import { MaterialModule } from '../../../material/material-module';
 import { LinkLoginAndCreateAccountComponent } from '../../../shared/pages/link-login-and-create-account/link-login-and-create-account.component';
-import { TokenService } from '../../../users/services/token.service'; // <--- Importa TokenService
+import { TokenService } from '../../../users/services/token.service';
 import { CommonModule } from '@angular/common';
 import { UploadContentPageComponent } from '../../../shared/pages/uploader-page-component/uploader-page-component';
 

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TokenService } from '../../../users/services/token.service';
 import { ResourceService } from '../../../users/services/resource.service';
+import { FreeAreaService } from '../../../users/services/free-area.service';
+import { PrincipalPhotoDTO } from '../../../dto/principal-photo-dto';
 
 @Component({
   selector: 'app-upload-content-page',
@@ -17,11 +19,13 @@ export class UploadContentPageComponent implements OnInit {
   isLogged: boolean = false;
   isUser: boolean = false;
   message = '';
-  username: string | null = null; 
+  username: string | null = null;
+  principalPhotoDTO!: PrincipalPhotoDTO;
 
   constructor(
     private tokenService: TokenService,
-    private resourceService: ResourceService
+    private resourceService: ResourceService,
+    private freeAreaService: FreeAreaService
   ) {}
 
   ngOnInit(): void {
@@ -77,9 +81,29 @@ export class UploadContentPageComponent implements OnInit {
   }
 
   submit(): void {
-    console.log('Imágenes subidas:', this.uploadedImages);
-    console.log('Comentario:', this.textComment);
-    console.log('user:', this.username);
+    if (!this.username || this.uploadedImages.length === 0) return;
+
+    const mainImage = this.uploadedImages[0];
+
+    const formData = new FormData();
+    formData.append('file', mainImage);
+
+    formData.append('description', this.textComment || '');
+    formData.append('isEnabled', 'true');
+    const today = new Date().toISOString().split('T')[0];
+    formData.append('createdAt', today);
+    formData.append('updatedAt', today);
+
+    this.freeAreaService.uploadContent(formData).subscribe({
+      next: (res) => {
+        console.log('Contenido subido correctamente', res);
+        this.uploadedImages = [];
+        this.textComment = '';
+      },
+      error: (err) => {
+        console.error('Error al subir contenido', err);
+      },
+    });
   }
 
   getLogged(): void {

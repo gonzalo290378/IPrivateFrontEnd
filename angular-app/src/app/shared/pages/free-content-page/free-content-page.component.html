@@ -17,17 +17,38 @@
     <h2>{{ user.username }}</h2>
 
     <mat-card>
-      
       <div class="grid-container">
         <mat-card-content>
           <div class="user-info">
             <div class="profile-image-wrapper">
+              <!-- Imagen de perfil -->
               <img
                 class="profile-image-free-content"
                 [src]="user! | userImage"
                 [alt]="user.username"
               />
+              
+
+              <!-- Overlay para editar foto - Solo visible si es propietario y en modo edición -->
+              <div
+                class="image-edit-overlay"
+                *ngIf="canEditImage()"
+                (click)="openImageEditor()"
+              >
+                <mat-icon class="edit-icon">edit</mat-icon>
+                <span class="edit-text">Cambiar foto</span>
+              </div>
+
+              <!-- Input oculto para seleccionar archivo -->
+              <input
+                #fileInput
+                type="file"
+                accept="image/*"
+                style="display: none"
+                (change)="onImageSelected($event)"
+              />
             </div>
+
             <span
               class="status"
               [class.active]="user.isEnabled"
@@ -47,13 +68,11 @@
             </span>
           </div>
         </mat-card-content>
-        
 
         <mat-card-content class="grid-item info-container subtle-shadow">
           <mat-list>
-                  <h4>Editar Perfil</h4>
+            <h4>Editar Perfil</h4>
 
-                  
             <div *ngIf="!isEditMode" class="m-3">
               <b>Ciudad:</b> {{ user.cityDTO?.city }}
             </div>
@@ -154,5 +173,4 @@
     </mat-card>
   </mat-card>
   <app-profile-feed-content-page></app-profile-feed-content-page>
-
 </div>

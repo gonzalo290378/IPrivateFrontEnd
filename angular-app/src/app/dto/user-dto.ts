@@ -9,16 +9,13 @@ export class UserDTO {
   username!: string;
   age!: number;
   sex!: string;
-  //email!: string;
   birthdate!: string;
   registerDate?: string;
   description!: string;
   isEnabled?: boolean;
-  //password!: string;
   idFreeArea?: number;
   idPrivateArea?: number;
   freeAreaDTO?: FreeAreaDTO;
-  //privateAreaDTO?: PrivateAreaDTO;
   preferenceDTO?: PreferenceDTO;
   countryDTO?: CountryDTO;
   cityDTO?: CityDTO;
