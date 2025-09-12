@@ -21,15 +21,12 @@
         <mat-card-content>
           <div class="user-info">
             <div class="profile-image-wrapper">
-              <!-- Imagen de perfil -->
               <img
                 class="profile-image-free-content"
-                [src]="user! | userImage"
+                [src]="getProfileImageUrl()"
                 [alt]="user.username"
               />
-              
 
-              <!-- Overlay para editar foto - Solo visible si es propietario y en modo edición -->
               <div
                 class="image-edit-overlay"
                 *ngIf="canEditImage()"
@@ -39,7 +36,6 @@
                 <span class="edit-text">Cambiar foto</span>
               </div>
 
-              <!-- Input oculto para seleccionar archivo -->
               <input
                 #fileInput
                 type="file"
