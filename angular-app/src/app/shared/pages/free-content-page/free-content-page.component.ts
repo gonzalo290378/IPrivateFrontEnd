@@ -8,14 +8,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { UserDTO } from '../../../dto/user-dto';
 import { CommonModule } from '@angular/common';
-import { UserImagePipe } from '../../../users/pipes/user-image.pipe';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../../users/services/token.service';
 import { UploadContentPageComponent } from '../uploader-page-component/uploader-page-component';
 import { ProfileFeedContentPage } from '../../../users/pages/profile-feed-page/profile-feed-content-page.component';
 import { FreeAreaService } from '../../../users/services/free-area.service';
-import { PrincipalPhotoDTO } from '../../../dto/principal-photo-dto';
 
 @Component({
   selector: 'app-free-content-page',
@@ -29,7 +27,6 @@ import { PrincipalPhotoDTO } from '../../../dto/principal-photo-dto';
     MatList,
     CommonModule,
     FormsModule,
-    UserImagePipe,
     MaterialModule,
     UploadContentPageComponent,
     ProfileFeedContentPage,
@@ -40,9 +37,9 @@ export class FreeContentPageComponent {
   user?: UserDTO;
   isEditMode: boolean = false;
   isOwner: boolean = false;
+  profileImageUrl: string = '/assets/default-avatar.png';
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-    private baseUrl = `http://localhost:8090/ms-free-area`;
-
+  private baseUrl = `http://localhost:8090/ms-free-area`;
 
   constructor(
     private userService: UserService,
@@ -69,6 +66,7 @@ export class FreeContentPageComponent {
         this.user = user;
         const loggedUsername = this.tokenService.getUsernameFromToken();
         this.isOwner = loggedUsername === user.username;
+        this.updateProfileImageUrl();
         return;
       });
   }
@@ -149,41 +147,39 @@ export class FreeContentPageComponent {
           };
 
           console.log('ver', response);
+          console.log('Imagen actualizada correctamente');
 
-          setTimeout(() => {
-            this.forceImageRefresh();
-          }, 100);
-
-          alert('Imagen actualizada correctamente');
+          this.updateProfileImageUrl();
         } else {
-          alert('Error al procesar la respuesta del servidor');
+          console.error('Error al procesar la respuesta del servidor');
         }
       },
       error: (error) => {
         console.error('Error al subir la imagen:', error);
-        alert('Error al subir la imagen. Inténtalo de nuevo.');
       },
     });
   }
 
-private forceImageRefresh(): void {
-    const imgElement = document.querySelector('.profile-image-free-content') as HTMLImageElement;
-    if (imgElement) {
-        if (this.user?.freeAreaDTO?.principalPhotoDTO?.[0]?.url) {
-            const backendUrl = this.baseUrl;
-            const relativePath = this.user.freeAreaDTO.principalPhotoDTO[0].url;
-            const separator = relativePath.includes('?') ? '&' : '?';
-            const newUrl = `${backendUrl}${relativePath}${separator}t=${new Date().getTime()}`;
-            imgElement.src = newUrl;
-        }
-        
-        imgElement.style.display = 'none';
-        imgElement.offsetHeight;
-        imgElement.style.display = '';
-    }
-}
-
   canEditImage(): boolean {
     return this.isOwner && this.isEditMode;
+  }
+
+  getProfileImageUrl(): string {
+    if (!this.user?.freeAreaDTO?.principalPhotoDTO?.[0]?.url) {
+      return `${this.baseUrl}/uploads/users/no-image.jpg`; // Cambiado aquí
+    }
+
+    const relativePath = this.user.freeAreaDTO.principalPhotoDTO[0].url;
+    return `${this.baseUrl}${relativePath}`;
+  }
+
+  private updateProfileImageUrl(): void {
+    if (!this.user?.freeAreaDTO?.principalPhotoDTO?.[0]?.url) {
+      this.profileImageUrl = `${this.baseUrl}/uploads/users/no-image.jpg`; // Cambiado aquí
+      return;
+    }
+
+    const relativePath = this.user.freeAreaDTO.principalPhotoDTO[0].url;
+    this.profileImageUrl = `${this.baseUrl}${relativePath}`;
   }
 }

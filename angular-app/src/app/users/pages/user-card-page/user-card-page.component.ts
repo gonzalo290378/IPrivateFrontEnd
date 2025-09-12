@@ -22,14 +22,15 @@ import { CommonModule } from '@angular/common';
     MatButton,
     MatIcon,
     RouterLink,
-    UserImagePipe,
     CommonModule,
+    UserImagePipe,
   ],
   templateUrl: './user-card-page.component.html',
 })
 export class UserCardPageComponent implements OnInit {
   @Input()
   user?: UserDTO;
+  private baseUrl = `http://localhost:8090/ms-free-area`;
 
   ngOnInit(): void {
     if (!this.user) throw Error('User is required');

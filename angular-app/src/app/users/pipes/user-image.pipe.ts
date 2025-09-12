@@ -6,13 +6,13 @@ import { UserDTO } from '../../dto/user-dto';
   standalone: true,
 })
 export class UserImagePipe implements PipeTransform {
+  private baseUrl = 'http://localhost:8090/ms-free-area';
+  
   transform(userDTO: UserDTO): string {
-    if (!userDTO.id && !userDTO.alt_img) {
-      return `assets/images/users/no-image.jpg`;
+    if (!userDTO?.freeAreaDTO?.principalPhotoDTO?.length) {
+      return `${this.baseUrl}/uploads/users/no-image.jpg`;
     }
-
-    if (userDTO.alt_img) return userDTO.alt_img;
-
-    return `assets/images/users/foto${userDTO.id}.jpg`;
+    const relativeUrl = userDTO.freeAreaDTO.principalPhotoDTO[0].url;
+    return `${this.baseUrl}${relativeUrl}`;
   }
 }
