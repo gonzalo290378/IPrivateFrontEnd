@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { UserDTO } from '../../dto/user-dto';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { UserFormDTO } from '../../dto/user-form-dto.model';
 import { User } from '../../models/user';
 import { FreeAreaDTO } from '../../dto/free-area-dto';
 import { PrincipalPhotoDTO } from '../../dto/principal-photo-dto';
+import { TokenService } from './token.service';
+import { ResourceService } from './resource.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,11 @@ import { PrincipalPhotoDTO } from '../../dto/principal-photo-dto';
 export class FreeAreaService {
   private baseUrl = `http://localhost:8090/ms-free-area/`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService,
+    private resourceService: ResourceService
+  ) {}
 
   findById(id: number): Observable<any> {
     return this.http
@@ -22,10 +28,18 @@ export class FreeAreaService {
   }
 
   uploadContent(formData: FormData): Observable<PrincipalPhotoDTO | undefined> {
+    const token = this.tokenService.getAccessToken();
+
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
     return this.http
       .post<PrincipalPhotoDTO>(
         `${this.baseUrl}api/v1/free-area/principal-photo/upload`,
-        formData
+        formData,
+        { headers }
       )
       .pipe(catchError(() => of(undefined)));
   }

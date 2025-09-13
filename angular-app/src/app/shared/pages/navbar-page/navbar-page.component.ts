@@ -6,7 +6,6 @@ import { FilterPageComponent } from '../../../home/pages/filter-page/filter-page
 import { TokenService } from '../../../users/services/token.service';
 import { ResourceService } from '../../../users/services/resource.service';
 import { UserProfile } from '../../../models/user-profle';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
