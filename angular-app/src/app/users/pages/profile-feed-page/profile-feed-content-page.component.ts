@@ -49,8 +49,6 @@ export class ProfileFeedContentPage implements OnInit {
       .subscribe((user) => {
         if (!user) return this.router.navigate(['/']);
         const idFreeArea = user.freeAreaDTO?.id;
-        //const loggedUsername = this.tokenService.getUsernameFromToken();
-        //this.isOwner = loggedUsername === user.username;
         if (idFreeArea !== undefined) {
           this.loadFreeArea(idFreeArea);
         }

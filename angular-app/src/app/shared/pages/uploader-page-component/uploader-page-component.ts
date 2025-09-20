@@ -6,6 +6,8 @@ import { TokenService } from '../../../users/services/token.service';
 import { ResourceService } from '../../../users/services/resource.service';
 import { FreeAreaService } from '../../../users/services/free-area.service';
 import { PrincipalPhotoDTO } from '../../../dto/principal-photo-dto';
+import { UserService } from '../../../users/services/user.service';
+import { FreeAreaDTO } from '../../../dto/free-area-dto';
 
 @Component({
   selector: 'app-upload-content-page',
@@ -21,32 +23,60 @@ export class UploadContentPageComponent implements OnInit {
   message = '';
   username: string | null = null;
   principalPhotoDTO!: PrincipalPhotoDTO;
+  uploadedFiles: File[] = [];
+  freeArea!: FreeAreaDTO;
 
   constructor(
     private tokenService: TokenService,
     private resourceService: ResourceService,
-    private freeAreaService: FreeAreaService
+    private freeAreaService: FreeAreaService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     const username = this.tokenService.getUsernameFromToken();
     this.username = username;
-    this.resourceService.user().subscribe(
-      (data) => {
+
+    this.resourceService.user().subscribe({
+      next: (data) => {
         this.message = data;
         this.getLogged();
         console.log('User from Uploader', username);
       },
-      (err) => {
-        console.log(err);
-      }
-    );
+      error: (err) => {
+        console.error('Error en resourceService.user()', err);
+      },
+    });
+
+    if (username) {
+      this.userService.getEntityByUsername(username).subscribe({
+        next: (user) => {
+          if (!user) {
+            console.error('Usuario no encontrado');
+            return;
+          }
+
+          if (!user.freeAreaDTO) {
+            console.error('El usuario no tiene freeArea asociada');
+            return;
+          }
+
+          this.freeArea = user.freeAreaDTO;
+          console.log('FreeArea ID encontrado:', this.freeArea.id);
+        },
+        error: (err) => {
+          console.error('Error obteniendo usuario desde userService:', err);
+        },
+      });
+    }
   }
+
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       Array.from(input.files).forEach((file) => {
+        this.uploadedFiles.push(file);
         const reader = new FileReader();
         reader.onload = (e: any) => this.uploadedImages.push(e.target.result);
         reader.readAsDataURL(file);
@@ -69,6 +99,7 @@ export class UploadContentPageComponent implements OnInit {
     this.isDragOver = false;
     if (event.dataTransfer?.files) {
       Array.from(event.dataTransfer.files).forEach((file) => {
+        this.uploadedFiles.push(file);
         const reader = new FileReader();
         reader.onload = (e: any) => this.uploadedImages.push(e.target.result);
         reader.readAsDataURL(file);
@@ -81,29 +112,35 @@ export class UploadContentPageComponent implements OnInit {
   }
 
   submit(): void {
-    if (!this.username || this.uploadedImages.length === 0) return;
-
-    const mainImage = this.uploadedImages[0];
+    if (
+      !this.username ||
+      this.uploadedImages.length === 0 ||
+      !this.freeArea?.id ||
+      !this.textComment.trim()
+    ) {
+      console.warn('Debes subir al menos una foto y escribir una descripción');
+      return;
+    }
 
     const formData = new FormData();
-    formData.append('file', mainImage);
-
-    formData.append('description', this.textComment || '');
-    formData.append('isEnabled', 'true');
-    const today = new Date().toISOString().split('T')[0];
-    formData.append('createdAt', today);
-    formData.append('updatedAt', today);
-
-    this.freeAreaService.uploadContent(formData).subscribe({
-      next: (res) => {
-        console.log('Contenido subido correctamente', res);
-        this.uploadedImages = [];
-        this.textComment = '';
-      },
-      error: (err) => {
-        console.error('Error al subir contenido', err);
-      },
+    this.uploadedFiles.forEach((file) => {
+      formData.append('files', file);
     });
+    formData.append('description', this.textComment);
+
+    this.freeAreaService
+      .uploadPublicContent(formData, this.freeArea.id)
+      .subscribe({
+        next: (res) => {
+          console.log('Contenido subido correctamente', res);
+          this.uploadedFiles = [];
+          this.uploadedImages = [];
+          this.textComment = '';
+        },
+        error: (err) => {
+          console.error('Error al subir contenido', err);
+        },
+      });
   }
 
   getLogged(): void {

@@ -69,7 +69,14 @@
   </div>
 
   <div class="m-3">
-    <button mat-raised-button color="accent" (click)="submit()">Sube tu Foto</button>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="submit()"
+      [disabled]="uploadedImages.length === 0 || !textComment.trim()"
+    >
+      Sube tu Foto
+    </button>
   </div>
 </div>
 }
