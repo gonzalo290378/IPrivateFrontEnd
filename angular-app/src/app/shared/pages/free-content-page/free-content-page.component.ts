@@ -52,8 +52,6 @@ export class FreeContentPageComponent {
   ngOnInit(): void {
     const isEditUrl = this.router.url.startsWith('/edit/');
     this.isEditMode = isEditUrl;
-    const loggedUsername = this.tokenService.getUsernameFromToken();
-
     this.activatedRoute.params
       .pipe(
         switchMap(({ username }) =>
@@ -105,8 +103,8 @@ export class FreeContentPageComponent {
         return;
       }
 
-      if (file.size > 5 * 1024 * 1024) {
-        alert('La imagen debe ser menor a 5MB');
+      if (file.size > 15 * 1024 * 1024) {
+        alert('La imagen debe ser menor a 15MB');
         return;
       }
 
@@ -138,7 +136,7 @@ export class FreeContentPageComponent {
     formData.append('file', file);
     formData.append('idFreeArea', this.user.freeAreaDTO.id.toString());
 
-    this.freeAreaService.uploadContent(formData).subscribe({
+    this.freeAreaService.uploadPrincipalPhoto(formData).subscribe({
       next: (response) => {
         if (response && this.user?.freeAreaDTO?.principalPhotoDTO) {
           this.user.freeAreaDTO = {

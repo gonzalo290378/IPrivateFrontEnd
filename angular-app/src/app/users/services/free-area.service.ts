@@ -8,6 +8,7 @@ import { FreeAreaDTO } from '../../dto/free-area-dto';
 import { PrincipalPhotoDTO } from '../../dto/principal-photo-dto';
 import { TokenService } from './token.service';
 import { ResourceService } from './resource.service';
+import { PublicContentDTO } from '../../dto/public-content-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,9 @@ export class FreeAreaService {
       .pipe(catchError((error) => of(undefined)));
   }
 
-  uploadContent(formData: FormData): Observable<PrincipalPhotoDTO | undefined> {
+  uploadPrincipalPhoto(
+    formData: FormData
+  ): Observable<PrincipalPhotoDTO | undefined> {
     const token = this.tokenService.getAccessToken();
 
     let headers = new HttpHeaders();
@@ -44,43 +47,34 @@ export class FreeAreaService {
       .pipe(catchError(() => of(undefined)));
   }
 
-  // filter(page: number, size: number): Observable<UserDTO[]> {
-  //   const params = {
-  //     page: page,
-  //     size: size,
-  //   };
-  //   return this.http.get<UserDTO[]>(this.baseUrl, { params });
-  // }
+  uploadPublicContent(
+    formData: FormData,
+    freeAreaId: number
+  ): Observable<PublicContentDTO | undefined> {
+    const token = this.tokenService.getAccessToken();
+    let headers = new HttpHeaders();
+    if (token) headers = headers.set('Authorization', `Bearer ${token}`);
 
-  // checkAvailabilityUsername(username: string): Observable<UserDTO | undefined> {
-  //   return this.http
-  //     .get<UserDTO>(`${this.baseUrl}check-availability-username/${username}`)
-  //     .pipe(catchError((error) => of(undefined)));
-  // }
+    return this.http
+      .post<PublicContentDTO>(
+        `${this.baseUrl}api/v1/free-area/${freeAreaId}/public-content`,
+        formData,
+        { headers }
+      )
+      .pipe(catchError(() => of(undefined)));
+  }
 
+  //SECURIZAR
   save(userFormDTO: UserFormDTO): Observable<User | undefined> {
     return this.http
       .post<User>(`${this.baseUrl}`, userFormDTO)
       .pipe(catchError((error) => of(undefined)));
   }
 
+  //SECURIZAR
   update(user: UserDTO): Observable<UserDTO | undefined> {
     return this.http
       .put<UserDTO>(`${this.baseUrl}edit/${user.id}`, user)
       .pipe(catchError((error) => of(undefined)));
   }
-
-  // checkUsernameAvailability(
-  //   username: string
-  // ): Observable<{ available: boolean }> {
-  //   return this.http.get<{ available: boolean }>(
-  //     `${this.baseUrl}/check-availability-username/${username}`
-  //   );
-  // }
-
-  // checkEmailAvailability(email: string): Observable<{ available: boolean }> {
-  //   return this.http.get<{ available: boolean }>(
-  //     `${this.baseUrl}/check-availability-email/${email}`
-  //   );
-  // }
 }
