@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { TokenService } from '../../services/token.service';
 import { UserDTO } from '../../../dto/user-dto';
 import { switchMap } from 'rxjs';
+import { PublicContentDTO } from '../../../dto/public-content-dto';
 
 @Component({
   selector: 'app-profile-feed-content-page',
@@ -18,8 +19,10 @@ import { switchMap } from 'rxjs';
 export class ProfileFeedContentPage implements OnInit {
   freeArea?: FreeAreaDTO;
   user?: UserDTO;
+  publicContentDTO: PublicContentDTO[] = [];
   isEditMode: boolean = false;
   isOwner: boolean = false;
+  private baseUrl = `http://localhost:8090/ms-free-area`;
 
   constructor(
     private freeAreaService: FreeAreaService,
@@ -29,15 +32,9 @@ export class ProfileFeedContentPage implements OnInit {
     private tokenService: TokenService
   ) {}
 
-  // ngOnInit(): void {
-  //   //ACA VA EL METODO QUE LLAMA AL SERVICIO free area y para traer todo el free area
-  //   this.loadFreeArea(1);
-  // }
-
   ngOnInit(): void {
     const isEditUrl = this.router.url.startsWith('/edit/');
     this.isEditMode = isEditUrl;
-    const loggedUsername = this.tokenService.getUsernameFromToken();
 
     this.activatedRoute.params
       .pipe(
@@ -45,9 +42,10 @@ export class ProfileFeedContentPage implements OnInit {
           this.userService.getEntityByUsername(username)
         )
       )
-
       .subscribe((user) => {
         if (!user) return this.router.navigate(['/']);
+        this.user = user;
+
         const idFreeArea = user.freeAreaDTO?.id;
         if (idFreeArea !== undefined) {
           this.loadFreeArea(idFreeArea);
@@ -56,19 +54,22 @@ export class ProfileFeedContentPage implements OnInit {
       });
   }
 
-  private loadFreeArea(id: number | undefined): void {
-    if (id === undefined) {
-      console.log('No se proporcionó un id de FreeArea válido');
-      return;
-    }
-
+  private loadFreeArea(id: number): void {
     this.freeAreaService.findById(id).subscribe((freeArea) => {
       if (freeArea) {
-        console.log(`FreeArea`, freeArea);
         this.freeArea = freeArea;
-      } else {
-        console.log(`FreeArea con id ${id} no encontrada`);
+        this.publicContentDTO = (freeArea.publicContentDTO || []).map(
+          (c: PublicContentDTO) => ({
+            ...c,
+            contentUrl: this.baseUrl + c.contentUrl,
+          })
+        );
       }
     });
+  }
+
+  // Método para manejar likes (opcional)
+  toggleLike(content: PublicContentDTO): void {
+    content.like = (content.like || 0) + 1;
   }
 }

@@ -1,8 +1,40 @@
-<div *ngIf="freeArea as area" class="flex flex-column p-4">
-  <h2>{{ area }}</h2>
-  <p>{{ area }}</p>
-</div>
-<div *ngIf="!freeArea" class="p-4">
-  <p>Cargando...</p>
+<div *ngIf="freeArea; else loading" class="posts-container">
+  <div class="posts-grid">
+    <div *ngFor="let content of publicContentDTO" class="post-card">
+      <div class="post-header">
+        <div class="post-avatar">{{ user?.username?.charAt(0)?.toUpperCase() }}</div>
+        <div class="post-info">
+          <div class="post-username">{{ user?.username }}</div>
+          <div class="post-date">{{ content.date | date:'short' }}</div>
+        </div>
+      </div>
+      <div class="post-image-container">
+        <img [src]="content.contentUrl" alt="Publicación" class="post-image">
+        <div class="image-overlay">
+          <div class="overlay-content">
+            <p>❤️ {{ content.like }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="post-content">
+        <div class="post-actions">
+          <button class="like-button" (click)="toggleLike(content)">
+            <span class="heart-icon">❤️</span>
+            <span>{{ content.like }} me gusta</span>
+          </button>
+        </div>
+        <p class="post-description" *ngIf="content.description">
+          <span class="username-mention">{{ user?.username }}</span> 
+          {{ content.description }}
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
+<ng-template #loading>
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Cargando...</p>
+  </div>
+</ng-template>
