@@ -1,8 +1,8 @@
 html,
 body {
-  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   width: 100%;
-  font-size: 15px;
 }
 
 ::-webkit-scrollbar {
@@ -127,7 +127,6 @@ mat-card.main-profile-card {
   max-width: 100%;
   width: 95%;
   border-radius: 12px;
-  padding: 1rem;
   background-color: transparent;
 }
 
@@ -189,8 +188,8 @@ mat-card-actions {
 }
 
 .user-data b {
-  font-weight: 500; /* Un estilo menos pesado que el 'bold' por defecto */
-  color: #333; /* Un color de texto oscuro para mayor contraste */
+  font-weight: 500;
+  color: #333;
 }
 
 /* Iniciar Sesion y Crear una nueva cuenta */
@@ -213,24 +212,23 @@ mat-card-actions {
 
 .entry {
   display: flex;
-  align-items: center;     /* Centra verticalmente */
-  justify-content: left; /* Centra horizontalmente si hace falta */
-  gap: 8px;                /* Espacio entre icono y texto */
-  font-size: 16px;         /* Tamaño del texto */
-  font-weight: 500;        /* Un poco más marcado */
-  cursor: pointer;         /* Para que parezca clicable */
-  padding: 6px 12px;       /* Espaciado interno */
-  border-radius: 8px;      /* Bordes redondeados */
+  align-items: center;
+  justify-content: left;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 8px;
 }
 
-
 .icon {
-  font-size: 20px;         /* Tamaño del ícono */
-  color: #1976d2;          /* Azul Material */
+  font-size: 20px;
+  color: #1976d2;
 }
 
 .text {
-  color: #333;             /* Color del texto */
+  color: #333;
 }
 
 /* Activo*/
@@ -248,14 +246,13 @@ mat-card-actions {
   color: red;
 }
 
-/* Image edition PrincipalPhotoDTO */
+/* Image edition PrincipalPhoto */
 
 .profile-image-wrapper {
   position: relative;
   display: inline-block;
   cursor: pointer;
 }
-
 
 .image-edit-overlay {
   position: absolute;
@@ -295,5 +292,169 @@ mat-card-actions {
   text-align: center;
 }
 
+/* ProfileFeedContentPage*/
+app-profile-feed-content-page {
+  width: 80%;
+  display: block;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
+.posts-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
 
+.posts-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.post-card {
+  width: 80%;
+  max-width: 95%;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.post-card:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.post-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.post-info {
+  flex: 1;
+}
+
+.post-username {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.post-date {
+  color: #7f8c8d;
+  font-size: 12px;
+}
+
+.post-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.post-image {
+  width: 100%;
+  height: auto; /* Cambiar de 100% a auto */
+  object-fit: contain; /* Cambiar de cover a contain */
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.post-content {
+  padding: 20px;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.like-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e74c3c;
+  font-weight: 600;
+  padding: 5px;
+  transition: none;
+}
+
+.like-button:hover {
+  transform: none;
+}
+
+.heart-icon {
+  font-size: 18px;
+  animation: none;
+}
+
+.post-description {
+  color: #2c3e50;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.username-mention {
+  font-weight: 600;
+  color: #3498db;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 60px 20px;
+  color: #7f8c8d;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #ecf0f1;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@media (max-width: 768px) {
+  .posts-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .post-image-container {
+    height: 220px;
+  }
+}
