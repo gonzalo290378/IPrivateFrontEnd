@@ -24,7 +24,6 @@ import { FreeAreaService } from '../../../users/services/free-area.service';
     MatProgressSpinner,
     MatCard,
     MatCardContent,
-    MatList,
     CommonModule,
     FormsModule,
     MaterialModule,
@@ -173,7 +172,7 @@ export class FreeContentPageComponent {
 
   private updateProfileImageUrl(): void {
     if (!this.user?.freeAreaDTO?.principalPhotoDTO?.[0]?.url) {
-      this.profileImageUrl = `${this.baseUrl}/uploads/users/no-image.jpg`; 
+      this.profileImageUrl = `${this.baseUrl}/uploads/users/no-image.jpg`;
       return;
     }
 

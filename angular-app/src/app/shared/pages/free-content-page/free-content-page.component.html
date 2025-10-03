@@ -14,7 +14,9 @@
   style="width: 100%"
 >
   <mat-card class="main-profile-card">
-    <h2>{{ user.username }}</h2>
+    <div class="flex justify-content-start pl-5">
+      <h2>{{ user.username }}</h2>
+    </div>
 
     <mat-card>
       <div class="grid-container">
@@ -62,10 +64,26 @@
                 {{ user.isEnabled ? "Activo" : "Inactivo" }}
               </div>
             </span>
+
+            <mat-form-field
+              appearance="outline"
+              style="width: 90%; margin: 1rem 0"
+              *ngIf="isEditMode"
+            >
+              <mat-label>Descripción</mat-label>
+              <textarea
+                matInput
+                [(ngModel)]="user.description"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="10"
+                placeholder="Escribe tu descripción"
+              ></textarea>
+            </mat-form-field>
           </div>
         </mat-card-content>
 
-        <mat-card-content class="grid-item info-container subtle-shadow">
+        <mat-card-content class="info-container subtle-shadow">
           <mat-list>
             <h4>Editar Perfil</h4>
 
@@ -125,22 +143,6 @@
             <div *ngIf="!isEditMode" class="m-3">
               {{ user.description }}
             </div>
-
-            <mat-form-field
-              appearance="outline"
-              style="width: 90%; margin: 1rem 0"
-              *ngIf="isEditMode"
-            >
-              <mat-label>Descripción</mat-label>
-              <textarea
-                matInput
-                [(ngModel)]="user.description"
-                cdkTextareaAutosize
-                cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="10"
-                placeholder="Escribe tu descripción"
-              ></textarea>
-            </mat-form-field>
           </mat-list>
 
           <mat-card-actions class="actions-container">
