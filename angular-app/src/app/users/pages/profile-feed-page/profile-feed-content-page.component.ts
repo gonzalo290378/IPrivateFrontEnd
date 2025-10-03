@@ -58,17 +58,24 @@ export class ProfileFeedContentPage implements OnInit {
     this.freeAreaService.findById(id).subscribe((freeArea) => {
       if (freeArea) {
         this.freeArea = freeArea;
-        this.publicContentDTO = (freeArea.publicContentDTO || []).map(
-          (c: PublicContentDTO) => ({
+        this.publicContentDTO = (freeArea.publicContentDTO || [])
+          .map((c: any) => ({
             ...c,
             contentUrl: this.baseUrl + c.contentUrl,
-          })
-        );
+            date:
+              c.date ||
+              c.createdDate ||
+              c.dateCreated ||
+              c.timestamp ||
+              c.createdAt ||
+              c.created ||
+              new Date().toISOString(),
+          }))
+          .sort((a: PublicContentDTO, b: PublicContentDTO) => b.id! - a.id!);
       }
     });
   }
 
-  // Método para manejar likes (opcional)
   toggleLike(content: PublicContentDTO): void {
     content.like = (content.like || 0) + 1;
   }
