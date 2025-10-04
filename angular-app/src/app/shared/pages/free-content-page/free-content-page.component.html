@@ -47,6 +47,10 @@
               />
             </div>
 
+            <div *ngIf="!isEditMode" class="m-3">
+              {{ user.description }}
+            </div>
+
             <span
               class="status"
               [class.active]="user.isEnabled"
@@ -85,7 +89,7 @@
 
         <mat-card-content class="info-container subtle-shadow">
           <mat-list>
-            <h4>Editar Perfil</h4>
+            <h4 *ngIf="isEditMode">Editar Perfil</h4>
 
             <div *ngIf="!isEditMode" class="m-3">
               <b>Ciudad:</b> {{ user.cityDTO?.city }}
@@ -101,6 +105,7 @@
               *ngIf="isEditMode"
               class="mt-1"
             >
+              <mat-label>País</mat-label>
               <input
                 matInput
                 type="text"
@@ -114,6 +119,7 @@
               *ngIf="isEditMode"
               class="mt-1"
             >
+              <mat-label>Ciudad</mat-label>
               <input matInput type="text" [(ngModel)]="user.cityDTO!.city" />
             </mat-form-field>
 
@@ -121,15 +127,24 @@
               <b>Edad:</b> {{ user.age }} años
             </div>
 
-            <mat-form-field appearance="outline" *ngIf="isEditMode">
-              <mat-label>Género</mat-label>
-              <mat-select>
-                <mat-option value="male">Hombres</mat-option>
-                <mat-option value="female">Mujeres</mat-option>
-                <mat-option value="female">Transgénero</mat-option>
-                <mat-option value="female">No binario</mat-option>
+            <mat-form-field
+              appearance="outline"
+              *ngIf="isEditMode"
+              class="mt-5"
+              style="flex: 1"
+            >
+              <mat-label>Sexo</mat-label>
+              <mat-select [(ngModel)]="user.sex">
+                <mat-option value="M">Hombre</mat-option>
+                <mat-option value="F">Mujer</mat-option>
+                <mat-option value="T">Transgénero</mat-option>
+                <mat-option value="N">No binario</mat-option>
               </mat-select>
             </mat-form-field>
+
+            <div *ngIf="!isEditMode" class="m-3">
+              <b>Genero:</b> {{ getSexLabel(user.sex) }}
+            </div>
 
             <mat-form-field
               appearance="outline"
@@ -137,12 +152,9 @@
               *ngIf="isEditMode"
               class="mt-5"
             >
+              <mat-label>Edad</mat-label>
               <input matInput type="number" [(ngModel)]="user.age" />
             </mat-form-field>
-
-            <div *ngIf="!isEditMode" class="m-3">
-              {{ user.description }}
-            </div>
           </mat-list>
 
           <mat-card-actions class="actions-container">

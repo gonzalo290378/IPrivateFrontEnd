@@ -179,4 +179,20 @@ export class FreeContentPageComponent {
     const relativePath = this.user.freeAreaDTO.principalPhotoDTO[0].url;
     this.profileImageUrl = `${this.baseUrl}${relativePath}`;
   }
+
+  getSexLabel(sex?: string): string {
+  switch (sex) {
+    case 'F':
+      return 'Mujer';
+    case 'M':
+      return 'Hombre';
+    case 'T':
+      return 'Transgénero';
+    case 'N':
+      return 'No binario';
+    default:
+      return 'No especificado';
+  }
+}
+
 }

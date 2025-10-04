@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, Subject } from 'rxjs';
 import { UserDTO } from '../../dto/user-dto';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { UserFormDTO } from '../../dto/user-form-dto.model';
@@ -15,6 +15,7 @@ import { PublicContentDTO } from '../../dto/public-content-dto';
 })
 export class FreeAreaService {
   private baseUrl = `http://localhost:8090/ms-free-area/`;
+  refreshFeed$ = new Subject<void>();
 
   constructor(
     private http: HttpClient,
