@@ -49,6 +49,10 @@ export class ProfileFeedContentPage implements OnInit {
         const idFreeArea = user.freeAreaDTO?.id;
         if (idFreeArea !== undefined) {
           this.loadFreeArea(idFreeArea);
+          this.freeAreaService.refreshFeed$.subscribe(() => {
+            console.log('Detectado nuevo contenido, recargando feed...');
+            this.loadFreeArea(idFreeArea);
+          });
         }
         return;
       });

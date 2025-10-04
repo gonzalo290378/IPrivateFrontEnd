@@ -303,7 +303,7 @@ app-profile-feed-content-page {
 }
 
 .posts-container {
-  width: 100%;
+  width: 80%;
   margin: 0 auto;
   padding: 20px;
 }
@@ -332,10 +332,6 @@ app-profile-feed-content-page {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.post-image-container {
-  position: relative;
-  overflow: hidden;
-}
 
 .post-image {
   width: 100%;

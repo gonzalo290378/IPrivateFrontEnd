@@ -25,6 +25,8 @@ export class UploadContentPageComponent implements OnInit {
   principalPhotoDTO!: PrincipalPhotoDTO;
   uploadedFiles: File[] = [];
   freeArea!: FreeAreaDTO;
+  isUploading: boolean = false;
+
 
   constructor(
     private tokenService: TokenService,
@@ -111,37 +113,40 @@ export class UploadContentPageComponent implements OnInit {
     this.uploadedImages.splice(index, 1);
   }
 
-  submit(): void {
-    if (
-      !this.username ||
-      this.uploadedImages.length === 0 ||
-      !this.freeArea?.id ||
-      !this.textComment.trim()
-    ) {
-      console.warn('Debes subir al menos una foto y escribir una descripción');
-      return;
-    }
-
-    const formData = new FormData();
-    this.uploadedFiles.forEach((file) => {
-      formData.append('files', file);
-    });
-    formData.append('description', this.textComment);
-
-    this.freeAreaService
-      .uploadPublicContent(formData, this.freeArea.id)
-      .subscribe({
-        next: (res) => {
-          console.log('Contenido subido correctamente', res);
-          this.uploadedFiles = [];
-          this.uploadedImages = [];
-          this.textComment = '';
-        },
-        error: (err) => {
-          console.error('Error al subir contenido', err);
-        },
-      });
+submit(): void {
+  if (
+    !this.username ||
+    this.uploadedImages.length === 0 ||
+    !this.freeArea?.id ||
+    !this.textComment.trim()
+  ) {
+    return;
   }
+
+  this.isUploading = true;
+
+  const formData = new FormData();
+  this.uploadedFiles.forEach((file) => {
+    formData.append('files', file);
+  });
+  formData.append('description', this.textComment);
+
+  this.freeAreaService.uploadPublicContent(formData, this.freeArea.id).subscribe({
+    next: (res) => {
+      console.log('Contenido subido correctamente', res);
+      this.freeAreaService.refreshFeed$.next();
+      this.uploadedFiles = [];
+      this.uploadedImages = [];
+      this.textComment = '';
+      this.isUploading = false;
+    },
+    error: (err) => {
+      console.error('Error al subir contenido', err);
+      this.isUploading = false;
+    },
+  });
+}
+
 
   getLogged(): void {
     this.isLogged = this.tokenService.isLogged();

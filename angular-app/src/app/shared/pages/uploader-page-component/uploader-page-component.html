@@ -69,14 +69,22 @@
   </div>
 
   <div class="m-3">
-    <button
-      mat-raised-button
-      color="accent"
-      (click)="submit()"
-      [disabled]="uploadedImages.length === 0 || !textComment.trim()"
-    >
-      Sube tu Foto
-    </button>
+    <div *ngIf="isUploading; else uploadForm">
+  <mat-spinner></mat-spinner>
+  <p>Subiendo tu foto...</p>
+</div>
+
+<ng-template #uploadForm>
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="submit()"
+    [disabled]="uploadedImages.length === 0 || !textComment.trim()"
+  >
+    Sube tu Foto
+  </button>
+</ng-template>
+
   </div>
 </div>
 }
