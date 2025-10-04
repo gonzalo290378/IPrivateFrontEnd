@@ -180,19 +180,37 @@ export class FreeContentPageComponent {
     this.profileImageUrl = `${this.baseUrl}${relativePath}`;
   }
 
-  getSexLabel(sex?: string): string {
-  switch (sex) {
-    case 'F':
-      return 'Mujer';
-    case 'M':
-      return 'Hombre';
-    case 'T':
-      return 'Transgénero';
-    case 'N':
-      return 'No binario';
-    default:
-      return 'No especificado';
+  onActivatePrivateArea(): void {
+    if (!this.isOwner) return;
+    alert('Función en desarrollo: activar área privada.');
   }
-}
 
+  onRequestUnsubscribe(): void {
+    if (!this.isOwner) return;
+
+    const confirmUnsubscribe = confirm(
+      '¿Seguro que deseas darte de baja? Recibirás un correo con el enlace para confirmar la baja.'
+    );
+
+    if (confirmUnsubscribe) {
+      // Simulamos que se enviará un correo
+      alert('Se ha enviado un correo de confirmación para completar la baja.');
+      // Aquí podrías luego llamar a un endpoint: userService.requestAccountDeletion(this.user.id)
+    }
+  }
+
+  getSexLabel(sex?: string): string {
+    switch (sex) {
+      case 'F':
+        return 'Mujer';
+      case 'M':
+        return 'Hombre';
+      case 'T':
+        return 'Transgénero';
+      case 'N':
+        return 'No binario';
+      default:
+        return 'No especificado';
+    }
+  }
 }

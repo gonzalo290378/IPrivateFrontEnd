@@ -84,6 +84,36 @@
                 placeholder="Escribe tu descripción"
               ></textarea>
             </mat-form-field>
+
+            <!-- Botones de acciones del usuario -->
+            <div
+              *ngIf="isOwner"
+              class="user-actions"
+              style="
+                margin-top: 1.5rem;
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+              "
+            >
+              <!-- Activar área privada -->
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="onActivatePrivateArea()"
+              >
+                Activar área privada
+              </button>
+
+              <!-- Darse de baja -->
+              <button
+                mat-stroked-button
+                color="warn"
+                (click)="onRequestUnsubscribe()"
+              >
+                Darse de baja
+              </button>
+            </div>
           </div>
         </mat-card-content>
 
