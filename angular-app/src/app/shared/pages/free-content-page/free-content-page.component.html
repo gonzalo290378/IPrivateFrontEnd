@@ -56,47 +56,25 @@
               [class.active]="user.isEnabled"
               [class.inactive]="!user.isEnabled"
             >
-              <mat-icon *ngIf="user.isEnabled" class="status-icon active-icon"
-                >check_circle</mat-icon
-              >
-              <mat-icon
-                *ngIf="!user.isEnabled"
-                class="status-icon inactive-icon"
-                >error</mat-icon
-              >
+              <mat-icon *ngIf="user.isEnabled">check_circle</mat-icon>
+              <mat-icon *ngIf="!user.isEnabled">error</mat-icon>
               <div class="status-text">
-                {{ user.isEnabled ? "Activo" : "Inactivo" }}
+                {{ user.isEnabled ? "" : "Cuenta Pausada" }}
               </div>
             </span>
 
-            <mat-form-field
-              appearance="outline"
-              style="width: 90%; margin: 1rem 0"
-              *ngIf="isEditMode"
-            >
-              <mat-label>Descripción</mat-label>
-              <textarea
-                matInput
-                [(ngModel)]="user.description"
-                cdkTextareaAutosize
-                cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="10"
-                placeholder="Escribe tu descripción"
-              ></textarea>
-            </mat-form-field>
-
-            <!-- Botones de acciones del usuario -->
             <div
               *ngIf="isOwner"
               class="user-actions"
               style="
                 margin-top: 1.5rem;
                 display: flex;
-                gap: 1rem;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
                 flex-wrap: wrap;
               "
             >
-              <!-- Activar área privada -->
               <button
                 mat-raised-button
                 color="primary"
@@ -105,14 +83,38 @@
                 Activar área privada
               </button>
 
-              <!-- Darse de baja -->
               <button
+                *ngIf="!isConfirmPauseVisible"
                 mat-stroked-button
                 color="warn"
-                (click)="onRequestUnsubscribe()"
+                (click)="onToggleAccountStatus()"
               >
-                Darse de baja
+                {{ user.isEnabled ? "Pausar la cuenta" : "Activar la cuenta" }}
               </button>
+
+              <div *ngIf="isConfirmPauseVisible" class="flex gap-2">
+                <button
+                  mat-raised-button
+                  (click)="confirmPauseAccount()"
+                  style="
+                    font-size: 0.7rem;
+                    padding: 4px 8px;
+                    line-height: 1;
+                    background-color: #933131;
+                    color: white;
+                  "
+                >
+                  <span style="margin-left: 4px">Sí, pausar</span>
+                </button>
+
+                <button
+                  mat-raised-button
+                  (click)="cancelPauseAccount()"
+                  style="font-size: 0.7rem; padding: 2px 6px; line-height: 1"
+                >
+                  No pausar
+                </button>
+              </div>
             </div>
           </div>
         </mat-card-content>
@@ -122,11 +124,11 @@
             <h4 *ngIf="isEditMode">Editar Perfil</h4>
 
             <div *ngIf="!isEditMode" class="m-3">
-              <b>Ciudad:</b> {{ user.cityDTO?.city }}
+              <b class="azul">Ciudad:</b> {{ user.cityDTO?.city }}
             </div>
 
             <div *ngIf="!isEditMode" class="m-3">
-              <b>Pais:</b> {{ user.countryDTO?.country }}
+              <b class="azul">Pais:</b> {{ user.countryDTO?.country }}
             </div>
 
             <mat-form-field
@@ -149,12 +151,22 @@
               *ngIf="isEditMode"
               class="mt-1"
             >
+              <mat-label>Provincia</mat-label>
+              <input matInput type="text" [(ngModel)]="user.stateDTO!.state" />
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="outline"
+              style="flex: 1"
+              *ngIf="isEditMode"
+              class="mt-1"
+            >
               <mat-label>Ciudad</mat-label>
               <input matInput type="text" [(ngModel)]="user.cityDTO!.city" />
             </mat-form-field>
 
             <div *ngIf="!isEditMode" class="m-3">
-              <b>Edad:</b> {{ user.age }} años
+              <b class="azul">Edad:</b> {{ user.age }} años
             </div>
 
             <mat-form-field
@@ -168,46 +180,90 @@
                 <mat-option value="M">Hombre</mat-option>
                 <mat-option value="F">Mujer</mat-option>
                 <mat-option value="T">Transgénero</mat-option>
-                <mat-option value="N">No binario</mat-option>
+                <mat-option value="NB">No binario</mat-option>
               </mat-select>
             </mat-form-field>
 
             <div *ngIf="!isEditMode" class="m-3">
-              <b>Genero:</b> {{ getSexLabel(user.sex) }}
+              <b class="azul">Genero:</b> {{ getSexLabel(user.sex) }}
             </div>
-
-            <mat-form-field
-              appearance="outline"
-              style="flex: 1"
-              *ngIf="isEditMode"
-              class="mt-5"
-            >
-              <mat-label>Edad</mat-label>
-              <input matInput type="number" [(ngModel)]="user.age" />
-            </mat-form-field>
           </mat-list>
+          <div *ngIf="isLoading; else formContent">
+            <mat-spinner></mat-spinner>
+          </div>
+          <ng-template #formContent>
+            <form [formGroup]="userForm" (ngSubmit)="save()">
+              <mat-form-field
+                appearance="outline"
+                style="width: 90%; margin: 1rem 0"
+                *ngIf="isEditMode"
+              >
+                <mat-label>Descripción</mat-label>
+                <textarea
+                  matInput
+                  formControlName="description"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="4"
+                  cdkAutosizeMaxRows="10"
+                  placeholder="Escribe tu descripción"
+                ></textarea>
 
-          <mat-card-actions class="actions-container">
-            <button mat-raised-button color="primary" (click)="goBack()">
-              <mat-icon>arrow_back</mat-icon>
-              Regresar
-            </button>
+                <mat-error
+                  *ngIf="userForm.get('description')?.hasError('required')"
+                >
+                  La descripción es obligatoria.
+                </mat-error>
+                <mat-error
+                  *ngIf="userForm.get('description')?.hasError('minlength')"
+                >
+                  La descripción debe tener al menos 4 caracteres.
+                </mat-error>
+                <mat-error
+                  *ngIf="userForm.get('description')?.hasError('maxlength')"
+                >
+                  La descripción no puede exceder 400 caracteres.
+                </mat-error>
+              </mat-form-field>
 
-            <button mat-raised-button color="warn" *ngIf="!isEditMode">
-              <mat-icon>block</mat-icon>
-              Bloquear
-            </button>
+              <mat-form-field
+                appearance="outline"
+                style="width: 90%; margin: 1rem 0"
+                *ngIf="isEditMode"
+              >
+                <mat-label>Tu fecha de nacimiento</mat-label>
+                <input matInput type="date" formControlName="birthdate" />
 
-            <button
-              mat-raised-button
-              color="accent"
-              *ngIf="isEditMode"
-              (click)="save()"
-            >
-              <mat-icon>save</mat-icon>
-              Guardar cambios
-            </button>
-          </mat-card-actions>
+                <mat-error
+                  *ngIf="userForm.get('birthdate')?.hasError('ageRange')"
+                >
+                  Debes tener entre 18 y 90 años.
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    userForm.get('birthdate')?.hasError('invalidYearLength')
+                  "
+                >
+                  El año debe tener exactamente 4 dígitos.
+                </mat-error>
+              </mat-form-field>
+
+              <button mat-raised-button color="primary" (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+                Regresar
+              </button>
+
+              <button
+                mat-raised-button
+                color="accent"
+                type="submit"
+                *ngIf="isEditMode"
+                [disabled]="userForm.invalid"
+              >
+                <mat-icon>save</mat-icon>
+                Guardar cambios
+              </button>
+            </form>
+          </ng-template>
         </mat-card-content>
       </div>
     </mat-card>

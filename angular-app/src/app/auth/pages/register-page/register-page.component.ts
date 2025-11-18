@@ -88,7 +88,7 @@ export class RegisterPageComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(140),
+          Validators.maxLength(400),
         ],
       ],
     });
