@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FreeAreaService } from '../../services/free-area.service';
 import { FreeAreaDTO } from '../../../dto/free-area-dto';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { PublicContentDTO } from '../../../dto/public-content-dto';
 @Component({
   selector: 'app-profile-feed-content-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './profile-feed-content-page.component.html',
   styleUrls: ['./profile-feed-content-page.component.css'],
 })

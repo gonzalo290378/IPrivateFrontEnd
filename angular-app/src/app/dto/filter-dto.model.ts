@@ -3,6 +3,7 @@ import { CountryDTO } from './country-dto';
 import { FreeAreaDTO } from './free-area-dto';
 import { PreferenceDTO } from './preference-dto';
 import { PrivateAreaDTO } from './private-area-dto';
+import { StateDTO } from './state-dto';
 
 export class FilterDTO {
   id?: number;
@@ -21,4 +22,5 @@ export class FilterDTO {
   preferenceDTO?: PreferenceDTO;
   countryDTO?: CountryDTO;
   cityDTO?: CityDTO;
+  stateDTO?: StateDTO;
 }

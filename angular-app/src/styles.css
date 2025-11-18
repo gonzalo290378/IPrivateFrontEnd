@@ -5,6 +5,10 @@ body {
   width: 100%;
 }
 
+.azul {
+  color: rgb(48, 48, 155);
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -73,8 +77,8 @@ mat-card-actions {
 
 /* FreeContent(home)*/
 .profile-image-wrapper {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   overflow: hidden;
   border-radius: 50%;
   border: 4px solid #d1d1dc;
@@ -387,7 +391,7 @@ app-profile-feed-content-page {
 
 .username-mention {
   font-weight: 600;
-  color: #5f5f60;
+  color: #6060b6;
 }
 
 .loading-container {
@@ -420,4 +424,17 @@ app-profile-feed-content-page {
   .post-image-container {
     height: 100%;
   }
+
+  /*Botones de Pausar cuenta*/
+  .button-pause {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    line-height: 1;
+  }
 }
+
+button[color="warn"] {
+  background-color: #a10c0c !important;
+  color: white !important;
+}
+

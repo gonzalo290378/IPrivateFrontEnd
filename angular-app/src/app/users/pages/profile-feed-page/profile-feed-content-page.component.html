@@ -10,9 +10,14 @@
           </button>
 
           <p class="post-description" *ngIf="content.description">
-            <span class="username-mention">{{ user?.username }}</span>
+            <a
+              class="username-mention"
+              [routerLink]="['/', user?.username, user?.id]"
+              >{{ user?.username }}</a
+            >
             {{ content.description }}
           </p>
+
           <span class="post-date">{{ content.date }}</span>
         </div>
       </div>

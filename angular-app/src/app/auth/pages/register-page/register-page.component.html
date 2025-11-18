@@ -208,10 +208,10 @@
             <mat-label>Tu descripción</mat-label>
             <textarea
               matInput
-              formControlName="description"
               rows="3"
               required
-              maxlength="140"
+              maxlength="400"
+              formControlName="description"
             ></textarea>
 
             <mat-error
@@ -229,7 +229,7 @@
             <mat-error
               *ngIf="preferencesForm.get('description')?.hasError('maxlength')"
             >
-              La descripción no puede superar los 140 caracteres.
+              La descripción no puede superar los 400 caracteres.
             </mat-error>
           </mat-form-field>
 
