@@ -65,17 +65,17 @@ export class FreeAreaService {
       .pipe(catchError(() => of(undefined)));
   }
 
-  //SECURIZAR
-  save(userFormDTO: UserFormDTO): Observable<User | undefined> {
-    return this.http
-      .post<User>(`${this.baseUrl}`, userFormDTO)
-      .pipe(catchError((error) => of(undefined)));
-  }
+  // //SECURIZAR
+  // save(userFormDTO: UserFormDTO): Observable<User | undefined> {
+  //   return this.http
+  //     .post<User>(`${this.baseUrl}`, userFormDTO)
+  //     .pipe(catchError((error) => of(undefined)));
+  // }
 
-  //SECURIZAR
-  update(user: UserDTO): Observable<UserDTO | undefined> {
-    return this.http
-      .put<UserDTO>(`${this.baseUrl}edit/${user.id}`, user)
-      .pipe(catchError((error) => of(undefined)));
-  }
+  // //SECURIZAR
+  // update(user: UserDTO): Observable<UserDTO | undefined> {
+  //   return this.http
+  //     .put<UserDTO>(`${this.baseUrl}edit/${user.id}`, user)
+  //     .pipe(catchError((error) => of(undefined)));
+  // }
 }
