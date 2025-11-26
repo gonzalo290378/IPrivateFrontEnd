@@ -62,58 +62,63 @@ export class FreeContentPageComponent {
   ) {}
 
   ngOnInit(): void {
-    const isEditUrl = this.router.url.startsWith('/edit/');
-    this.isEditMode = isEditUrl;
-    this.userForm = this.fb.group({
-      country: ['', Validators.required],
-      state: ['', Validators.required],
-      city: ['', Validators.required],
-      birthdate: [
-        '',
-        [
-          Validators.required,
-          this.ageRangeValidator,
-          this.validYearLengthValidator,
-        ],
+  const isEditUrl = this.router.url.startsWith('/edit/');
+  this.isEditMode = isEditUrl;
+  this.userForm = this.fb.group({
+    country: ['', Validators.required],
+    state: ['', Validators.required],
+    city: ['', Validators.required],
+    sex: ['', Validators.required],
+    birthdate: [
+      '',
+      [
+        Validators.required,
+        this.ageRangeValidator,
+        this.validYearLengthValidator,
       ],
-      description: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(400),
-        ],
+    ],
+    description: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(400),
       ],
-    });
+    ],
+  });
 
-    this.activatedRoute.params
-      .pipe(
-        switchMap(({ username }) =>
-          this.userService.getEntityByUsername(username)
-        )
+  this.activatedRoute.params
+    .pipe(
+      switchMap(({ username }) =>
+        this.userService.getEntityByUsername(username)
       )
+    )
+    .subscribe((user) => {
+      if (!user) return this.router.navigate(['/']);
+      this.user = user;
 
-      .subscribe((user) => {
-        if (!user) return this.router.navigate(['/']);
-        this.user = user;
+      const loggedUsername = this.tokenService.getUsernameFromToken();
+      this.isOwner = loggedUsername === user.username;
 
-        const loggedUsername = this.tokenService.getUsernameFromToken();
-        this.isOwner = loggedUsername === user.username;
-        console.log('Fecha que llega del backend:', user.birthdate);
-
-        this.userForm.patchValue({
-          country: user.countryDTO?.country || '',
-          state: user.stateDTO?.state || '',
-          city: user.cityDTO?.city || '',
-          description: user.description || '',
-          birthdate: user.birthdate
-            ? this.formatDateForInput(user.birthdate)
-            : '',
-        });
-        this.updateProfileImageUrl();
-        return;
+      this.userForm.patchValue({
+        country: user.countryDTO?.country || '',
+        state: user.stateDTO?.state || '',
+        city: user.cityDTO?.city || '',
+        sex: user.sex || '',
+        description: user.description || '',
+        birthdate: user.birthdate
+          ? this.formatDateForInput(user.birthdate)
+          : '',
       });
-  }
+      
+      if (!user.isEnabled) {
+        this.userForm.disable();
+      }
+      
+      this.updateProfileImageUrl();
+      return;
+    });
+}
 
   private formatDateForInput(dateString: string): string {
     const date = new Date(dateString);
@@ -142,35 +147,41 @@ export class FreeContentPageComponent {
     return year.length !== 4 ? { invalidYearLength: true } : null;
   }
 
-  save(): void {
-    if (!this.user || this.userForm.invalid) return;
-
-    this.isLoading = true;
-
-    const formValues = this.userForm.value;
-
-    const userDetailsFreeAreaDTO: UserDetailsFreeAreaDTO = {
-      birthdate: formValues.birthdate,
-      sex: this.user.sex,
-      description: formValues.description,
-      country: formValues.country,
-      state: formValues.state,
-      city: formValues.city,
-    };
-
-    this.userService
-      .updateDetailsFreeArea(this.user.username, userDetailsFreeAreaDTO)
-      .subscribe({
-        next: () => {
-          this.isLoading = false;
-          this.router.navigate(['/edit', this.user?.username]);
-        },
-        error: (err) => {
-          console.error('Error al actualizar el perfil:', err);
-          this.isLoading = false;
-        },
-      });
+save(): void {
+  if (!this.user || this.userForm.invalid) return;
+  
+  // ⬅️ AGREGAR VALIDACIÓN
+  if (!this.user.isEnabled) {
+    alert('No puedes guardar cambios mientras la cuenta está pausada');
+    return;
   }
+
+  this.isLoading = true;
+
+  const formValues = this.userForm.value;
+
+  const userDetailsFreeAreaDTO: UserDetailsFreeAreaDTO = {
+    birthdate: formValues.birthdate,
+    sex: formValues.sex, // ⬅️ CAMBIAR de this.user.sex a formValues.sex
+    description: formValues.description,
+    country: formValues.country,
+    state: formValues.state,
+    city: formValues.city,
+  };
+
+  this.userService
+    .updateDetailsFreeArea(this.user.username, userDetailsFreeAreaDTO)
+    .subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.router.navigate(['/edit', this.user?.username]);
+      },
+      error: (err) => {
+        console.error('Error al actualizar el perfil:', err);
+        this.isLoading = false;
+      },
+    });
+}
 
   goBack(): void {
     this.router.navigateByUrl('');
@@ -249,8 +260,8 @@ export class FreeContentPageComponent {
   }
 
   canEditImage(): boolean {
-    return this.isOwner && this.isEditMode;
-  }
+  return this.isOwner && this.isEditMode && this.user?.isEnabled === true;
+}
 
   getProfileImageUrl(): string {
     if (!this.user?.freeAreaDTO?.principalPhotoDTO?.[0]?.url) {
@@ -304,6 +315,7 @@ export class FreeContentPageComponent {
         this.isLoading = false;
         this.user!.isEnabled = true;
         this.isConfirmPauseVisible = false;
+        window.location.reload();
       },
       error: (err) => {
         this.isLoading = false;
@@ -351,5 +363,9 @@ export class FreeContentPageComponent {
   cancelPauseAccount(): void {
     this.isConfirmPauseVisible = false;
   }
+
+  canEdit(): boolean {
+  return this.isOwner && this.isEditMode && this.user?.isEnabled === true;
+}
   
 }

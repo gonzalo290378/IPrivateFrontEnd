@@ -120,79 +120,83 @@
         </mat-card-content>
 
         <mat-card-content class="info-container subtle-shadow">
-          <mat-list>
-            <h4 *ngIf="isEditMode">Editar Perfil</h4>
-
-            <div *ngIf="!isEditMode" class="m-3">
-              <b class="azul">Ciudad:</b> {{ user.cityDTO?.city }}
-            </div>
-
-            <div *ngIf="!isEditMode" class="m-3">
-              <b class="azul">Pais:</b> {{ user.countryDTO?.country }}
-            </div>
-
-            <mat-form-field
-              appearance="outline"
-              style="flex: 1"
-              *ngIf="isEditMode"
-              class="mt-1"
-            >
-              <mat-label>País</mat-label>
-              <input
-                matInput
-                type="text"
-                [(ngModel)]="user.countryDTO!.country"
-              />
-            </mat-form-field>
-
-            <mat-form-field
-              appearance="outline"
-              style="flex: 1"
-              *ngIf="isEditMode"
-              class="mt-1"
-            >
-              <mat-label>Provincia</mat-label>
-              <input matInput type="text" [(ngModel)]="user.stateDTO!.state" />
-            </mat-form-field>
-
-            <mat-form-field
-              appearance="outline"
-              style="flex: 1"
-              *ngIf="isEditMode"
-              class="mt-1"
-            >
-              <mat-label>Ciudad</mat-label>
-              <input matInput type="text" [(ngModel)]="user.cityDTO!.city" />
-            </mat-form-field>
-
-            <div *ngIf="!isEditMode" class="m-3">
-              <b class="azul">Edad:</b> {{ user.age }} años
-            </div>
-
-            <mat-form-field
-              appearance="outline"
-              *ngIf="isEditMode"
-              class="mt-5"
-              style="flex: 1"
-            >
-              <mat-label>Sexo</mat-label>
-              <mat-select [(ngModel)]="user.sex">
-                <mat-option value="M">Hombre</mat-option>
-                <mat-option value="F">Mujer</mat-option>
-                <mat-option value="T">Transgénero</mat-option>
-                <mat-option value="NB">No binario</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <div *ngIf="!isEditMode" class="m-3">
-              <b class="azul">Genero:</b> {{ getSexLabel(user.sex) }}
-            </div>
-          </mat-list>
           <div *ngIf="isLoading; else formContent">
             <mat-spinner></mat-spinner>
           </div>
+          
           <ng-template #formContent>
             <form [formGroup]="userForm" (ngSubmit)="save()">
+              <mat-list>
+                <h4 *ngIf="isEditMode">Editar Perfil</h4>
+
+                <!-- MODO VISTA (no editable) -->
+                <div *ngIf="!isEditMode" class="m-3">
+                  <b class="azul">País:</b> {{ user.countryDTO?.country }}
+                </div>
+
+                <div *ngIf="!isEditMode" class="m-3">
+                  <b class="azul">Provincia:</b> {{ user.stateDTO?.state }}
+                </div>
+
+                <div *ngIf="!isEditMode" class="m-3">
+                  <b class="azul">Ciudad:</b> {{ user.cityDTO?.city }}
+                </div>
+
+                <div *ngIf="!isEditMode" class="m-3">
+                  <b class="azul">Edad:</b> {{ user.age }} años
+                </div>
+
+                <div *ngIf="!isEditMode" class="m-3">
+                  <b class="azul">Género:</b> {{ getSexLabel(user.sex) }}
+                </div>
+
+                <!-- MODO EDICIÓN -->
+                <mat-form-field
+                  appearance="outline"
+                  style="flex: 1"
+                  *ngIf="isEditMode"
+                  class="mt-1"
+                >
+                  <mat-label>País</mat-label>
+                  <input matInput type="text" formControlName="country" />
+                </mat-form-field>
+
+                <mat-form-field
+                  appearance="outline"
+                  style="flex: 1"
+                  *ngIf="isEditMode"
+                  class="mt-1"
+                >
+                  <mat-label>Provincia</mat-label>
+                  <input matInput type="text" formControlName="state" />
+                </mat-form-field>
+
+                <mat-form-field
+                  appearance="outline"
+                  style="flex: 1"
+                  *ngIf="isEditMode"
+                  class="mt-1"
+                >
+                  <mat-label>Ciudad</mat-label>
+                  <input matInput type="text" formControlName="city" />
+                </mat-form-field>
+
+                <mat-form-field
+                  appearance="outline"
+                  *ngIf="isEditMode"
+                  class="mt-5"
+                  style="flex: 1"
+                >
+                  <mat-label>Sexo</mat-label>
+                  <mat-select formControlName="sex">
+                    <mat-option value="M">Hombre</mat-option>
+                    <mat-option value="F">Mujer</mat-option>
+                    <mat-option value="T">Transgénero</mat-option>
+                    <mat-option value="NB">No binario</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-list>
+
               <mat-form-field
                 appearance="outline"
                 style="width: 90%; margin: 1rem 0"
@@ -257,7 +261,7 @@
                 color="accent"
                 type="submit"
                 *ngIf="isEditMode"
-                [disabled]="userForm.invalid"
+                [disabled]="userForm.invalid || !user.isEnabled"
               >
                 <mat-icon>save</mat-icon>
                 Guardar cambios
