@@ -1,3 +1,50 @@
+/* ================================================
+   VARIABLES CSS (para facilitar mantenimiento)
+   ================================================ */
+:root {
+  --primary-blue: rgb(48, 48, 155);
+  --primary-blue-hover: #6060b6;
+  --link-blue: #007bff;
+  --link-blue-hover: #0056b3;
+  --icon-blue: #1976d2;
+  
+  --text-dark: #262626;
+  --text-medium: #333;
+  --text-light: #555;
+  --text-muted: #7f8c8d;
+  --text-secondary: rgb(88, 86, 86);
+  
+  --status-active: green;
+  --status-inactive: red;
+  --danger-red: #d30f0f;
+  --danger-red-bg: #a10c0c;
+  
+  --border-light: #d1d1dc;
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --bg-overlay-light: rgba(0, 0, 0, 0.55);
+  --bg-overlay-dark: rgba(0, 0, 0, 0.75);
+  --bg-menu: rgba(0, 0, 0, 0.82);
+  
+  --shadow-light: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-large: 0px 6px 18px rgba(0, 0, 0, 0.2);
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-dropdown: 0 8px 24px rgba(0, 0, 0, 0.18);
+  
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 15px;
+  --border-radius-xl: 18px;
+  --border-radius-full: 999px;
+  
+  --transition-fast: 0.15s ease;
+  --transition-medium: 0.2s ease;
+  --transition-slow: 0.3s ease;
+}
+
+/* ================================================
+   RESET Y BASE
+   ================================================ */
 html,
 body {
   margin: 0;
@@ -5,117 +52,43 @@ body {
   width: 100%;
 }
 
-.azul {
-  color: rgb(48, 48, 155);
+body {
+  width: 95%;
 }
 
 ::-webkit-scrollbar {
   display: none;
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  width: 95%;
+/* ================================================
+   UTILIDADES GENERALES
+   ================================================ */
+.azul {
+  color: var(--primary-blue);
 }
 
-/* Logo IPrivate */
+.shadow-lg {
+  box-shadow: var(--shadow-large);
+}
+
+.subtle-shadow {
+  box-shadow: var(--shadow-light);
+}
+
+/* ================================================
+   LAYOUT Y CONTENEDORES
+   ================================================ */
 .app-name {
   display: inline-block;
   text-align: center;
 }
 
-/* Scroll Infinite*/
 div[infinite-scroll] {
   min-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
   box-sizing: border-box;
-}
-
-/* user card (home)*/
-.user-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
-}
-
-.user-header h6 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.profile-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 70%;
-  object-fit: cover;
-  border: 4px solid white;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.status {
-  margin-top: 0.5rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-}
-
-mat-card-actions {
-  display: flex;
-  justify-content: space-between;
-}
-
-.shadow-lg {
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
-}
-
-/* FreeContent(home)*/
-.profile-image-wrapper {
-  width: 250px;
-  height: 250px;
-  overflow: hidden;
-  border-radius: 50%;
-  border: 4px solid #d1d1dc;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin: 1rem auto;
-}
-
-.profile-image-free-content {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.user-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.username {
-  font-size: 16px;
-  color: #2c3e50;
-  text-transform: capitalize;
-  margin: 8px 0;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.username:hover {
-  color: #233a52;
-  font-weight: bolder;
-}
-
-.description {
-  font-style: italic;
-  font-size: 0.9rem;
-  color: #555;
 }
 
 .grid-container {
@@ -127,153 +100,53 @@ mat-card-actions {
   box-sizing: border-box;
 }
 
-mat-card.main-profile-card {
-  max-width: 80%;
-  width: 80%;
-  border-radius: 12px;
-  background-color: transparent;
+/* ================================================
+   PERFILES E IMÁGENES
+   ================================================ */
+/* Imágenes de perfil base */
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 70%;
+  object-fit: cover;
+  border: 4px solid white;
+  box-shadow: var(--shadow-medium);
 }
 
-.status {
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.status.active {
-  color: green;
-}
-
-.status.inactive {
-  color: red;
-}
-
-mat-card-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
-}
-
-.info-container mat-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-.info-container mat-form-field,
-.info-container .m-3 {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.subtle-shadow {
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: bold;
-}
-
-.status-icon.active-icon {
-  color: green;
-  font-size: 16px;
-}
-
-.status-icon.inactive-icon {
-  color: red;
-  font-size: 16px;
-}
-
-.grid-container {
-  gap: 20px;
-}
-
-.status-text {
-  margin: 0;
-}
-
-.user-data b {
-  font-weight: 500;
-  color: #333;
-}
-
-/* Iniciar Sesion y Crear una nueva cuenta */
-.link-button {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 999px;
-  font-size: 0.875rem;
-  text-align: center;
-}
-
-.link-button:hover {
-  background-color: #0056b3;
-}
-
-/* Menu de navegacion*/
-.entry {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 6px 12px;
-  border-radius: 8px;
-}
-
-.icon {
-  font-size: 20px;
-  color: #1976d2;
-}
-
-.text {
-  color: #333;
-}
-
-/* Activo*/
-.status-text {
-  margin-left: 8px;
-  font-weight: bold;
-}
-
-.active-status {
-  color: green;
-}
-
-.inactive-status {
-  color: red;
-}
-
-/*PrincipalPhoto */
 .profile-image-wrapper {
   position: relative;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 4px solid var(--border-light);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 1rem auto;
   display: inline-block;
   cursor: pointer;
 }
 
+.profile-image-free-content {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay de edición de imagen */
 .image-edit-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--bg-overlay);
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-slow);
   cursor: pointer;
 }
 
@@ -298,7 +171,190 @@ mat-card-actions {
   text-align: center;
 }
 
-/* ProfileFeedContentPage*/
+/* ================================================
+   TARJETAS DE USUARIO (HOME)
+   ================================================ */
+.user-card:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-large);
+}
+
+.user-header h6 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+mat-card.main-profile-card {
+  max-width: 80%;
+  width: 80%;
+  border-radius: var(--border-radius-md);
+  background-color: transparent;
+}
+
+/* ================================================
+   INFORMACIÓN DE USUARIO
+   ================================================ */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.username {
+  font-size: 16px;
+  color: #2c3e50;
+  text-transform: capitalize;
+  margin: 8px 0;
+  cursor: pointer;
+  transition: color var(--transition-slow);
+}
+
+.username:hover {
+  color: #233a52;
+  font-weight: bolder;
+}
+
+.username-mention {
+  font-weight: 600;
+  color: var(--primary-blue-hover);
+}
+
+.description {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.user-data b {
+  font-weight: 500;
+  color: var(--text-medium);
+}
+
+/* ================================================
+   ESTADOS (ACTIVO/INACTIVO)
+   ================================================ */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status.active,
+.active-status {
+  color: var(--status-active);
+}
+
+.status.inactive,
+.inactive-status {
+  color: var(--status-inactive);
+}
+
+.status-icon.active-icon {
+  color: var(--status-active);
+  font-size: 16px;
+}
+
+.status-icon.inactive-icon {
+  color: var(--status-inactive);
+  font-size: 16px;
+}
+
+.status-text {
+  margin: 0;
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+/* ================================================
+   BOTONES Y ENLACES
+   ================================================ */
+.link-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: var(--link-blue);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--border-radius-full);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.link-button:hover {
+  background-color: var(--link-blue-hover);
+}
+
+button[color="warn"] {
+  background-color: var(--danger-red-bg) !important;
+  color: white !important;
+}
+
+.button-pause {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  line-height: 1;
+}
+
+/* ================================================
+   ACCIONES DE TARJETAS
+   ================================================ */
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+/* ================================================
+   NAVEGACIÓN
+   ================================================ */
+.entry {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--border-radius-sm);
+}
+
+.icon {
+  font-size: 20px;
+  color: var(--icon-blue);
+}
+
+.text {
+  color: var(--text-medium);
+}
+
+/* ================================================
+   FORMULARIOS E INFORMACIÓN
+   ================================================ */
+.info-container mat-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.info-container mat-form-field,
+.info-container .m-3 {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ================================================
+   FEED DE CONTENIDO Y POSTS
+   ================================================ */
 app-profile-feed-content-page {
   width: 80%;
   display: block;
@@ -322,33 +378,34 @@ app-profile-feed-content-page {
   margin: 0 auto;
 }
 
+/* ================================================
+   TARJETAS DE POST
+   ================================================ */
+.post-card,
+.post-image-container {
+  position: relative;
+}
+
 .post-card {
   width: 80%;
   max-width: 80%;
   background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
 }
 
 .post-card:hover {
   transform: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-card);
 }
 
 .post-image {
   width: 100%;
-  height: auto;
-  object-fit: contain;
   display: block;
-}
-
-.post-date {
-  font-weight: 300;
-  color: rgba(6, 6, 6, 0.8);
-  font-size: 12px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.5px;
+  border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+  cursor: pointer;
+  transition: opacity var(--transition-medium);
 }
 
 .image-overlay {
@@ -359,6 +416,24 @@ app-profile-feed-content-page {
   padding: 20px;
 }
 
+.post-date {
+  font-weight: 300;
+  color: rgba(6, 6, 6, 0.8);
+  font-size: 12px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.5px;
+}
+
+.post-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ================================================
+   BOTÓN DE LIKE
+   ================================================ */
 .like-button {
   display: flex;
   align-items: center;
@@ -382,22 +457,95 @@ app-profile-feed-content-page {
   animation: none;
 }
 
-.post-description {
-  color: rgb(88, 86, 86);
-  line-height: 1.6;
+/* ================================================
+   MENÚ DE OPCIONES (estilo Instagram)
+   ================================================ */
+.menu-container {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 20;
+}
+
+.menu-button {
+  background: var(--bg-overlay-light);
+  border: none;
+  color: white;
+  font-size: 22px;
+  padding: 4px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background var(--transition-medium), transform 0.1s ease;
+}
+
+.menu-button:hover {
+  background: var(--bg-overlay-dark);
+  transform: scale(1.05);
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  margin-top: 8px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 8px 0;
+  width: 180px;
+  box-shadow: var(--shadow-dropdown);
+  display: flex;
+  flex-direction: column;
+  animation: fadeInScale 0.13s ease-out;
+}
+
+.menu-dropdown button {
+  text-align: left;
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  width: 100%;
   font-size: 14px;
-  margin: 0;
+  cursor: pointer;
+  color: var(--text-dark);
+  transition: background var(--transition-fast);
 }
 
-.username-mention {
+.menu-dropdown button:hover {
+  background: #f5f5f5;
+}
+
+.menu-dropdown .delete-option {
+  color: var(--danger-red);
   font-weight: 600;
-  color: #6060b6;
 }
 
+.menu-dropdown .delete-option:hover {
+  background: rgba(255, 0, 0, 0.08);
+}
+
+/* ================================================
+   TOOLTIP DE COMPARTIR
+   ================================================ */
+.share-tooltip {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-menu);
+  color: white;
+  padding: 10px 18px;
+  border-radius: var(--border-radius-xl);
+  font-size: 14px;
+  animation: fadeInOut 2s ease forwards;
+}
+
+/* ================================================
+   ESTADO DE CARGA
+   ================================================ */
 .loading-container {
   text-align: center;
   padding: 60px 20px;
-  color: #7f8c8d;
+  color: var(--text-muted);
 }
 
 .loading-spinner {
@@ -410,6 +558,50 @@ app-profile-feed-content-page {
   margin: 0 auto 20px;
 }
 
+/* ================================================
+   ANIMACIONES
+   ================================================ */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================================================
+   RESPONSIVE (Mobile First)
+   ================================================ */
 @media (max-width: 768px) {
   .posts-grid {
     flex-direction: column;
@@ -422,19 +614,12 @@ app-profile-feed-content-page {
   }
 
   .post-image-container {
-    height: 100%;
+    position: relative;
   }
 
-  /*Botones de Pausar cuenta*/
   .button-pause {
     font-size: 0.7rem;
     padding: 2px 6px;
     line-height: 1;
   }
 }
-
-button[color="warn"] {
-  background-color: #a10c0c !important;
-  color: white !important;
-}
-
