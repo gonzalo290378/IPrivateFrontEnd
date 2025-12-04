@@ -150,7 +150,6 @@ export class FreeContentPageComponent {
 save(): void {
   if (!this.user || this.userForm.invalid) return;
   
-  // ⬅️ AGREGAR VALIDACIÓN
   if (!this.user.isEnabled) {
     alert('No puedes guardar cambios mientras la cuenta está pausada');
     return;
