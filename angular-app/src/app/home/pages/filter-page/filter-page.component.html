@@ -1,37 +1,62 @@
 <div class="example-container m-5">
-
-    <div class="flex justify-content-center">
-    <button mat-raised-button color="primary" (click)="applyFilters()">
-      Filtra ahora
-    </button>
-  </div>
-
   <mat-list class="flex flex-column justify-content-center" style="gap: 10px">
-    <app-by-country-page></app-by-country-page>
-    <app-by-state-page></app-by-state-page>
-    <app-by-city-page></app-by-city-page>
+    <app-by-country-page (countrySelected)="filters.country = $event"></app-by-country-page>
+    <app-by-state-page (stateSelected)="filters.state = $event"></app-by-state-page>
+    <app-by-city-page (citySelected)="filters.city = $event"></app-by-city-page>
 
     <div class="flex justify-content-between gap-2" style="flex: 1">
       <mat-form-field appearance="outline" style="flex: 1">
         <mat-label>Edad desde</mat-label>
-        <input matInput type="text" [(ngModel)]="filters.ageFrom" />
+        <input 
+          matInput 
+          type="number" 
+          [(ngModel)]="filters.ageFrom" 
+          (ngModelChange)="onAgeChange()"
+          min="18" 
+          max="90" />
+        <mat-error *ngIf="ageFromInvalid">
+          {{ filters.ageFrom === null || filters.ageFrom === '' ? 'Completa ambas edades' : 'Entre 18 y 90 años' }}
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="flex: 1">
         <mat-label>Edad hasta</mat-label>
-        <input matInput type="text" [(ngModel)]="filters.ageTo" />
+        <input 
+          matInput 
+          type="number" 
+          [(ngModel)]="filters.ageTo" 
+          (ngModelChange)="onAgeChange()"
+          min="18" 
+          max="90" />
+        <mat-error *ngIf="ageToInvalid">
+          {{ filters.ageTo === null || filters.ageTo === '' ? 'Completa ambas edades' : 'Entre 18 y 90 años' }}
+        </mat-error>
       </mat-form-field>
     </div>
+    
+    <mat-error *ngIf="ageRangeInvalid" style="margin-top: -8px; font-size: 12px;">
+      La edad "desde" debe ser menor o igual a la edad "hasta"
+    </mat-error>
 
-    <!-- VER QUE ACA HAY ALGO MAL -->
     <mat-form-field appearance="outline">
       <mat-label>Género</mat-label>
-      <mat-select [(ngModel)]="filters.sexPreference">
-        <mat-option value="male">Hombres</mat-option>
-        <mat-option value="female">Mujeres</mat-option>
-        <mat-option value="female">Transgénero</mat-option>
-        <mat-option value="female">No binario</mat-option>
+      <mat-select [(ngModel)]="filters.sexPreference" (ngModelChange)="onAgeChange()">
+        <mat-option value="M">Hombres</mat-option>
+        <mat-option value="F">Mujeres</mat-option>
+        <mat-option value="T">Transgénero</mat-option>
+        <mat-option value="NB">No binario</mat-option>
       </mat-select>
+      <mat-error *ngIf="sexInvalid">Debes seleccionar un género</mat-error>
     </mat-form-field>
   </mat-list>
+  
+  <div class="flex justify-content-center">
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="applyFilters()"
+      [disabled]="!isFormValid()">
+      Filtra ahora
+    </button>
+  </div>
 </div>

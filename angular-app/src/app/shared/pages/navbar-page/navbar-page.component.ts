@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { FilterPageComponent } from '../../../home/pages/filter-page/filter-page.component';
 import { TokenService } from '../../../users/services/token.service';
 import { ResourceService } from '../../../users/services/resource.service';
 import { UserProfile } from '../../../models/user-profle';
@@ -10,7 +9,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar-page',
-  imports: [MaterialModule, FormsModule, FilterPageComponent, RouterLink, CommonModule ],
+  imports: [MaterialModule, FormsModule, RouterLink, CommonModule ],
   templateUrl: './navbar-page.component.html',
 })
 export class NavbarPageComponent implements OnInit {

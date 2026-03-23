@@ -70,21 +70,22 @@
 
   <div class="m-3">
     <div *ngIf="isUploading; else uploadForm">
-  <mat-spinner></mat-spinner>
-  <p>Subiendo tu foto...</p>
-</div>
+      <mat-spinner></mat-spinner>
+      <p>Subiendo tu foto...</p>
+    </div>
 
-<ng-template #uploadForm>
-  <button
-    mat-raised-button
-    color="accent"
-    (click)="submit()"
-    [disabled]="uploadedImages.length === 0 || !textComment.trim()"
-  >
-    Sube tu Foto
-  </button>
+   <ng-template #uploadForm>
+  <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+    <button mat-raised-button color="accent" (click)="submit()">
+      Sube tu Foto
+    </button>
+    <div style="min-height: 24px; margin-top: 8px; text-align: center;">
+      <span *ngIf="errorMessage" style="color: red; font-size: 0.85rem;">
+        {{ errorMessage }}
+      </span>
+    </div>
+  </div>
 </ng-template>
-
   </div>
 </div>
 }

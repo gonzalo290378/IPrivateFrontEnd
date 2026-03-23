@@ -30,6 +30,11 @@ export class ByStatePageComponent implements OnInit {
     this.states = [];
   }
 
+  onStateChange(value: string) {
+    this.stateSelected.emit(value);
+  }
+
+
   searchByState(term: string): void {
     this.stateService.states$.subscribe((states) => {
       this.states = states;

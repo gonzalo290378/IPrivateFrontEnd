@@ -30,6 +30,10 @@ export class ByCountryPageComponent implements OnInit {
     this.countries = [];
   }
 
+  onCountryChange(value: string) {
+    this.countrySelected.emit(value);
+  }
+
   searchByCountry(term: string): void {
     this.countryService.searchCountry(term).subscribe((countries) => {
       this.countries = countries;

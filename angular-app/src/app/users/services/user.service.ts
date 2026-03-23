@@ -17,7 +17,7 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
-    private resourceService: ResourceService
+    private resourceService: ResourceService,
   ) {}
 
   findAll(page: number, size: number): Observable<any> {
@@ -41,6 +41,41 @@ export class UserService {
     return this.http.get<UserDTO[]>(this.baseUrl, { params });
   }
 
+  filterUsers(filters: any, page: number, size: number): Observable<any> {
+    let params = new HttpParams().set('page', page).set('size', size);
+
+    if (
+      filters.ageFrom !== null &&
+      filters.ageFrom !== undefined &&
+      filters.ageFrom !== ''
+    ) {
+      params = params.set('ageFrom', filters.ageFrom);
+    }
+    if (
+      filters.ageTo !== null &&
+      filters.ageTo !== undefined &&
+      filters.ageTo !== ''
+    ) {
+      params = params.set('ageTo', filters.ageTo);
+    }
+    if (filters.sexPreference) {
+      params = params.set('sexPreference', filters.sexPreference);
+    }
+    if (filters.country) {
+      params = params.set('country', filters.country);
+    }
+    if (filters.state) {
+      params = params.set('state', filters.state);
+    }
+    if (filters.city) {
+      params = params.set('city', filters.city);
+    }
+    if (filters.isEnabled !== undefined) {
+      params = params.set('isEnabled', filters.isEnabled);
+    }
+    return this.http.get(`${this.baseUrl}filter`, { params });
+  }
+
   checkAvailabilityUsername(username: string): Observable<UserDTO | undefined> {
     return this.http
       .get<UserDTO>(`${this.baseUrl}check-availability-username/${username}`)
@@ -55,7 +90,7 @@ export class UserService {
 
   updateDetailsFreeArea(
     username: string,
-    userDetailsFreeAreaDTO: UserDetailsFreeAreaDTO
+    userDetailsFreeAreaDTO: UserDetailsFreeAreaDTO,
   ): Observable<UserDetailsFreeAreaDTO | undefined> {
     const token = this.tokenService.getAccessToken();
     let headers = new HttpHeaders();
@@ -67,22 +102,22 @@ export class UserService {
       .put<UserDetailsFreeAreaDTO>(
         `${this.baseUrl}edit/${username}`,
         userDetailsFreeAreaDTO,
-        { headers }
+        { headers },
       )
       .pipe(catchError((error) => of(undefined)));
   }
 
   checkUsernameAvailability(
-    username: string
+    username: string,
   ): Observable<{ available: boolean }> {
     return this.http.get<{ available: boolean }>(
-      `${this.baseUrl}/check-availability-username/${username}`
+      `${this.baseUrl}/check-availability-username/${username}`,
     );
   }
 
   checkEmailAvailability(email: string): Observable<{ available: boolean }> {
     return this.http.get<{ available: boolean }>(
-      `${this.baseUrl}/check-availability-email/${email}`
+      `${this.baseUrl}/check-availability-email/${email}`,
     );
   }
 
@@ -110,7 +145,7 @@ export class UserService {
       .put<UserDetailsFreeAreaDTO>(
         `${this.baseUrl}${id}/reactivate`,
         {},
-        { headers }
+        { headers },
       )
       .pipe(catchError((error) => of(undefined)));
   }

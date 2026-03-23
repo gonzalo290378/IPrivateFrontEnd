@@ -14,11 +14,20 @@ export class MeetingRoomPageComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   users: UserDTO[] = [];
-
+  noResults = false;
   throttle = 0;
   distance = 0;
   page = 0;
   size = 5;
+  filtersApplied = false;
+  filters: any = {
+    ageFrom: null,
+    ageTo: null,
+    sexPreference: null,
+    country: null,
+    state: null,
+    city: null,
+  };
 
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
@@ -29,14 +38,37 @@ export class MeetingRoomPageComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.userService.findAll(this.page, this.size).subscribe((users) => {
-      this.users.push(...users.content);
+    const request$ =
+      this.filtersApplied && this.filters
+        ? this.userService.filterUsers(this.filters, this.page, this.size)
+        : this.userService.findAll(this.page, this.size); // 👈 usa findAll cuando no hay filtros
+
+    request$.subscribe({
+      next: (response) => {
+        const content = response.content ?? response; // findAll puede devolver array o page
+        if (content.length > 0) {
+          this.users.push(...content);
+          this.noResults = false;
+        } else if (this.page === 0) {
+          this.noResults = true;
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar usuarios:', err);
+      },
     });
   }
 
+  applyFilters(newFilters: any): void {
+    this.filters = { ...newFilters };
+    this.filtersApplied = true;
+    this.page = 0;
+    this.users = [];
+    this.loadUsers();
+  }
+
   onScroll(): void {
-    this.userService.findAll(++this.page, this.size).subscribe((users) => {
-      this.users.push(...users.content);
-    });
+    this.page++;
+    this.loadUsers();
   }
 }
