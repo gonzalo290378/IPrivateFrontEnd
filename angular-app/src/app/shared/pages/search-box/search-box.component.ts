@@ -5,6 +5,10 @@ import {
   Output,
   OnInit,
   OnDestroy,
+  ElementRef,
+  ViewChild,
+  SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import { Subject, debounceTime, Subscription } from 'rxjs';
 import { MaterialModule } from '../../../material/material-module';
@@ -15,21 +19,19 @@ import { MaterialModule } from '../../../material/material-module';
   templateUrl: './search-box.component.html',
   styles: [],
 })
-export class SearchBoxComponent implements OnInit, OnDestroy {
+export class SearchBoxComponent implements OnInit, OnDestroy, OnChanges {
   private debouncer: Subject<string> = new Subject<string>();
   private debouncerSuscription?: Subscription;
 
   @Input()
   public placeholder: string = '';
-
   @Input()
   public initialValue: string = '';
-
   @Output()
   public onValue = new EventEmitter<string>();
-
   @Output()
   public onDebounce = new EventEmitter<string>();
+  public currentValue: string = '';
 
   ngOnInit(): void {
     this.debouncerSuscription = this.debouncer
@@ -37,6 +39,12 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
       .subscribe((value) => {
         this.onDebounce.emit(value);
       });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['initialValue']) {
+      this.currentValue = changes['initialValue'].currentValue;
+    }
   }
 
   ngOnDestroy(): void {

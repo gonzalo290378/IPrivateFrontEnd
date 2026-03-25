@@ -107,6 +107,34 @@ export class UserService {
       .pipe(catchError((error) => of(undefined)));
   }
 
+  updatePreferences(preferenceDTO: any): Observable<void> {
+    const token = this.tokenService.getAccessToken();
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http
+      .put<void>(`${this.baseUrl}preferences`, preferenceDTO, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error updating preferences', error);
+          return of();
+        }),
+      );
+  }
+
+  getPreferences(): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http.get(`${this.baseUrl}preferences`, { headers });
+  }
+
   checkUsernameAvailability(
     username: string,
   ): Observable<{ available: boolean }> {

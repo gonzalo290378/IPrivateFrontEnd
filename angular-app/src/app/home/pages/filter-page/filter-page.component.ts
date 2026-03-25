@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
 import { ByCountryPageComponent } from '../../../countries/pages/by-country-page/by-country-page.component';
@@ -18,8 +18,32 @@ import { UserService } from '../../../users/services/user.service';
     ByStatePageComponent,
   ],
   templateUrl: './filter-page.component.html',
+  styleUrl: './filter-page.component.css',
 })
-export class FilterPageComponent {
+export class FilterPageComponent implements OnInit {
+  ngOnInit() {
+    this.userService.getPreferences().subscribe({
+      next: (pref) => {
+        if (!pref) return;
+
+        this.filters = {
+          country: pref.filterCountry?.country || '',
+          state: pref.filterState?.state || '',
+          city: pref.filterCity?.city || '',
+          ageFrom: pref.ageFrom ?? null,
+          ageTo: pref.ageTo ?? null,
+          sexPreference: pref.sexPreference || '',
+        };
+
+        console.log('Preferences loaded', this.filters);
+        this.filtersEmitted.emit({ ...this.filters });
+      },
+      error: (err) => {
+        console.error('Error loading preferences', err);
+      },
+    });
+  }
+
   @Output() filtersEmitted = new EventEmitter<any>();
   filters = {
     country: '',
@@ -42,7 +66,6 @@ export class FilterPageComponent {
   }
 
   validateFilters() {
-    // Resetear errores
     this.ageFromInvalid = false;
     this.ageToInvalid = false;
     this.ageRangeInvalid = false;
@@ -85,11 +108,12 @@ export class FilterPageComponent {
     }
 
     this.sexInvalid = !this.filters.sexPreference;
-
     return !this.sexInvalid;
   }
 
   isFormValid(): boolean {
+    if (!this.filters.country) return false; // ← país obligatorio
+
     const hasAgeFrom =
       this.filters.ageFrom !== null && this.filters.ageFrom !== '';
     const hasAgeTo = this.filters.ageTo !== null && this.filters.ageTo !== '';
@@ -102,31 +126,64 @@ export class FilterPageComponent {
       const ageFrom = Number(this.filters.ageFrom);
       const ageTo = Number(this.filters.ageTo);
 
-      if (isNaN(ageFrom) || isNaN(ageTo)) {
+      if (isNaN(ageFrom) || isNaN(ageTo)) return false;
+      if (ageFrom < 18 || ageFrom > 90 || ageTo < 18 || ageTo > 90)
         return false;
-      }
-
-      if (ageFrom < 18 || ageFrom > 90 || ageTo < 18 || ageTo > 90) {
-        return false;
-      }
-
-      if (ageFrom > ageTo) {
-        return false;
-      }
+      if (ageFrom > ageTo) return false;
     }
 
-    if (!this.filters.sexPreference) {
-      return false;
-    }
+    if (!this.filters.sexPreference) return false;
 
     return true;
   }
 
-
   applyFilters() {
     const isValid = this.validateFilters();
     if (!isValid) return;
-    this.filtersEmitted.emit({ ...this.filters }); // 👈 reemplaza la llamada al servicio
+
+    const preferenceDTO = {
+      ageFrom: this.filters.ageFrom,
+      ageTo: this.filters.ageTo,
+      sexPreference: this.filters.sexPreference,
+      filterCountry: this.filters.country
+        ? { country: this.filters.country }
+        : null,
+      filterState: this.filters.state ? { state: this.filters.state } : null,
+      filterCity: this.filters.city ? { city: this.filters.city } : null,
+    };
+
+    this.filtersEmitted.emit({ ...this.filters });
+
+    this.userService.updatePreferences(preferenceDTO).subscribe({
+      next: () => {
+        console.log('Preferences updated successfully', preferenceDTO);
+      },
+      error: (err) => {
+        console.error('Error updating preferences', err);
+      },
+    });
+    console.log('Filter Options Selected', preferenceDTO);
+  }
+
+  onCountrySelected(country: string): void {
+    this.filters = {
+      ...this.filters,
+      country: country,
+      state: '',
+      city: '',
+    };
+  }
+
+  onStateSelected(state: string): void {
+    this.filters = {
+      ...this.filters,
+      state: state,
+      city: '',
+    };
+  }
+
+  onCitySelected(city: string): void {
+    this.filters.city = city;
   }
 
   resetFilters() {

@@ -41,11 +41,11 @@ export class MeetingRoomPageComponent implements OnInit {
     const request$ =
       this.filtersApplied && this.filters
         ? this.userService.filterUsers(this.filters, this.page, this.size)
-        : this.userService.findAll(this.page, this.size); // 👈 usa findAll cuando no hay filtros
+        : this.userService.findAll(this.page, this.size);
 
     request$.subscribe({
       next: (response) => {
-        const content = response.content ?? response; // findAll puede devolver array o page
+        const content = response.content ?? response;
         if (content.length > 0) {
           this.users.push(...content);
           this.noResults = false;

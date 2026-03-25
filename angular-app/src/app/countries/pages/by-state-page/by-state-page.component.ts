@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SearchBoxComponent } from '../../../shared/pages/search-box/search-box.component';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
@@ -18,30 +18,42 @@ import { StateTableComponent } from '../../components/state-table/state-table.co
   templateUrl: './by-state-page.component.html',
 })
 export class ByStatePageComponent implements OnInit {
+  @Input() selectedState: string = '';
+  @Input() selectedCountry: string = '';
   @Output() stateSelected = new EventEmitter<string>();
 
   public initialValue: string = '';
   public states: State[] = [];
-  public selectedState: string = '';
 
   constructor(private stateService: StateService) {}
 
   ngOnInit(): void {
     this.states = [];
+    if (this.selectedCountry) {
+      this.stateService.getStates(this.selectedCountry).subscribe((states) => {
+        this.stateService.setStates(states);
+      });
+    }
   }
 
   onStateChange(value: string) {
     this.stateSelected.emit(value);
   }
 
-
   searchByState(term: string): void {
-    this.stateService.states$.subscribe((states) => {
-      this.states = states;
-      this.stateService.searchState(term, this.states).subscribe((states) => {
+    this.stateSelected.emit(term);
+
+    if (!term || term.trim() === '') {
+      this.states = [];
+      return;
+    }
+
+    const currentStates = this.stateService.getCurrentStates();
+    if (currentStates.length > 0) {
+      this.stateService.searchState(term, currentStates).subscribe((states) => {
         this.states = states;
       });
-    });
+    }
   }
 
   updateSearchBox(stateName: string): void {
