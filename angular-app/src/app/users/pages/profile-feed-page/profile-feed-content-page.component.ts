@@ -140,7 +140,6 @@ export class ProfileFeedContentPage implements OnInit {
   shareContent(content: PublicContentDTO): void {
     const shareUrl = `${window.location.origin}/${this.user?.username}/${this.user?.id}/content/${content.id}`;
 
-    // Intentar usar la API nativa de compartir (móviles)
     if (navigator.share) {
       navigator
         .share({
@@ -150,7 +149,6 @@ export class ProfileFeedContentPage implements OnInit {
         })
         .catch((err) => console.log('Error al compartir:', err));
     } else {
-      // Fallback: copiar al portapapeles
       navigator.clipboard.writeText(shareUrl).then(() => {
         this.showShareTooltip = true;
         setTimeout(() => {
@@ -180,7 +178,6 @@ export class ProfileFeedContentPage implements OnInit {
 
     this.freeAreaService.deletePublicContent(freeAreaId, contentId).subscribe({
       next: () => {
-        // Filtramos la publicación eliminada del array local
         this.publicContentDTO = this.publicContentDTO.filter(
           (c) => c.id !== contentId
         );
