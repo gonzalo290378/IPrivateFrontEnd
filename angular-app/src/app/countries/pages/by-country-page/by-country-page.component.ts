@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
 import { SearchBoxComponent } from '../../../shared/pages/search-box/search-box.component';
 import { CountryTableComponent } from '../../components/country-table/country-table.component';
@@ -18,11 +18,11 @@ import { Country } from '../../interfaces/country';
   styles: [],
 })
 export class ByCountryPageComponent implements OnInit {
+  @Input() selectedCountry: string = '';
   @Output() countrySelected = new EventEmitter<string>();
 
   public initialValue: string = '';
   public countries: Country[] = [];
-  public selectedCountry: string = '';
 
   constructor(private countryService: CountryService) {}
 
@@ -30,7 +30,12 @@ export class ByCountryPageComponent implements OnInit {
     this.countries = [];
   }
 
+  onCountryChange(value: string) {
+    this.countrySelected.emit(value);
+  }
+
   searchByCountry(term: string): void {
+    this.countrySelected.emit(term);
     this.countryService.searchCountry(term).subscribe((countries) => {
       this.countries = countries;
     });

@@ -67,6 +67,7 @@ export class ProfileFeedContentPage implements OnInit {
       });
   }
 
+  
   private loadFreeArea(id: number): void {
     this.freeAreaService.findById(id).subscribe((freeArea) => {
       if (freeArea) {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { City } from '../../interfaces/city';
 import { CityService } from '../../services/city.service';
 import { SearchBoxComponent } from '../../../shared/pages/search-box/search-box.component';
@@ -20,16 +20,17 @@ import { State } from '../../interfaces/state';
   templateUrl: './by-city-page.component.html',
 })
 export class ByCityPageComponent implements OnInit {
+  @Input() selectedCity: string = '';
+
   @Output() citySelected = new EventEmitter<string>();
 
   public initialValue: string = '';
   public cities: City[] = [];
   public states: State[] = [];
-  public selectedCity: string = '';
 
   constructor(
     private stateService: StateService,
-    private cityService: CityService
+    private cityService: CityService,
   ) {}
 
   ngOnInit(): void {
@@ -37,12 +38,19 @@ export class ByCityPageComponent implements OnInit {
   }
 
   searchByCity(term: string): void {
-    this.cityService.cities$.subscribe((cities) => {
-      this.cities = cities;
-      this.cityService.searchCity(term, cities).subscribe((cities) => {
+    this.citySelected.emit(term);
+
+    if (!term || term.trim() === '') {
+      this.cities = [];
+      return;
+    }
+
+    const currentCities = this.cityService.getCurrentCities();
+    if (currentCities.length > 0) {
+      this.cityService.searchCity(term, currentCities).subscribe((cities) => {
         this.cities = cities;
       });
-    });
+    }
   }
 
   updateSearchBox(cityName: string): void {

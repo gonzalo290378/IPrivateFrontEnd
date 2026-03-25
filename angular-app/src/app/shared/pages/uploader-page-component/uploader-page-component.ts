@@ -26,7 +26,7 @@ export class UploadContentPageComponent implements OnInit {
   uploadedFiles: File[] = [];
   freeArea!: FreeAreaDTO;
   isUploading: boolean = false;
-
+errorMessage: string = '';
 
   constructor(
     private tokenService: TokenService,
@@ -114,12 +114,25 @@ export class UploadContentPageComponent implements OnInit {
   }
 
 submit(): void {
-  if (
-    !this.username ||
-    this.uploadedImages.length === 0 ||
-    !this.freeArea?.id ||
-    !this.textComment.trim()
-  ) {
+  this.errorMessage = '';
+
+  if (!this.username) {
+    this.errorMessage = 'Debes estar logueado';
+    return;
+  }
+
+  if (this.uploadedImages.length === 0) {
+    this.errorMessage = 'Debes subir al menos una imagen';
+    return;
+  }
+
+  if (!this.textComment.trim()) {
+    this.errorMessage = 'Por favor, agrega una descripción antes de publicar';
+    return;
+  }
+
+  if (!this.freeArea?.id) {
+    this.errorMessage = 'Error interno, intenta nuevamente';
     return;
   }
 
@@ -142,6 +155,7 @@ submit(): void {
     },
     error: (err) => {
       console.error('Error al subir contenido', err);
+      this.errorMessage = 'Error al subir contenido';
       this.isUploading = false;
     },
   });

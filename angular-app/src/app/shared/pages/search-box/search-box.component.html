@@ -3,8 +3,8 @@
     <input
       matInput
       class="form-control"
-      [value]="initialValue"
-      [placeholder]="placeholder"
+      [value]="currentValue"
+      [placeholder]="currentValue ? placeholder : 'Todos'"
       (keyup)="onKeyPress(txtInput.value)"
       #txtInput
     />
