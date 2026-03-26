@@ -4,6 +4,7 @@ import { UserDTO } from '../../../dto/user-dto';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { UserCardPageComponent } from '../../../users/pages/user-card-page/user-card-page.component';
+import { TokenService } from '../../../users/services/token.service';
 
 @Component({
   selector: 'app-meeting-room-page',
@@ -11,7 +12,10 @@ import { UserCardPageComponent } from '../../../users/pages/user-card-page/user-
   templateUrl: './meeting-room-page.component.html',
 })
 export class MeetingRoomPageComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private tokenService: TokenService,
+  ) {}
 
   users: UserDTO[] = [];
   noResults = false;
@@ -29,14 +33,51 @@ export class MeetingRoomPageComponent implements OnInit {
     city: null,
   };
 
+  // ngOnInit(): void {
+  //   if (typeof window !== 'undefined') {
+  //     const isMobile = window.innerWidth <= 768;
+  //     this.size = isMobile ? 10 : 5;
+  //   }
+
+  //   const token = this.tokenService.getAccessToken();
+
+  //   if (token) {
+  //     this.userService.getPreferences().subscribe({
+  //       next: (pref) => {
+  //         if (pref && pref.sexPreference && pref.ageFrom && pref.ageTo) {
+  //           this.filters = {
+  //             country: pref.filterCountry?.country || null,
+  //             state: pref.filterState?.state || null,
+  //             city: pref.filterCity?.city || null,
+  //             ageFrom: pref.ageFrom,
+  //             ageTo: pref.ageTo,
+  //             sexPreference: pref.sexPreference,
+  //           };
+  //           this.filtersApplied = true;
+  //         }
+  //         this.loadUsers();
+  //       },
+  //       error: () => {
+  //         this.loadUsers();
+  //       },
+  //     });
+  //   } else {
+  //     this.loadUsers();
+  //   }
+  // }
+
   ngOnInit(): void {
-    if (typeof window !== 'undefined') {
-      const isMobile = window.innerWidth <= 768;
-      this.size = isMobile ? 10 : 5;
-    }
-    this.loadUsers();
+  if (typeof window !== 'undefined') {
+    const isMobile = window.innerWidth <= 768;
+    this.size = isMobile ? 10 : 5;
   }
 
+  const token = this.tokenService.getAccessToken();
+  if (!token) {
+    // Solo visitantes cargan aquí, los autenticados esperan a FilterPage
+    this.loadUsers();
+  }
+}
   loadUsers(): void {
     const request$ =
       this.filtersApplied && this.filters

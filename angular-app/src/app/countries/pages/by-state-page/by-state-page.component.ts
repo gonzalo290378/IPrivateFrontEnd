@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { SearchBoxComponent } from '../../../shared/pages/search-box/search-box.component';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +25,7 @@ import { StateTableComponent } from '../../components/state-table/state-table.co
   ],
   templateUrl: './by-state-page.component.html',
 })
-export class ByStatePageComponent implements OnInit {
+export class ByStatePageComponent implements OnInit, OnChanges {
   @Input() selectedState: string = '';
   @Input() selectedCountry: string = '';
   @Output() stateSelected = new EventEmitter<string>();
@@ -29,10 +37,19 @@ export class ByStatePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.states = [];
-    if (this.selectedCountry) {
-      this.stateService.getStates(this.selectedCountry).subscribe((states) => {
-        this.stateService.setStates(states);
-      });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedCountry']) {
+      const country = changes['selectedCountry'].currentValue;
+      this.states = [];
+      this.stateService.setStates([]);
+
+      if (country) {
+        this.stateService.getStates(country).subscribe((states) => {
+          this.stateService.setStates(states);
+        });
+      }
     }
   }
 
@@ -41,13 +58,10 @@ export class ByStatePageComponent implements OnInit {
   }
 
   searchByState(term: string): void {
-    this.stateSelected.emit(term);
-
     if (!term || term.trim() === '') {
       this.states = [];
       return;
     }
-
     const currentStates = this.stateService.getCurrentStates();
     if (currentStates.length > 0) {
       this.stateService.searchState(term, currentStates).subscribe((states) => {
@@ -58,6 +72,7 @@ export class ByStatePageComponent implements OnInit {
 
   updateSearchBox(stateName: string): void {
     this.selectedState = stateName;
+    this.states = [];
     this.stateSelected.emit(stateName);
   }
 }

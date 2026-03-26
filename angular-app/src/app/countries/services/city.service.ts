@@ -38,7 +38,7 @@ export class CityService {
 
   private getCitiesRequest(url: string): Observable<City[]> {
     return this.http.get<City[]>(url).pipe(
-      catchError(() => of([]))
+      catchError(() => of([])),
       //delay( 2000 ),
     );
   }
