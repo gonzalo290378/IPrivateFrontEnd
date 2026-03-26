@@ -35,10 +35,14 @@ export class ByCountryPageComponent implements OnInit {
   }
 
   searchByCountry(term: string): void {
-    this.countryService.searchCountry(term).subscribe((countries) => {
-      this.countries = countries;
-    });
+  if (!term || term.trim() === '') {
+    this.countries = [];
+    return;
   }
+  this.countryService.searchCountry(term).subscribe((countries) => {
+    this.countries = countries;
+  });
+}
 
   updateSearchBox(countryName: string): void {
     this.selectedCountry = countryName;
