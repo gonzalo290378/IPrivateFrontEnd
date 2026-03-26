@@ -38,13 +38,10 @@ export class ByCityPageComponent implements OnInit {
   }
 
   searchByCity(term: string): void {
-    this.citySelected.emit(term);
-
     if (!term || term.trim() === '') {
       this.cities = [];
       return;
     }
-
     const currentCities = this.cityService.getCurrentCities();
     if (currentCities.length > 0) {
       this.cityService.searchCity(term, currentCities).subscribe((cities) => {
@@ -57,4 +54,5 @@ export class ByCityPageComponent implements OnInit {
     this.selectedCity = cityName;
     this.citySelected.emit(cityName);
   }
+  
 }

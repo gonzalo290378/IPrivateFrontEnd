@@ -6,6 +6,7 @@ import { ByCityPageComponent } from '../../../countries/pages/by-city-page/by-ci
 import { ByStatePageComponent } from '../../../countries/pages/by-state-page/by-state-page.component';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../users/services/user.service';
+import { CityService } from '../../../countries/services/city.service';
 
 @Component({
   selector: 'app-filter-page',
@@ -35,7 +36,10 @@ export class FilterPageComponent implements OnInit {
           sexPreference: pref.sexPreference || '',
         };
 
-        console.log('Preferences loaded', this.filters);
+        if (this.filters.country) {
+          this.cityService.setSelectedCountry(this.filters.country);
+        }
+
         this.filtersEmitted.emit({ ...this.filters });
       },
       error: (err) => {
@@ -54,7 +58,10 @@ export class FilterPageComponent implements OnInit {
     sexPreference: '',
   };
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private cityService: CityService,
+  ) {}
 
   ageFromInvalid: boolean = false;
   ageToInvalid: boolean = false;
@@ -112,7 +119,7 @@ export class FilterPageComponent implements OnInit {
   }
 
   isFormValid(): boolean {
-    if (!this.filters.country) return false; // ← país obligatorio
+    if (!this.filters.country) return false;
 
     const hasAgeFrom =
       this.filters.ageFrom !== null && this.filters.ageFrom !== '';
@@ -172,6 +179,7 @@ export class FilterPageComponent implements OnInit {
       state: '',
       city: '',
     };
+    this.cityService.setSelectedCountry(country);
   }
 
   onStateSelected(state: string): void {

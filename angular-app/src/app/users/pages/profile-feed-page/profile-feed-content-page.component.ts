@@ -35,7 +35,7 @@ export class ProfileFeedContentPage implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private tokenService: TokenService
+    private tokenService: TokenService,
   ) {}
 
   ngOnInit(): void {
@@ -45,8 +45,8 @@ export class ProfileFeedContentPage implements OnInit {
     this.activatedRoute.params
       .pipe(
         switchMap(({ username }) =>
-          this.userService.getEntityByUsername(username)
-        )
+          this.userService.getEntityByUsername(username),
+        ),
       )
       .subscribe((user) => {
         if (!user) return this.router.navigate(['/']);
@@ -67,13 +67,12 @@ export class ProfileFeedContentPage implements OnInit {
       });
   }
 
-  
   private loadFreeArea(id: number): void {
     this.freeAreaService.findById(id).subscribe((freeArea) => {
       if (freeArea) {
         this.freeArea = freeArea;
         this.publicContentDTO = (freeArea.publicContentDTO || [])
-        .filter((c: any) => c.isEnabled === true)
+          .filter((c: any) => c.isEnabled === true)
           .map((c: any) => ({
             ...c,
             contentUrl: this.baseUrl + c.contentUrl,
@@ -179,7 +178,7 @@ export class ProfileFeedContentPage implements OnInit {
     this.freeAreaService.deletePublicContent(freeAreaId, contentId).subscribe({
       next: () => {
         this.publicContentDTO = this.publicContentDTO.filter(
-          (c) => c.id !== contentId
+          (c) => c.id !== contentId,
         );
         this.closeMenu();
       },
