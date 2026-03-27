@@ -125,15 +125,27 @@
       <mat-step [stepControl]="locationForm">
         <form [formGroup]="locationForm">
           <h4>Localidad</h4>
-          <app-by-country-page
-            (countrySelected)="onCountryChange($event)"
-          ></app-by-country-page>
-          <app-by-state-page
-            (stateSelected)="onStateChange($event)"
-          ></app-by-state-page>
-          <app-by-city-page
-            (citySelected)="onCityChange($event)"
-          ></app-by-city-page>
+
+          <div class="mat-field-wrapper">
+            <span class="field-label">País</span>
+            <app-by-country-page
+              (countrySelected)="onCountryChange($event)"
+            ></app-by-country-page>
+          </div>
+
+          <div class="mat-field-wrapper">
+            <span class="field-label">Estado</span>
+            <app-by-state-page
+              (stateSelected)="onStateChange($event)"
+            ></app-by-state-page>
+          </div>
+
+          <div class="mat-field-wrapper">
+            <span class="field-label">Ciudad</span>
+            <app-by-city-page
+              (citySelected)="onCityChange($event)"
+            ></app-by-city-page>
+          </div>
 
           <div class="step-buttons">
             <button mat-button matStepperPrevious>Anterior</button>

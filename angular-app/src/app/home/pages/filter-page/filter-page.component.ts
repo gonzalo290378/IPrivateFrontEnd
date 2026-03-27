@@ -25,7 +25,6 @@ import { TokenService } from '../../../users/services/token.service';
 export class FilterPageComponent implements OnInit {
   ngOnInit() {
     if (!this.tokenService.isLogged()) {
-      // Usuarios no registrados pueden ver el filtro, pero no tienen preferencias guardadas.
       return;
     }
 
