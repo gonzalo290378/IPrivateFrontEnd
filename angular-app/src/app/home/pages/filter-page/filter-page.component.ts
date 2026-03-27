@@ -119,20 +119,15 @@ export class FilterPageComponent implements OnInit {
   }
 
   isFormValid(): boolean {
-    if (!this.filters.country) return false;
-
     const hasAgeFrom =
       this.filters.ageFrom !== null && this.filters.ageFrom !== '';
     const hasAgeTo = this.filters.ageTo !== null && this.filters.ageTo !== '';
 
-    if ((hasAgeFrom && !hasAgeTo) || (!hasAgeFrom && hasAgeTo)) {
-      return false;
-    }
+    if ((hasAgeFrom && !hasAgeTo) || (!hasAgeFrom && hasAgeTo)) return false;
 
     if (hasAgeFrom && hasAgeTo) {
       const ageFrom = Number(this.filters.ageFrom);
       const ageTo = Number(this.filters.ageTo);
-
       if (isNaN(ageFrom) || isNaN(ageTo)) return false;
       if (ageFrom < 18 || ageFrom > 90 || ageTo < 18 || ageTo > 90)
         return false;

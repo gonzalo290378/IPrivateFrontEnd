@@ -60,6 +60,7 @@ export class ByStatePageComponent implements OnInit, OnChanges {
   searchByState(term: string): void {
     if (!term || term.trim() === '') {
       this.states = [];
+      this.stateSelected.emit('');
       return;
     }
     const currentStates = this.stateService.getCurrentStates();
