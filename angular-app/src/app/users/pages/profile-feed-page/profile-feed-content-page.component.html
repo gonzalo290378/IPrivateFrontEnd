@@ -32,15 +32,6 @@
             <span>{{ content.like }} </span>
           </button>
 
-          <!-- <p class="post-description" *ngIf="content.description">
-            <a
-              class="username-mention"
-              [routerLink]="['/', user?.username, user?.id]"
-              >{{ user?.username }}</a
-            >
-            {{ content.description }}
-          </p> -->
-
           <div class="post-description">
             <a
               class="username-mention"
@@ -49,7 +40,6 @@
               {{ user?.username }}
             </a>
 
-            <!-- Si es el post seleccionado y estamos editando, mostrar textarea -->
             <div *ngIf="selectedContent === content && isEditingDescription">
               <textarea [(ngModel)]="editedDescription" rows="2"></textarea>
               <div class="edit-actions">
@@ -58,7 +48,6 @@
               </div>
             </div>
 
-            <!-- Si no estamos editando, mostrar descripción normal -->
             <span
               *ngIf="!(selectedContent === content && isEditingDescription)"
             >
