@@ -44,7 +44,7 @@ export class MeetingRoomPageComponent implements OnInit {
       this.loadUsers();
     }
   }
-  
+
   loadUsers(): void {
     const request$ =
       this.filtersApplied && this.filters

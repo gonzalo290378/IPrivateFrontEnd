@@ -4,7 +4,6 @@
     <app-navbar-page></app-navbar-page>
 
     <app-filter-page
-      *ngIf="isOwner"
       (filtersEmitted)="onFiltersEmitted($event)">
     </app-filter-page>
   </div>
