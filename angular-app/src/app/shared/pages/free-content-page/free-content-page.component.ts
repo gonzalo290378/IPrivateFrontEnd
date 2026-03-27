@@ -21,6 +21,10 @@ import { UploadContentPageComponent } from '../uploader-page-component/uploader-
 import { ProfileFeedContentPage } from '../../../users/pages/profile-feed-page/profile-feed-content-page.component';
 import { FreeAreaService } from '../../../users/services/free-area.service';
 import { UserDetailsFreeAreaDTO } from '../../../dto/user-details-free-area-dto';
+import { ByCountryPageComponent } from '../../../countries/pages/by-country-page/by-country-page.component';
+import { ByStatePageComponent } from '../../../countries/pages/by-state-page/by-state-page.component';
+import { ByCityPageComponent } from '../../../countries/pages/by-city-page/by-city-page.component';
+import { CityService } from '../../../countries/services/city.service';
 
 @Component({
   selector: 'app-free-content-page',
@@ -36,6 +40,9 @@ import { UserDetailsFreeAreaDTO } from '../../../dto/user-details-free-area-dto'
     MaterialModule,
     UploadContentPageComponent,
     ProfileFeedContentPage,
+    ByCountryPageComponent,
+    ByStatePageComponent,
+    ByCityPageComponent,
   ],
   templateUrl: './free-content-page.component.html',
 })
@@ -50,7 +57,6 @@ export class FreeContentPageComponent {
   isLoading: boolean = false;
   showPauseConfirmation: boolean = false;
   isConfirmPauseVisible: boolean = false;
-  
 
   constructor(
     private userService: UserService,
@@ -58,74 +64,75 @@ export class FreeContentPageComponent {
     private router: Router,
     private tokenService: TokenService,
     private freeAreaService: FreeAreaService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cityService: CityService,
   ) {}
 
   ngOnInit(): void {
-  const isEditUrl = this.router.url.startsWith('/edit/');
-  this.isEditMode = isEditUrl;
-  this.userForm = this.fb.group({
-    country: ['', Validators.required],
-    state: ['', Validators.required],
-    city: ['', Validators.required],
-    sex: ['', Validators.required],
-    birthdate: [
-      '',
-      [
-        Validators.required,
-        this.ageRangeValidator,
-        this.validYearLengthValidator,
+    const isEditUrl = this.router.url.startsWith('/edit/');
+    this.isEditMode = isEditUrl;
+    this.userForm = this.fb.group({
+      country: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      sex: ['', Validators.required],
+      birthdate: [
+        '',
+        [
+          Validators.required,
+          this.ageRangeValidator,
+          this.validYearLengthValidator,
+        ],
       ],
-    ],
-    description: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(400),
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(400),
+        ],
       ],
-    ],
-  });
-
-  this.activatedRoute.params
-    .pipe(
-      switchMap(({ username }) =>
-        this.userService.getEntityByUsername(username)
-      )
-    )
-    .subscribe((user) => {
-      if (!user) return this.router.navigate(['/']);
-      this.user = user;
-
-      const loggedUsername = this.tokenService.getUsernameFromToken();
-      this.isOwner = loggedUsername === user.username;
-
-      this.userForm.patchValue({
-        country: user.countryDTO?.country || '',
-        state: user.stateDTO?.state || '',
-        city: user.cityDTO?.city || '',
-        sex: user.sex || '',
-        description: user.description || '',
-        birthdate: user.birthdate
-          ? this.formatDateForInput(user.birthdate)
-          : '',
-      });
-      
-      if (!user.isEnabled) {
-        this.userForm.disable();
-      }
-      
-      this.updateProfileImageUrl();
-      return;
     });
-}
+
+    this.activatedRoute.params
+      .pipe(
+        switchMap(({ username }) =>
+          this.userService.getEntityByUsername(username),
+        ),
+      )
+      .subscribe((user) => {
+        if (!user) return this.router.navigate(['/']);
+        this.user = user;
+
+        const loggedUsername = this.tokenService.getUsernameFromToken();
+        this.isOwner = loggedUsername === user.username;
+
+        this.userForm.patchValue({
+          country: user.countryDTO?.country || '',
+          state: user.stateDTO?.state || '',
+          city: user.cityDTO?.city || '',
+          sex: user.sex || '',
+          description: user.description || '',
+          birthdate: user.birthdate
+            ? this.formatDateForInput(user.birthdate)
+            : '',
+        });
+
+        if (!user.isEnabled) {
+          this.userForm.disable();
+        }
+
+        this.updateProfileImageUrl();
+        return;
+      });
+  }
 
   private formatDateForInput(dateString: string): string {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return '';
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
       2,
-      '0'
+      '0',
     )}-${String(date.getDate()).padStart(2, '0')}`;
   }
 
@@ -147,40 +154,40 @@ export class FreeContentPageComponent {
     return year.length !== 4 ? { invalidYearLength: true } : null;
   }
 
-save(): void {
-  if (!this.user || this.userForm.invalid) return;
-  
-  if (!this.user.isEnabled) {
-    alert('No puedes guardar cambios mientras la cuenta está pausada');
-    return;
+  save(): void {
+    if (!this.user || this.userForm.invalid) return;
+
+    if (!this.user.isEnabled) {
+      alert('No puedes guardar cambios mientras la cuenta está pausada');
+      return;
+    }
+
+    this.isLoading = true;
+
+    const formValues = this.userForm.value;
+
+    const userDetailsFreeAreaDTO: UserDetailsFreeAreaDTO = {
+      birthdate: formValues.birthdate,
+      sex: formValues.sex, // ⬅️ CAMBIAR de this.user.sex a formValues.sex
+      description: formValues.description,
+      country: formValues.country,
+      state: formValues.state,
+      city: formValues.city,
+    };
+
+    this.userService
+      .updateDetailsFreeArea(this.user.username, userDetailsFreeAreaDTO)
+      .subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.router.navigate(['/edit', this.user?.username]);
+        },
+        error: (err) => {
+          console.error('Error al actualizar el perfil:', err);
+          this.isLoading = false;
+        },
+      });
   }
-
-  this.isLoading = true;
-
-  const formValues = this.userForm.value;
-
-  const userDetailsFreeAreaDTO: UserDetailsFreeAreaDTO = {
-    birthdate: formValues.birthdate,
-    sex: formValues.sex, // ⬅️ CAMBIAR de this.user.sex a formValues.sex
-    description: formValues.description,
-    country: formValues.country,
-    state: formValues.state,
-    city: formValues.city,
-  };
-
-  this.userService
-    .updateDetailsFreeArea(this.user.username, userDetailsFreeAreaDTO)
-    .subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.router.navigate(['/edit', this.user?.username]);
-      },
-      error: (err) => {
-        console.error('Error al actualizar el perfil:', err);
-        this.isLoading = false;
-      },
-    });
-}
 
   goBack(): void {
     this.router.navigateByUrl('');
@@ -259,8 +266,8 @@ save(): void {
   }
 
   canEditImage(): boolean {
-  return this.isOwner && this.isEditMode && this.user?.isEnabled === true;
-}
+    return this.isOwner && this.isEditMode && this.user?.isEnabled === true;
+  }
 
   getProfileImageUrl(): string {
     if (!this.user?.freeAreaDTO?.principalPhotoDTO?.[0]?.url) {
@@ -364,7 +371,19 @@ save(): void {
   }
 
   canEdit(): boolean {
-  return this.isOwner && this.isEditMode && this.user?.isEnabled === true;
-}
-  
+    return this.isOwner && this.isEditMode && this.user?.isEnabled === true;
+  }
+
+  onCountrySelected(country: string): void {
+    this.userForm.patchValue({ country, state: '', city: '' });
+    this.cityService.setSelectedCountry(country);
+  }
+
+  onStateSelected(state: string): void {
+    this.userForm.patchValue({ state, city: '' });
+  }
+
+  onCitySelected(city: string): void {
+    this.userForm.patchValue({ city });
+  }
 }
