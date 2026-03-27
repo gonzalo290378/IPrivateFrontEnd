@@ -52,7 +52,7 @@ export class TokenService {
     }
     const encrypted = CryptoJS.AES.encrypt(
       code_verifier,
-      environment.secret_pkce
+      environment.secret_pkce,
     );
     localStorage.setItem(CODE_VERIFIER, encrypted.toString());
   }

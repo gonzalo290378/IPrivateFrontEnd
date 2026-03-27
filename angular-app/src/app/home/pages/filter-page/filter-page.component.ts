@@ -7,6 +7,7 @@ import { ByStatePageComponent } from '../../../countries/pages/by-state-page/by-
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../users/services/user.service';
 import { CityService } from '../../../countries/services/city.service';
+import { TokenService } from '../../../users/services/token.service';
 
 @Component({
   selector: 'app-filter-page',
@@ -23,6 +24,10 @@ import { CityService } from '../../../countries/services/city.service';
 })
 export class FilterPageComponent implements OnInit {
   ngOnInit() {
+    if (!this.tokenService.isLogged()) {
+      return;
+    }
+
     this.userService.getPreferences().subscribe({
       next: (pref) => {
         if (!pref) return;
@@ -61,6 +66,7 @@ export class FilterPageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private cityService: CityService,
+    private tokenService: TokenService,
   ) {}
 
   ageFromInvalid: boolean = false;
@@ -156,14 +162,19 @@ export class FilterPageComponent implements OnInit {
 
     this.filtersEmitted.emit({ ...this.filters });
 
-    this.userService.updatePreferences(preferenceDTO).subscribe({
-      next: () => {
-        console.log('Preferences updated successfully', preferenceDTO);
-      },
-      error: (err) => {
-        console.error('Error updating preferences', err);
-      },
-    });
+    if (this.tokenService.isLogged()) {
+      this.userService.updatePreferences(preferenceDTO).subscribe({
+        next: () => {
+          console.log('Preferences updated successfully', preferenceDTO);
+        },
+        error: (err) => {
+          console.error('Error updating preferences', err);
+        },
+      });
+    } else {
+      console.log('Usuario invitado: no se guardan preferencias en el servidor', preferenceDTO);
+    }
+
     console.log('Filter Options Selected', preferenceDTO);
   }
 
