@@ -15,7 +15,7 @@
 >
   <mat-card class="main-profile-card">
     <div class="flex justify-content-start pl-5">
-      <h2>{{ user.username }}</h2>
+      <h2>{{ "@" + user.username }}</h2>
     </div>
 
     <mat-card>
@@ -28,7 +28,6 @@
                 [src]="getProfileImageUrl()"
                 [alt]="user.username"
               />
-
               <div
                 class="image-edit-overlay"
                 *ngIf="canEditImage()"
@@ -37,7 +36,6 @@
                 <mat-icon class="edit-icon">edit</mat-icon>
                 <span class="edit-text">Cambiar foto</span>
               </div>
-
               <input
                 #fileInput
                 type="file"
@@ -45,77 +43,46 @@
                 style="display: none"
                 (change)="onImageSelected($event)"
               />
+              <div class="avatar-online-badge" *ngIf="user.isEnabled"></div>
             </div>
 
-            <div *ngIf="!isEditMode" class="m-3">
+            <div class="profile-username">{{ user.username }}</div>
+            <div class="profile-handle">{{ "@" + user.username }}</div>
+
+            <div *ngIf="!isEditMode" class="profile-bio">
               {{ user.description }}
             </div>
 
             <span
-              class="status"
-              [class.active]="user.isEnabled"
-              [class.inactive]="!user.isEnabled"
+              class="status-pill"
+              [class.status-pill--active]="user.isEnabled"
+              [class.status-pill--inactive]="!user.isEnabled"
             >
-              <mat-icon *ngIf="user.isEnabled">check_circle</mat-icon>
-              <mat-icon *ngIf="!user.isEnabled">error</mat-icon>
-              <div class="status-text">
-                {{ user.isEnabled ? "" : "Cuenta Pausada" }}
-              </div>
+              <span class="status-pill-dot"></span>
+              {{ user.isEnabled ? "Activa" : "Cuenta Pausada" }}
             </span>
 
-            <div
-              *ngIf="isOwner"
-              class="user-actions"
-              style="
-                margin-top: 1.5rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 2.5rem;
-                flex-wrap: wrap;
-              "
-            >
+            <div class="follow-row">
               <button
-                mat-raised-button
-                color="primary"
-                (click)="onActivatePrivateArea()"
+                mat-button
+                class="follow-stat"
+                (click)="onViewFollowers()"
               >
-                Activar área privada
+                <span class="follow-num">{{ followersCount }}</span>
+                <span class="follow-lbl">Seguidores</span>
               </button>
-
+              <div class="follow-sep"></div>
               <button
-                *ngIf="!isConfirmPauseVisible"
-                mat-stroked-button
-                color="warn"
-                (click)="onToggleAccountStatus()"
+                mat-button
+                class="follow-stat"
+                (click)="onViewFollowing()"
               >
-                {{ user.isEnabled ? "Pausar la cuenta" : "Activar la cuenta" }}
+                <span class="follow-num">{{ followingCount }}</span>
+                <span class="follow-lbl">Siguiendo</span>
               </button>
-
-              <div *ngIf="isConfirmPauseVisible" class="flex gap-2">
-                <button
-                  mat-raised-button
-                  (click)="confirmPauseAccount()"
-                  style="
-                    font-size: 0.7rem;
-                    padding: 4px 8px;
-                    line-height: 1;
-                    background-color: #933131;
-                    color: white;
-                  "
-                >
-                  <span style="margin-left: 4px">Sí, pausar</span>
-                </button>
-
-                <button
-                  mat-raised-button
-                  (click)="cancelPauseAccount()"
-                  style="font-size: 0.7rem; padding: 2px 6px; line-height: 1"
-                >
-                  No pausar
-                </button>
-              </div>
             </div>
+
+            
           </div>
         </mat-card-content>
 
@@ -126,30 +93,10 @@
 
           <ng-template #formContent>
             <form [formGroup]="userForm" (ngSubmit)="save()">
-              <mat-list>
-                <h4 *ngIf="isEditMode">Editar Perfil</h4>
+              <mat-list *ngIf="isEditMode">
+                <h4>Editar Perfil</h4>
 
-                <div *ngIf="!isEditMode" class="m-3">
-                  <b class="azul">País:</b> {{ user.countryDTO?.country }}
-                </div>
-
-                <div *ngIf="!isEditMode" class="m-3">
-                  <b class="azul">Provincia:</b> {{ user.stateDTO?.state }}
-                </div>
-
-                <div *ngIf="!isEditMode" class="m-3">
-                  <b class="azul">Ciudad:</b> {{ user.cityDTO?.city }}
-                </div>
-
-                <div *ngIf="!isEditMode" class="m-3">
-                  <b class="azul">Edad:</b> {{ user.age }} años
-                </div>
-
-                <div *ngIf="!isEditMode" class="m-3">
-                  <b class="azul">Género:</b> {{ getSexLabel(user.sex) }}
-                </div>
-
-                <div *ngIf="isEditMode" class="mat-field-wrapper">
+                <div class="mat-field-wrapper">
                   <span class="field-label">País</span>
                   <app-by-country-page
                     [selectedCountry]="userForm.get('country')?.value"
@@ -157,7 +104,7 @@
                   ></app-by-country-page>
                 </div>
 
-                <div *ngIf="isEditMode" class="mat-field-wrapper">
+                <div class="mat-field-wrapper">
                   <span class="field-label">Estado</span>
                   <app-by-state-page
                     [selectedState]="userForm.get('state')?.value"
@@ -166,7 +113,7 @@
                   ></app-by-state-page>
                 </div>
 
-                <div *ngIf="isEditMode" class="mat-field-wrapper">
+                <div class="mat-field-wrapper">
                   <span class="field-label">Ciudad</span>
                   <app-by-city-page
                     [selectedCity]="userForm.get('city')?.value"
@@ -176,7 +123,6 @@
 
                 <mat-form-field
                   appearance="outline"
-                  *ngIf="isEditMode"
                   class="mt-5"
                   style="flex: 1"
                 >
@@ -204,7 +150,6 @@
                   cdkAutosizeMaxRows="10"
                   placeholder="Escribe tu descripción"
                 ></textarea>
-
                 <mat-error
                   *ngIf="userForm.get('description')?.hasError('required')"
                 >
@@ -229,7 +174,6 @@
               >
                 <mat-label>Tu fecha de nacimiento</mat-label>
                 <input matInput type="date" formControlName="birthdate" />
-
                 <mat-error
                   *ngIf="userForm.get('birthdate')?.hasError('ageRange')"
                 >
@@ -244,11 +188,6 @@
                 </mat-error>
               </mat-form-field>
 
-              <button mat-raised-button color="primary" (click)="goBack()">
-                <mat-icon>arrow_back</mat-icon>
-                Regresar
-              </button>
-
               <button
                 mat-raised-button
                 color="accent"
@@ -260,6 +199,94 @@
                 Guardar cambios
               </button>
             </form>
+
+            <div *ngIf="!isEditMode" class="info-grid">
+              <div class="info-item">
+                <div class="info-icon"><mat-icon>public</mat-icon></div>
+                <div>
+                  <div class="info-lbl">País</div>
+                  <div class="info-val">{{ user.countryDTO?.country }}</div>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon"><mat-icon>home</mat-icon></div>
+                <div>
+                  <div class="info-lbl">Provincia</div>
+                  <div class="info-val">{{ user.stateDTO?.state }}</div>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon"><mat-icon>location_city</mat-icon></div>
+                <div>
+                  <div class="info-lbl">Ciudad</div>
+                  <div class="info-val">{{ user.cityDTO?.city }}</div>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon"><mat-icon>schedule</mat-icon></div>
+                <div>
+                  <div class="info-lbl">Edad</div>
+                  <div class="info-val">{{ user.age }} años</div>
+                </div>
+              </div>
+              <div class="info-item info-item--full">
+                <div class="info-icon"><mat-icon>person</mat-icon></div>
+                <div>
+                  <div class="info-lbl">Género</div>
+                  <div class="info-val">{{ getSexLabel(user.sex) }}</div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!isOwner && !isEditMode" class="action-row">
+              <button mat-raised-button class="btn-follow">Seguir</button>
+              <button mat-stroked-button class="btn-msg">Mensaje</button>
+            </div>
+            <div *ngIf="isOwner" class="user-actions">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="onActivatePrivateArea()"
+              >
+                Activar área privada
+              </button>
+
+              <button
+                *ngIf="!isConfirmPauseVisible"
+                mat-stroked-button
+                color="warn"
+                (click)="onToggleAccountStatus()"
+              >
+                {{ user.isEnabled ? "Pausar la cuenta" : "Activar la cuenta" }}
+              </button>
+
+              <button mat-raised-button color="primary" (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+                Regresar
+              </button>
+
+              <div *ngIf="isConfirmPauseVisible" class="flex gap-2">
+                <button
+                  mat-raised-button
+                  (click)="confirmPauseAccount()"
+                  style="
+                    font-size: 0.7rem;
+                    padding: 4px 8px;
+                    line-height: 1;
+                    background-color: #933131;
+                    color: white;
+                  "
+                >
+                  <span style="margin-left: 4px">Sí, pausar</span>
+                </button>
+                <button
+                  mat-raised-button
+                  (click)="cancelPauseAccount()"
+                  style="font-size: 0.7rem; padding: 2px 6px; line-height: 1"
+                >
+                  No pausar
+                </button>
+              </div>
+            </div>
           </ng-template>
         </mat-card-content>
       </div>

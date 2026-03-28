@@ -22,7 +22,7 @@
     <mat-card-content>
       <div class="user-info">
         <p class="username" [routerLink]="['/', user?.username, user?.id]">
-          {{ user?.username }}
+          {{ '@' + user?.username }}
         </p>
         <span class="status" [class.active]="user?.isEnabled">
           <mat-icon class="status-icon" *ngIf="user?.isEnabled"
