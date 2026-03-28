@@ -57,6 +57,8 @@ export class FreeContentPageComponent {
   isLoading: boolean = false;
   showPauseConfirmation: boolean = false;
   isConfirmPauseVisible: boolean = false;
+  followersCount: number = 0;
+  followingCount: number = 0;
 
   constructor(
     private userService: UserService,
@@ -168,7 +170,7 @@ export class FreeContentPageComponent {
 
     const userDetailsFreeAreaDTO: UserDetailsFreeAreaDTO = {
       birthdate: formValues.birthdate,
-      sex: formValues.sex, // ⬅️ CAMBIAR de this.user.sex a formValues.sex
+      sex: formValues.sex,
       description: formValues.description,
       country: formValues.country,
       state: formValues.state,
@@ -385,5 +387,13 @@ export class FreeContentPageComponent {
 
   onCitySelected(city: string): void {
     this.userForm.patchValue({ city });
+  }
+
+  onViewFollowers(): void {
+    console.log('Ver seguidores de', this.user?.username);
+  }
+
+  onViewFollowing(): void {
+    console.log('Ver seguidos de', this.user?.username);
   }
 }

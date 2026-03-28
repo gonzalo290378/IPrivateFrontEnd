@@ -7,36 +7,36 @@
   --link-blue: #007bff;
   --link-blue-hover: #0056b3;
   --icon-blue: #1976d2;
-  
+
   --text-dark: #262626;
   --text-medium: #333;
   --text-light: #555;
   --text-muted: #7f8c8d;
   --text-secondary: rgb(88, 86, 86);
-  
+
   --status-active: green;
   --status-inactive: red;
   --danger-red: #d30f0f;
   --danger-red-bg: #a10c0c;
-  
+
   --border-light: #d1d1dc;
   --bg-overlay: rgba(0, 0, 0, 0.6);
   --bg-overlay-light: rgba(0, 0, 0, 0.55);
   --bg-overlay-dark: rgba(0, 0, 0, 0.75);
   --bg-menu: rgba(0, 0, 0, 0.82);
-  
+
   --shadow-light: 0px 2px 6px rgba(0, 0, 0, 0.1);
   --shadow-medium: 0px 4px 8px rgba(0, 0, 0, 0.2);
   --shadow-large: 0px 6px 18px rgba(0, 0, 0, 0.2);
   --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-dropdown: 0 8px 24px rgba(0, 0, 0, 0.18);
-  
+
   --border-radius-sm: 8px;
   --border-radius-md: 12px;
   --border-radius-lg: 15px;
   --border-radius-xl: 18px;
   --border-radius-full: 999px;
-  
+
   --transition-fast: 0.15s ease;
   --transition-medium: 0.2s ease;
   --transition-slow: 0.3s ease;
@@ -93,21 +93,31 @@ div[infinite-scroll] {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 320px 1fr;
   gap: 20px;
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
 }
 
+mat-card.main-profile-card {
+  max-width: 90%;
+  width: 90%;
+  border-radius: var(--border-radius-md);
+  background-color: transparent;
+}
+
 /* ================================================
    PERFILES E IMÁGENES
    ================================================ */
 /* Imágenes de perfil base */
+/* ================================================
+   PERFILES E IMÁGENES
+   ================================================ */
 .profile-image {
   width: 100px;
   height: 100px;
-  border-radius: 70%;
+  border-radius: 50%;
   object-fit: cover;
   border: 4px solid white;
   box-shadow: var(--shadow-medium);
@@ -115,15 +125,15 @@ div[infinite-scroll] {
 
 .profile-image-wrapper {
   position: relative;
-  width: 250px;
-  height: 250px;
-  overflow: hidden;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  border: 4px solid var(--border-light);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin: 1rem auto;
-  display: inline-block;
+  border: 3px solid var(--color-background-primary, white);
+  box-shadow: 0 0 0 1px var(--border-light);
+  margin: 0 auto 16px;
+  display: block;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .profile-image-free-content {
@@ -132,7 +142,17 @@ div[infinite-scroll] {
   object-fit: cover;
 }
 
-/* Overlay de edición de imagen */
+.avatar-online-badge {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2.5px solid white;
+}
+
 .image-edit-overlay {
   position: absolute;
   top: 0;
@@ -172,289 +192,258 @@ div[infinite-scroll] {
 }
 
 /* ================================================
-   TARJETAS DE USUARIO (HOME)
-   ================================================ */
-.user-card:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-large);
-}
-
-.user-header h6 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-mat-card.main-profile-card {
-  max-width: 80%;
-  width: 80%;
-  border-radius: var(--border-radius-md);
-  background-color: transparent;
-}
-
-/* ================================================
    INFORMACIÓN DE USUARIO
    ================================================ */
 .user-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.username {
-  font-size: 16px;
-  color: #2c3e50;
-  text-transform: capitalize;
-  margin: 8px 0;
-  cursor: pointer;
-  transition: color var(--transition-slow);
-}
-
-.username:hover {
-  color: #233a52;
-  font-weight: bolder;
-}
-
-.username-mention {
-  font-weight: 600;
-  color: var(--primary-blue-hover);
-}
-
-.description {
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--text-light);
-}
-
-.user-data b {
-  font-weight: 500;
-  color: var(--text-medium);
-}
-
-/* ================================================
-   ESTADOS (ACTIVO/INACTIVO)
-   ================================================ */
-.status {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 0.5rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: var(--border-radius-sm);
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.status.active,
-.active-status {
-  color: var(--status-active);
-}
-
-.status.inactive,
-.inactive-status {
-  color: var(--status-inactive);
-}
-
-.status-icon.active-icon {
-  color: var(--status-active);
-  font-size: 16px;
-}
-
-.status-icon.inactive-icon {
-  color: var(--status-inactive);
-  font-size: 16px;
-}
-
-.status-text {
-  margin: 0;
-  margin-left: 8px;
-  font-weight: bold;
-}
-
-/* ================================================
-   BOTONES Y ENLACES
-   ================================================ */
-.link-button {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: var(--link-blue);
-  color: white;
-  text-decoration: none;
-  border-radius: var(--border-radius-full);
-  font-size: 0.875rem;
+  padding: 32px 24px 24px;
   text-align: center;
 }
 
-.link-button:hover {
-  background-color: var(--link-blue-hover);
+.profile-username {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-dark);
 }
 
-button[color="warn"] {
-  background-color: var(--danger-red-bg) !important;
+.profile-handle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.profile-bio {
+  font-size: 14px;
+  color: var(--text-light);
+  margin: 14px auto 0;
+  max-width: 340px;
+  line-height: 1.5;
+}
+
+/* ================================================
+   ESTADO (PILL)
+   ================================================ */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: var(--border-radius-full);
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.status-pill--active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-pill--inactive {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.status-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ================================================
+   FOLLOW BUTTONS
+   ================================================ */
+.follow-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 0;
+}
+
+.follow-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 36px !important;
+  min-width: unset !important;
+  height: auto !important;
+  line-height: 1.2 !important;
+}
+
+.follow-num {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--primary-blue);
+}
+
+.follow-lbl {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 1px;
+}
+
+.follow-sep {
+  width: 1px;
+  height: 32px;
+  background-color: var(--border-light);
+}
+
+/* ================================================
+   BOTONES DE ACCIÓN DEL PERFIL
+   ================================================ */
+.action-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-follow {
+  padding: 9px 32px !important;
+  border-radius: var(--border-radius-full) !important;
+  font-size: 14px !important;
+  background: var(--primary-blue) !important;
   color: white !important;
 }
 
-.button-pause {
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  line-height: 1;
+.btn-msg {
+  padding: 9px 22px !important;
+  border-radius: var(--border-radius-full) !important;
+  font-size: 14px !important;
 }
 
-/* ================================================
-   ACCIONES DE TARJETAS
-   ================================================ */
-mat-card-actions {
+.user-actions {
+  margin-top: 1.5rem;
   display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
-}
-
-/* ================================================
-   NAVEGACIÓN
-   ================================================ */
-.entry {
-  display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: left;
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 6px 12px;
-  border-radius: var(--border-radius-sm);
-}
-
-.icon {
-  font-size: 20px;
-  color: var(--icon-blue);
-}
-
-.text {
-  color: var(--text-medium);
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 /* ================================================
-   FORMULARIOS E INFORMACIÓN
+   BOTONES DE NAVEGACIÓN (login/logout sidebar)
    ================================================ */
-.info-container mat-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-.info-container mat-form-field,
-.info-container .m-3 {
+a.link-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: var(--link-blue);
+  color: white !important;
+  text-decoration: none !important;
+  border-radius: var(--border-radius-full);
+  font-size: 0.875rem;
+  text-align: center;
+  cursor: pointer;
   width: 100%;
   box-sizing: border-box;
 }
 
+a.link-button:hover {
+  background-color: var(--link-blue-hover);
+  color: white !important;
+}
+
 /* ================================================
-   FEED DE CONTENIDO Y POSTS
+   GRILLA DE INFO
    ================================================ */
-app-profile-feed-content-page {
-  width: 80%;
-  display: block;
-  max-width: 1200px;
-  margin: 0 auto;
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--border-light);
+  width: 100%;
 }
 
-.posts-container {
-  width: 80%;
-  margin: 0 auto;
-  padding: 20px;
+.info-item {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.posts-grid {
+.info-item:nth-child(odd) {
+  border-right: 1px solid var(--border-light);
+}
+
+.info-item--full {
+  grid-column: 1 / -1;
+}
+
+.info-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--border-radius-sm);
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.info-icon mat-icon {
+  font-size: 17px;
+  width: 17px;
+  height: 17px;
+  color: var(--text-muted);
+}
+
+.info-lbl {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.info-val {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-top: 1px;
+}
+
+/* ================================================
+   FOLLOW BUTTONS
+   ================================================ */
+
+.follow-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin: 0.75rem 0 0.5rem 0;
+  width: 100%;
+}
+
+.follow-stat-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
+  padding: 0.4rem 1.5rem;
+  min-width: 100px;
+  line-height: 1.2;
+  height: auto !important;
 }
 
-/* ================================================
-   TARJETAS DE POST
-   ================================================ */
-.post-card,
-.post-image-container {
-  position: relative;
+.follow-count {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a237e; /* azul que ya usas */
 }
 
-.post-card {
-  width: 80%;
-  max-width: 80%;
-  background: white;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-card);
-  overflow: hidden;
+.follow-label {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.post-card:hover {
-  transform: none;
-  box-shadow: var(--shadow-card);
-}
-
-.post-image {
-  width: 100%;
-  display: block;
-  border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
-  cursor: pointer;
-  transition: opacity var(--transition-medium);
-}
-
-.image-overlay {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  color: white;
-  padding: 20px;
-}
-
-.post-date {
-  font-weight: 300;
-  color: rgba(6, 6, 6, 0.8);
-  font-size: 12px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.5px;
-}
-
-.post-description {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  font-size: 14px;
-  margin: 0;
-}
-
-/* ================================================
-   BOTÓN DE LIKE
-   ================================================ */
-.like-button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: rgb(16, 16, 16);
-  font-weight: 600;
-  padding: 5px;
-  transition: none;
-}
-
-.like-button:hover {
-  transform: none;
-  color: #ffffff;
-}
-
-.heart-icon {
-  font-size: 18px;
-  animation: none;
+.follow-divider {
+  width: 1px;
+  height: 2rem;
+  background-color: #ddd;
 }
 
 /* ================================================
@@ -476,7 +465,9 @@ app-profile-feed-content-page {
   border-radius: 50%;
   cursor: pointer;
   backdrop-filter: blur(4px);
-  transition: background var(--transition-medium), transform 0.1s ease;
+  transition:
+    background var(--transition-medium),
+    transform 0.1s ease;
 }
 
 .menu-button:hover {
@@ -540,6 +531,19 @@ app-profile-feed-content-page {
 }
 
 /* ================================================
+   NAVBAR / SIDEBAR — protección de estilos
+   ================================================ */
+.mat-toolbar button,
+.mat-sidenav button,
+.mat-nav-list .mat-list-item {
+  font-size: inherit !important;
+  color: inherit !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: revert !important;
+}
+
+/* ================================================
    ESTADO DE CARGA
    ================================================ */
 .loading-container {
@@ -597,6 +601,26 @@ app-profile-feed-content-page {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* ================================================
+   FIX IMÁGENES FEED
+   ================================================ */
+.post-card img,
+.post-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+app-profile-feed-content-page {
+  width: 80%;
+  max-width: 900px;
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 /* ================================================
