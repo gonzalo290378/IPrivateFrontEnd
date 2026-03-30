@@ -6,18 +6,15 @@
   --primary-blue-hover: #6060b6;
   --link-blue: #007bff;
   --link-blue-hover: #0056b3;
-  --icon-blue: #1976d2;
 
   --text-dark: #262626;
   --text-medium: #333;
   --text-light: #555;
   --text-muted: #7f8c8d;
-  --text-secondary: rgb(88, 86, 86);
 
   --status-active: green;
   --status-inactive: red;
   --danger-red: #d30f0f;
-  --danger-red-bg: #a10c0c;
 
   --border-light: #d1d1dc;
   --bg-overlay: rgba(0, 0, 0, 0.6);
@@ -27,7 +24,6 @@
 
   --shadow-light: 0px 2px 6px rgba(0, 0, 0, 0.1);
   --shadow-medium: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  --shadow-large: 0px 6px 18px rgba(0, 0, 0, 0.2);
   --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-dropdown: 0 8px 24px rgba(0, 0, 0, 0.18);
 
@@ -52,9 +48,7 @@ body {
   width: 100%;
 }
 
-body {
-  width: 95%;
-}
+
 
 ::-webkit-scrollbar {
   display: none;
@@ -63,14 +57,6 @@ body {
 /* ================================================
    UTILIDADES GENERALES
    ================================================ */
-.azul {
-  color: var(--primary-blue);
-}
-
-.shadow-lg {
-  box-shadow: var(--shadow-large);
-}
-
 .subtle-shadow {
   box-shadow: var(--shadow-light);
 }
@@ -78,11 +64,6 @@ body {
 /* ================================================
    LAYOUT Y CONTENEDORES
    ================================================ */
-.app-name {
-  display: inline-block;
-  text-align: center;
-}
-
 div[infinite-scroll] {
   min-height: 100vh;
   overflow-y: auto;
@@ -110,10 +91,7 @@ mat-card.main-profile-card {
 /* ================================================
    PERFILES E IMÁGENES
    ================================================ */
-/* Imágenes de perfil base */
-/* ================================================
-   PERFILES E IMÁGENES
-   ================================================ */
+
 .profile-image {
   width: 100px;
   height: 100px;
@@ -404,47 +382,6 @@ a.link-button:hover {
   margin-top: 1px;
 }
 
-/* ================================================
-   FOLLOW BUTTONS
-   ================================================ */
-
-.follow-stats {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0;
-  margin: 0.75rem 0 0.5rem 0;
-  width: 100%;
-}
-
-.follow-stat-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.4rem 1.5rem;
-  min-width: 100px;
-  line-height: 1.2;
-  height: auto !important;
-}
-
-.follow-count {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #1a237e; /* azul que ya usas */
-}
-
-.follow-label {
-  font-size: 0.75rem;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.follow-divider {
-  width: 1px;
-  height: 2rem;
-  background-color: #ddd;
-}
 
 /* ================================================
    MENÚ DE OPCIONES (estilo Instagram)
@@ -621,6 +558,77 @@ app-profile-feed-content-page {
   display: block;
   margin: 0 auto;
   overflow: hidden;
+}
+
+/* ================================================
+   EDICION DE PERFIL
+   ================================================ */
+
+.edit-section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0 0 12px 0;
+  padding: 16px 20px 0;
+}
+
+.edit-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--border-light);
+  width: 100%;
+}
+
+.edit-info-item {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.edit-info-item:nth-child(odd) {
+  border-right: 1px solid var(--border-light);
+}
+
+.edit-info-item--full {
+  grid-column: 1 / -1;
+}
+
+.edit-field-block {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.edit-field-block .info-lbl {
+  margin-bottom: 4px;
+}
+
+.edit-mat-field {
+  width: 100%;
+  margin-top: 2px;
+}
+
+.edit-actions-row {
+  display: flex;
+  justify-content: center;
+  padding: 16px 20px 8px;
+}
+
+.edit-btn-save {
+  border-radius: var(--border-radius-full) !important;
+  padding: 8px 28px !important;
+  font-size: 14px !important;
+}
+
+.btn-confirm-pause {
+  font-size: 0.7rem !important;
+  padding: 4px 8px !important;
+  line-height: 1 !important;
+  background-color: #933131 !important;
+  color: white !important;
 }
 
 /* ================================================
