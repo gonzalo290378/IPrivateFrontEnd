@@ -81,8 +81,6 @@
                 <span class="follow-lbl">Siguiendo</span>
               </button>
             </div>
-
-            
           </div>
         </mat-card-content>
 
@@ -93,200 +91,321 @@
 
           <ng-template #formContent>
             <form [formGroup]="userForm" (ngSubmit)="save()">
-              <mat-list *ngIf="isEditMode">
-                <h4>Editar Perfil</h4>
+              <!-- MODO EDICIÓN -->
+              <ng-container *ngIf="isEditMode">
+                <h4 class="edit-section-title">Editar Perfil</h4>
 
-                <div class="mat-field-wrapper">
-                  <span class="field-label">País</span>
-                  <app-by-country-page
-                    [selectedCountry]="userForm.get('country')?.value"
-                    (countrySelected)="onCountrySelected($event)"
-                  ></app-by-country-page>
+                <div class="edit-info-grid">
+                  <div class="edit-info-item">
+                    <div class="info-icon"><mat-icon>public</mat-icon></div>
+                    <div class="edit-field-block">
+                      <div class="info-lbl">País</div>
+                      <app-by-country-page
+                        [selectedCountry]="userForm.get('country')?.value"
+                        (countrySelected)="onCountrySelected($event)"
+                      ></app-by-country-page>
+                    </div>
+                  </div>
+
+                  <div class="edit-info-item">
+                    <div class="info-icon"><mat-icon>home</mat-icon></div>
+                    <div class="edit-field-block">
+                      <div class="info-lbl">Estado / Provincia</div>
+                      <app-by-state-page
+                        [selectedState]="userForm.get('state')?.value"
+                        [selectedCountry]="userForm.get('country')?.value"
+                        (stateSelected)="onStateSelected($event)"
+                      ></app-by-state-page>
+                    </div>
+                  </div>
+
+                  <div class="edit-info-item">
+                    <div class="info-icon">
+                      <mat-icon>location_city</mat-icon>
+                    </div>
+                    <div class="edit-field-block">
+                      <div class="info-lbl">Ciudad</div>
+                      <app-by-city-page
+                        [selectedCity]="userForm.get('city')?.value"
+                        (citySelected)="onCitySelected($event)"
+                      ></app-by-city-page>
+                    </div>
+                  </div>
+
+                  <div class="edit-info-item">
+                    <div class="info-icon"><mat-icon>person</mat-icon></div>
+                    <div class="edit-field-block">
+                      <div class="info-lbl">Género</div>
+                      <mat-form-field
+                        appearance="outline"
+                        class="edit-mat-field"
+                      >
+                        <mat-select formControlName="sex">
+                          <mat-option value="M">Hombre</mat-option>
+                          <mat-option value="F">Mujer</mat-option>
+                          <mat-option value="T">Transgénero</mat-option>
+                          <mat-option value="NB">No binario</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="edit-info-item edit-info-item--full">
+                    <div class="info-icon"><mat-icon>schedule</mat-icon></div>
+                    <div class="edit-field-block">
+                      <div class="info-lbl">Fecha de nacimiento</div>
+                      <mat-form-field
+                        appearance="outline"
+                        class="edit-mat-field"
+                      >
+                        <input
+                          matInput
+                          type="date"
+                          formControlName="birthdate"
+                        />
+                        <mat-error
+                          *ngIf="
+                            userForm.get('birthdate')?.hasError('ageRange')
+                          "
+                        >
+                          Debes tener entre 18 y 90 años.
+                        </mat-error>
+                        <mat-error
+                          *ngIf="
+                            userForm
+                              .get('birthdate')
+                              ?.hasError('invalidYearLength')
+                          "
+                        >
+                          El año debe tener exactamente 4 dígitos.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="edit-info-item edit-info-item--full">
+                    <div class="info-icon"><mat-icon>notes</mat-icon></div>
+                    <div class="edit-field-block">
+                      <div class="info-lbl">Descripción</div>
+                      <mat-form-field
+                        appearance="outline"
+                        class="edit-mat-field"
+                      >
+                        <textarea
+                          matInput
+                          formControlName="description"
+                          cdkTextareaAutosize
+                          cdkAutosizeMinRows="3"
+                          cdkAutosizeMaxRows="8"
+                          placeholder="Escribe tu descripción"
+                        ></textarea>
+                        <mat-error
+                          *ngIf="
+                            userForm.get('description')?.hasError('required')
+                          "
+                        >
+                          La descripción es obligatoria.
+                        </mat-error>
+                        <mat-error
+                          *ngIf="
+                            userForm.get('description')?.hasError('minlength')
+                          "
+                        >
+                          Mínimo 4 caracteres.
+                        </mat-error>
+                        <mat-error
+                          *ngIf="
+                            userForm.get('description')?.hasError('maxlength')
+                          "
+                        >
+                          Máximo 400 caracteres.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="mat-field-wrapper">
-                  <span class="field-label">Estado</span>
-                  <app-by-state-page
-                    [selectedState]="userForm.get('state')?.value"
-                    [selectedCountry]="userForm.get('country')?.value"
-                    (stateSelected)="onStateSelected($event)"
-                  ></app-by-state-page>
+                <!-- Botón guardar -->
+                <div class="edit-actions-row">
+                  <button
+                    mat-raised-button
+                    color="accent"
+                    type="submit"
+                    [disabled]="userForm.invalid || !user.isEnabled"
+                    class="edit-btn-save"
+                  >
+                    <mat-icon>save</mat-icon>
+                    Guardar cambios
+                  </button>
                 </div>
 
-                <div class="mat-field-wrapper">
-                  <span class="field-label">Ciudad</span>
-                  <app-by-city-page
-                    [selectedCity]="userForm.get('city')?.value"
-                    (citySelected)="onCitySelected($event)"
-                  ></app-by-city-page>
+                <!-- Botones de cuenta -->
+                <div class="user-actions">
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    type="button"
+                    (click)="onActivatePrivateArea()"
+                  >
+                    Activar área privada
+                  </button>
+
+                  <button
+                    *ngIf="!isConfirmPauseVisible"
+                    mat-stroked-button
+                    color="warn"
+                    type="button"
+                    (click)="onToggleAccountStatus()"
+                  >
+                    {{
+                      user.isEnabled ? "Pausar la cuenta" : "Activar la cuenta"
+                    }}
+                  </button>
+
+                  <div *ngIf="isConfirmPauseVisible" class="flex gap-2">
+                    <button
+                      mat-raised-button
+                      type="button"
+                      (click)="confirmPauseAccount()"
+                      class="btn-confirm-pause"
+                    >
+                      Sí, pausar
+                    </button>
+                    <button
+                      mat-raised-button
+                      type="button"
+                      (click)="cancelPauseAccount()"
+                    >
+                      No pausar
+                    </button>
+                  </div>
+
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    type="button"
+                    (click)="goBack()"
+                  >
+                    <mat-icon>arrow_back</mat-icon>
+                    Regresar
+                  </button>
+                </div>
+              </ng-container>
+
+              <div *ngIf="!isEditMode" class="info-grid">
+                <div class="info-item">
+                  <div class="info-icon"><mat-icon>public</mat-icon></div>
+                  <div>
+                    <div class="info-lbl">País</div>
+                    <div class="info-val">{{ user.countryDTO?.country }}</div>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-icon"><mat-icon>home</mat-icon></div>
+                  <div>
+                    <div class="info-lbl">Provincia</div>
+                    <div class="info-val">{{ user.stateDTO?.state }}</div>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-icon">
+                    <mat-icon>location_city</mat-icon>
+                  </div>
+                  <div>
+                    <div class="info-lbl">Ciudad</div>
+                    <div class="info-val">{{ user.cityDTO?.city }}</div>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-icon"><mat-icon>schedule</mat-icon></div>
+                  <div>
+                    <div class="info-lbl">Edad</div>
+                    <div class="info-val">{{ user.age }} años</div>
+                  </div>
+                </div>
+                <div class="info-item info-item--full">
+                  <div class="info-icon"><mat-icon>person</mat-icon></div>
+                  <div>
+                    <div class="info-lbl">Género</div>
+                    <div class="info-val">{{ getSexLabel(user.sex) }}</div>
+                  </div>
                 </div>
 
-                <mat-form-field
-                  appearance="outline"
-                  class="mt-5"
-                  style="flex: 1"
-                >
-                  <mat-label>Sexo</mat-label>
-                  <mat-select formControlName="sex">
-                    <mat-option value="M">Hombre</mat-option>
-                    <mat-option value="F">Mujer</mat-option>
-                    <mat-option value="T">Transgénero</mat-option>
-                    <mat-option value="NB">No binario</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-list>
-
-              <mat-form-field
-                appearance="outline"
-                style="width: 90%; margin: 1rem 0"
-                *ngIf="isEditMode"
-              >
-                <mat-label>Descripción</mat-label>
-                <textarea
-                  matInput
-                  formControlName="description"
-                  cdkTextareaAutosize
-                  cdkAutosizeMinRows="4"
-                  cdkAutosizeMaxRows="10"
-                  placeholder="Escribe tu descripción"
-                ></textarea>
-                <mat-error
-                  *ngIf="userForm.get('description')?.hasError('required')"
-                >
-                  La descripción es obligatoria.
-                </mat-error>
-                <mat-error
-                  *ngIf="userForm.get('description')?.hasError('minlength')"
-                >
-                  La descripción debe tener al menos 4 caracteres.
-                </mat-error>
-                <mat-error
-                  *ngIf="userForm.get('description')?.hasError('maxlength')"
-                >
-                  La descripción no puede exceder 400 caracteres.
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field
-                appearance="outline"
-                style="width: 90%; margin: 1rem 0"
-                *ngIf="isEditMode"
-              >
-                <mat-label>Tu fecha de nacimiento</mat-label>
-                <input matInput type="date" formControlName="birthdate" />
-                <mat-error
-                  *ngIf="userForm.get('birthdate')?.hasError('ageRange')"
-                >
-                  Debes tener entre 18 y 90 años.
-                </mat-error>
-                <mat-error
-                  *ngIf="
-                    userForm.get('birthdate')?.hasError('invalidYearLength')
-                  "
-                >
-                  El año debe tener exactamente 4 dígitos.
-                </mat-error>
-              </mat-form-field>
-
-              <button
-                mat-raised-button
-                color="accent"
-                type="submit"
-                *ngIf="isEditMode"
-                [disabled]="userForm.invalid || !user.isEnabled"
-              >
-                <mat-icon>save</mat-icon>
-                Guardar cambios
-              </button>
-            </form>
-
-            <div *ngIf="!isEditMode" class="info-grid">
-              <div class="info-item">
-                <div class="info-icon"><mat-icon>public</mat-icon></div>
-                <div>
-                  <div class="info-lbl">País</div>
-                  <div class="info-val">{{ user.countryDTO?.country }}</div>
-                </div>
-              </div>
-              <div class="info-item">
-                <div class="info-icon"><mat-icon>home</mat-icon></div>
-                <div>
-                  <div class="info-lbl">Provincia</div>
-                  <div class="info-val">{{ user.stateDTO?.state }}</div>
-                </div>
-              </div>
-              <div class="info-item">
-                <div class="info-icon"><mat-icon>location_city</mat-icon></div>
-                <div>
-                  <div class="info-lbl">Ciudad</div>
-                  <div class="info-val">{{ user.cityDTO?.city }}</div>
-                </div>
-              </div>
-              <div class="info-item">
-                <div class="info-icon"><mat-icon>schedule</mat-icon></div>
-                <div>
-                  <div class="info-lbl">Edad</div>
-                  <div class="info-val">{{ user.age }} años</div>
-                </div>
-              </div>
-              <div class="info-item info-item--full">
-                <div class="info-icon"><mat-icon>person</mat-icon></div>
-                <div>
-                  <div class="info-lbl">Género</div>
-                  <div class="info-val">{{ getSexLabel(user.sex) }}</div>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="!isOwner && !isEditMode" class="action-row">
-              <button mat-raised-button class="btn-follow">Seguir</button>
-              <button mat-stroked-button class="btn-msg">Mensaje</button>
-            </div>
-            <div *ngIf="isOwner" class="user-actions">
-              <button
-                mat-raised-button
-                color="primary"
-                (click)="onActivatePrivateArea()"
-              >
-                Activar área privada
-              </button>
-
-              <button
-                *ngIf="!isConfirmPauseVisible"
-                mat-stroked-button
-                color="warn"
-                (click)="onToggleAccountStatus()"
-              >
-                {{ user.isEnabled ? "Pausar la cuenta" : "Activar la cuenta" }}
-              </button>
-
-              <button mat-raised-button color="primary" (click)="goBack()">
-                <mat-icon>arrow_back</mat-icon>
-                Regresar
-              </button>
-
-              <div *ngIf="isConfirmPauseVisible" class="flex gap-2">
-                <button
-                  mat-raised-button
-                  (click)="confirmPauseAccount()"
+                <!-- Botones dentro de la grilla, ocupando full width -->
+                <div
+                  class="info-item info-item--full"
                   style="
-                    font-size: 0.7rem;
-                    padding: 4px 8px;
-                    line-height: 1;
-                    background-color: #933131;
-                    color: white;
+                    border-bottom: none;
+                    justify-content: center;
+                    gap: 12px;
+                    padding: 20px;
                   "
                 >
-                  <span style="margin-left: 4px">Sí, pausar</span>
-                </button>
-                <button
-                  mat-raised-button
-                  (click)="cancelPauseAccount()"
-                  style="font-size: 0.7rem; padding: 2px 6px; line-height: 1"
-                >
-                  No pausar
-                </button>
+                  <ng-container *ngIf="!isOwner">
+                    <button mat-raised-button class="btn-follow">Seguir</button>
+                    <button mat-stroked-button class="btn-msg">Mensaje</button>
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      type="button"
+                      (click)="goBack()"
+                    >
+                      <mat-icon>arrow_back</mat-icon>
+                      Regresar
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="isOwner">
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      type="button"
+                      (click)="onActivatePrivateArea()"
+                    >
+                      Activar área privada
+                    </button>
+                    <button
+                      *ngIf="!isConfirmPauseVisible"
+                      mat-stroked-button
+                      color="warn"
+                      type="button"
+                      (click)="onToggleAccountStatus()"
+                    >
+                      {{
+                        user.isEnabled
+                          ? "Pausar la cuenta"
+                          : "Activar la cuenta"
+                      }}
+                    </button>
+                    <div *ngIf="isConfirmPauseVisible" class="flex gap-2">
+                      <button
+                        mat-raised-button
+                        type="button"
+                        (click)="confirmPauseAccount()"
+                        class="btn-confirm-pause"
+                      >
+                        Sí, pausar
+                      </button>
+                      <button
+                        mat-raised-button
+                        type="button"
+                        (click)="cancelPauseAccount()"
+                      >
+                        No pausar
+                      </button>
+                    </div>
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      type="button"
+                      (click)="goBack()"
+                    >
+                      <mat-icon>arrow_back</mat-icon>
+                      Regresar
+                    </button>
+                  </ng-container>
+                </div>
               </div>
-            </div>
+            </form>
           </ng-template>
         </mat-card-content>
       </div>
