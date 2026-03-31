@@ -64,6 +64,11 @@ body {
 /* ================================================
    LAYOUT Y CONTENEDORES
    ================================================ */
+.app-name {
+  display: inline-block;
+  text-align: center;
+}
+
 div[infinite-scroll] {
   min-height: 100vh;
   overflow-y: auto;
