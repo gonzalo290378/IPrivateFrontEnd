@@ -37,6 +37,12 @@ export class ByStatePageComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.states = [];
+
+    if (this.selectedCountry) {
+      this.stateService.getStates(this.selectedCountry).subscribe((states) => {
+        this.stateService.setStates(states);
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -120,6 +120,10 @@ export class FreeContentPageComponent {
             : '',
         });
 
+        if (user.countryDTO?.country) {
+  this.cityService.setSelectedCountry(user.countryDTO.country);
+}
+
         if (!user.isEnabled) {
           this.userForm.disable();
         }
