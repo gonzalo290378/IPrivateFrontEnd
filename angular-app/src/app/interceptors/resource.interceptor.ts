@@ -14,11 +14,11 @@ export class ResourceInterceptor implements HttpInterceptor {
 
   intercept(
     request: HttpRequest<unknown>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
     let intReq = request;
     const token = this.tokenService.getAccessToken();
-    if (token != null && request.url.includes('resource')) {
+    if (token != null && request.url.includes('localhost:8090')) {
       intReq = request.clone({
         headers: request.headers.set('Authorization', 'Bearer ' + token),
       });

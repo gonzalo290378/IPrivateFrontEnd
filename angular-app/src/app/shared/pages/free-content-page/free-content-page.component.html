@@ -63,23 +63,32 @@
             </span>
 
             <div class="follow-row">
-              <button
-                mat-button
-                class="follow-stat"
-                (click)="onViewFollowers()"
-              >
-                <span class="follow-num">{{ followersCount }}</span>
-                <span class="follow-lbl">Seguidores</span>
-              </button>
-              <div class="follow-sep"></div>
-              <button
-                mat-button
-                class="follow-stat"
-                (click)="onViewFollowing()"
-              >
-                <span class="follow-num">{{ followingCount }}</span>
-                <span class="follow-lbl">Siguiendo</span>
-              </button>
+              <div class="follow-stats">
+                <button
+                  mat-button
+                  class="follow-stat"
+                  (click)="onViewFollowers()"
+                >
+                  <span class="follow-num">{{ followersCount }}</span>
+                  <span class="follow-lbl">Seguidores</span>
+                </button>
+                <div class="follow-sep"></div>
+                <button
+                  mat-button
+                  class="follow-stat"
+                  (click)="onViewFollowing()"
+                >
+                  <span class="follow-num">{{ followingCount }}</span>
+                  <span class="follow-lbl">Siguiendo</span>
+                </button>
+              </div>
+
+              @if (!isOwner) {
+                <app-follow-button
+                  [userId]="user!.id!"
+                  (followChanged)="onFollowChanged($event)"
+                />
+              }
             </div>
           </div>
         </mat-card-content>
@@ -331,7 +340,6 @@
                   </div>
                 </div>
 
-                <!-- Botones dentro de la grilla, ocupando full width -->
                 <div
                   class="info-item info-item--full"
                   style="
@@ -342,7 +350,6 @@
                   "
                 >
                   <ng-container *ngIf="!isOwner">
-                    <button mat-raised-button class="btn-follow">Seguir</button>
                     <button mat-stroked-button class="btn-msg">Mensaje</button>
                     <button
                       mat-raised-button

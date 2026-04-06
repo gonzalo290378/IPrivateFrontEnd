@@ -1,1 +1,14 @@
-<p>follow-button works!</p>
+@if (isLogged) {
+  <button
+    mat-raised-button
+    [color]="isFollowing ? 'warn' : 'primary'"
+    [disabled]="isLoading"
+    (click)="toggleFollow()"
+  >
+    @if (isLoading) {
+      <mat-spinner diameter="20"></mat-spinner>
+    } @else {
+      {{ isFollowing ? "Dejar de seguir" : "Seguir" }}
+    }
+  </button>
+}
