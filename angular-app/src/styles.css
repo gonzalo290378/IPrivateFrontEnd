@@ -48,8 +48,6 @@ body {
   width: 100%;
 }
 
-
-
 ::-webkit-scrollbar {
   display: none;
 }
@@ -91,6 +89,10 @@ mat-card.main-profile-card {
   width: 90%;
   border-radius: var(--border-radius-md);
   background-color: transparent;
+}
+
+.post-image-container {
+  position: relative;
 }
 
 /* ================================================
@@ -241,19 +243,46 @@ mat-card.main-profile-card {
    ================================================ */
 .follow-row {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 0;
+  width: 100%;
+}
+
+.follow-row app-follow-button {
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid var(--border-light);
+}
+
+.follow-row app-follow-button button {
+  border-radius: var(--border-radius-full) !important;
+  padding: 6px 22px !important;
+  font-size: 13px !important;
+}
+
+.follow-stats {
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 0 0;
+  gap: 0;
 }
 
 .follow-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 36px !important;
+  padding: 8px 24px !important;
   min-width: unset !important;
   height: auto !important;
   line-height: 1.2 !important;
+}
+
+.follow-row app-follow-button button {
+  border-radius: var(--border-radius-full) !important;
+  padding: 6px 28px !important;
+  font-size: 13px !important;
 }
 
 .follow-num {
@@ -386,7 +415,6 @@ a.link-button:hover {
   color: var(--text-dark);
   margin-top: 1px;
 }
-
 
 /* ================================================
    MENÚ DE OPCIONES (estilo Instagram)

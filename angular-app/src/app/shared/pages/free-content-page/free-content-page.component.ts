@@ -25,6 +25,8 @@ import { ByCountryPageComponent } from '../../../countries/pages/by-country-page
 import { ByStatePageComponent } from '../../../countries/pages/by-state-page/by-state-page.component';
 import { ByCityPageComponent } from '../../../countries/pages/by-city-page/by-city-page.component';
 import { CityService } from '../../../countries/services/city.service';
+import { FollowService } from '../../../home/follow/services/follow.service';
+import { FollowButtonComponent } from '../../../home/follow/components/follow-button/follow-button.component';
 
 @Component({
   selector: 'app-free-content-page',
@@ -43,6 +45,7 @@ import { CityService } from '../../../countries/services/city.service';
     ByCountryPageComponent,
     ByStatePageComponent,
     ByCityPageComponent,
+    FollowButtonComponent,
   ],
   templateUrl: './free-content-page.component.html',
 })
@@ -68,6 +71,7 @@ export class FreeContentPageComponent {
     private freeAreaService: FreeAreaService,
     private fb: FormBuilder,
     private cityService: CityService,
+    private followService: FollowService,
   ) {}
 
   ngOnInit(): void {
@@ -121,16 +125,33 @@ export class FreeContentPageComponent {
         });
 
         if (user.countryDTO?.country) {
-  this.cityService.setSelectedCountry(user.countryDTO.country);
-}
+          this.cityService.setSelectedCountry(user.countryDTO.country);
+        }
 
         if (!user.isEnabled) {
           this.userForm.disable();
         }
 
         this.updateProfileImageUrl();
+        if (user.id) {
+          this.followService.getCounts(user.id).subscribe({
+            next: (counts) => {
+              this.followersCount = counts.followers;
+              this.followingCount = counts.following;
+            },
+            error: (err) => console.error('Error loading follow counts', err),
+          });
+        }
         return;
       });
+  }
+
+  onFollowChanged(isFollowing: boolean): void {
+    if (isFollowing) {
+      this.followersCount++;
+    } else {
+      this.followersCount--;
+    }
   }
 
   private formatDateForInput(dateString: string): string {
@@ -394,10 +415,10 @@ export class FreeContentPageComponent {
   }
 
   onViewFollowers(): void {
-    console.log('Ver seguidores de', this.user?.username);
+    this.router.navigate([this.user?.username, 'followers']);
   }
 
   onViewFollowing(): void {
-    console.log('Ver seguidos de', this.user?.username);
+    this.router.navigate([this.user?.username, 'following']);
   }
 }

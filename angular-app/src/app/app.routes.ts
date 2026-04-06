@@ -7,64 +7,78 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./home/pages/layout-home-page/layout-home-page.component').then(
-        (m) => m.LayoutHomePageComponent
+        (m) => m.LayoutHomePageComponent,
       ),
   },
   {
     path: 'edit/:username',
     canActivate: [AuthGuard, OwnerGuard],
     loadComponent: () =>
-      import(
-        './users/pages/layout-users-page/layout-users-page.component'
-      ).then((m) => m.LayoutUsersPageComponent),
+      import('./users/pages/layout-users-page/layout-users-page.component').then(
+        (m) => m.LayoutUsersPageComponent,
+      ),
   },
   {
     path: ':username/:id',
     loadComponent: () =>
-      import(
-        './users/pages/layout-users-page/layout-users-page.component'
-      ).then((m) => m.LayoutUsersPageComponent),
+      import('./users/pages/layout-users-page/layout-users-page.component').then(
+        (m) => m.LayoutUsersPageComponent,
+      ),
+  },
+  {
+    path: ':username/followers',
+    loadComponent: () =>
+      import('./home/follow/components/followers-list/followers-list.component').then(
+        (m) => m.FollowersListComponent,
+      ),
+  },
+  {
+    path: ':username/following',
+    loadComponent: () =>
+      import('./home/follow/components/following-list/following-list.component').then(
+        (m) => m.FollowingListComponent,
+      ),
   },
   {
     path: 'register-success',
     loadComponent: () =>
-      import(
-        './auth/pages/register-success/register-success-page.component'
-      ).then((m) => m.RegisterSuccessPageComponent),
+      import('./auth/pages/register-success/register-success-page.component').then(
+        (m) => m.RegisterSuccessPageComponent,
+      ),
   },
   {
     path: ':username/suscriptions',
     loadComponent: () =>
       import('./users/pages/suscription-page/suscription-page.component').then(
-        (m) => m.SuscriptionPageComponent
+        (m) => m.SuscriptionPageComponent,
       ),
   },
   {
     path: ':username/messages',
     loadComponent: () =>
       import('./users/pages/message-page/message-page.component').then(
-        (m) => m.MessagePageComponent
+        (m) => m.MessagePageComponent,
       ),
   },
   {
     path: 'authorized',
     loadComponent: () =>
       import('./auth/pages/authorized-page/authorized-page.component').then(
-        (m) => m.AuthorizedComponent
+        (m) => m.AuthorizedComponent,
       ),
   },
   {
     path: 'logout',
     loadComponent: () =>
       import('./auth/pages/logout-page/logout-page.component').then(
-        (m) => m.LogoutPageComponent
+        (m) => m.LogoutPageComponent,
       ),
   },
   {
     path: 'new-account',
     loadComponent: () =>
       import('./auth/pages/register-page/register-page.component').then(
-        (m) => m.RegisterPageComponent
+        (m) => m.RegisterPageComponent,
       ),
   },
   {
