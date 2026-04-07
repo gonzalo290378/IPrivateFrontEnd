@@ -415,10 +415,10 @@ export class FreeContentPageComponent {
   }
 
   onViewFollowers(): void {
-    this.router.navigate([this.user?.username, 'followers']);
+    this.router.navigate([this.user?.username, this.user?.id, 'followers']);
   }
 
   onViewFollowing(): void {
-    this.router.navigate([this.user?.username, 'following']);
+    this.router.navigate([this.user?.username, this.user?.id, 'following']);
   }
 }

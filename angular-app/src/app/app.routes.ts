@@ -19,24 +19,24 @@ export const routes: Routes = [
       ),
   },
   {
-    path: ':username/:id',
-    loadComponent: () =>
-      import('./users/pages/layout-users-page/layout-users-page.component').then(
-        (m) => m.LayoutUsersPageComponent,
-      ),
-  },
-  {
-    path: ':username/followers',
+    path: ':username/:id/followers',
     loadComponent: () =>
       import('./home/follow/components/followers-list/followers-list.component').then(
         (m) => m.FollowersListComponent,
       ),
   },
   {
-    path: ':username/following',
+    path: ':username/:id/following',
     loadComponent: () =>
       import('./home/follow/components/following-list/following-list.component').then(
         (m) => m.FollowingListComponent,
+      ),
+  },
+  {
+    path: ':username/:id',
+    loadComponent: () =>
+      import('./users/pages/layout-users-page/layout-users-page.component').then(
+        (m) => m.LayoutUsersPageComponent,
       ),
   },
   {
