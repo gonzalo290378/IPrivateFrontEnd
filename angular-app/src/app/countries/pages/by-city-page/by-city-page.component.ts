@@ -21,9 +21,8 @@ import { State } from '../../interfaces/state';
 })
 export class ByCityPageComponent implements OnInit {
   @Input() selectedCity: string = '';
-
+  @Input() disabled: boolean = false;
   @Output() citySelected = new EventEmitter<string>();
-
   public initialValue: string = '';
   public cities: City[] = [];
   public states: State[] = [];

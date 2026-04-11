@@ -100,7 +100,6 @@
 
           <ng-template #formContent>
             <form [formGroup]="userForm" (ngSubmit)="save()">
-              <!-- MODO EDICIÓN -->
               <ng-container *ngIf="isEditMode">
                 <h4 class="edit-section-title">Editar Perfil</h4>
 
@@ -112,6 +111,7 @@
                       <app-by-country-page
                         [selectedCountry]="userForm.get('country')?.value"
                         (countrySelected)="onCountrySelected($event)"
+                        [disabled]="!isAccountEnabled"
                       ></app-by-country-page>
                     </div>
                   </div>
@@ -124,6 +124,7 @@
                         [selectedState]="userForm.get('state')?.value"
                         [selectedCountry]="userForm.get('country')?.value"
                         (stateSelected)="onStateSelected($event)"
+                        [disabled]="!isAccountEnabled"
                       ></app-by-state-page>
                     </div>
                   </div>
@@ -137,6 +138,7 @@
                       <app-by-city-page
                         [selectedCity]="userForm.get('city')?.value"
                         (citySelected)="onCitySelected($event)"
+                        [disabled]="!isAccountEnabled"
                       ></app-by-city-page>
                     </div>
                   </div>
@@ -234,7 +236,6 @@
                   </div>
                 </div>
 
-                <!-- Botón guardar -->
                 <div class="edit-actions-row">
                   <button
                     mat-raised-button
@@ -248,7 +249,6 @@
                   </button>
                 </div>
 
-                <!-- Botones de cuenta -->
                 <div class="user-actions">
                   <button
                     mat-raised-button

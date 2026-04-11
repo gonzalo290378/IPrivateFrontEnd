@@ -29,6 +29,7 @@ export class ByStatePageComponent implements OnInit, OnChanges {
   @Input() selectedState: string = '';
   @Input() selectedCountry: string = '';
   @Output() stateSelected = new EventEmitter<string>();
+  @Input() disabled: boolean = false;
 
   public initialValue: string = '';
   public states: State[] = [];

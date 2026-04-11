@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FollowCountDTO, FollowResponseDTO } from '../components/models/follow.model';
+import {
+  FollowCountDTO,
+  FollowResponseDTO,
+} from '../components/models/follow.model';
 
 @Injectable({
   providedIn: 'root',

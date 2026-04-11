@@ -62,6 +62,7 @@ export class FreeContentPageComponent {
   isConfirmPauseVisible: boolean = false;
   followersCount: number = 0;
   followingCount: number = 0;
+  isAccountEnabled: boolean = true;
 
   constructor(
     private userService: UserService,
@@ -130,6 +131,7 @@ export class FreeContentPageComponent {
 
         if (!user.isEnabled) {
           this.userForm.disable();
+          this.isAccountEnabled = user.isEnabled ?? true;
         }
 
         this.updateProfileImageUrl();
@@ -415,10 +417,17 @@ export class FreeContentPageComponent {
   }
 
   onViewFollowers(): void {
+    if (!this.tokenService.isLogged()) {
+      return;
+    }
+
     this.router.navigate([this.user?.username, this.user?.id, 'followers']);
   }
 
   onViewFollowing(): void {
+    if (!this.tokenService.isLogged()) {
+      return;
+    }
     this.router.navigate([this.user?.username, this.user?.id, 'following']);
   }
 }
