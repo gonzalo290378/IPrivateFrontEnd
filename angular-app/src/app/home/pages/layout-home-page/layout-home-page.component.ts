@@ -34,6 +34,6 @@ export class LayoutHomePageComponent {
   }
 
   onFiltersEmitted(filters: any): void {
-    this.meetingRoom.applyFilters(filters); // 👈 conecta filtro → meeting-room
+    this.meetingRoom.applyFilters(filters);
   }
 }

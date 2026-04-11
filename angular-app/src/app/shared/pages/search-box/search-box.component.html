@@ -6,6 +6,7 @@
       [value]="currentValue"
       [placeholder]="currentValue ? placeholder : 'Todos'"
       (keyup)="onKeyPress(txtInput.value)"
+      [disabled]="disabled"
       #txtInput
     />
   </mat-form-field>

@@ -1,37 +1,46 @@
-<div class="follow-list-container">
-  <div class="follow-list-header">
-    <button mat-icon-button (click)="goBack()">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <h2>Seguidores de &#64;{{ username }}</h2>
-  </div>
+<div class="followers-page-wrapper">
+  <div class="followers-card">
+    <div class="followers-header">
+      <button mat-icon-button (click)="goBack()" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>Seguidores de &#64;{{ username }}</h2>
+    </div>
 
-  @if (isLoading) {
-    <div class="follow-list-loading">
-      <mat-spinner diameter="40"></mat-spinner>
-    </div>
-  } @else if (followers.length === 0) {
-    <div class="follow-list-empty">
-      <mat-icon>people_outline</mat-icon>
-      <p>Aún no hay seguidores</p>
-    </div>
-  } @else {
-    <mat-list>
-      @for (follower of followers; track follower.id) {
-        <button
-          mat-list-item
-          class="follow-list-item"
-          (click)="goToProfile(follower.user.username, follower.user.id)"
-        >
-          <img
-            matListItemAvatar
-            [src]="getPhotoUrl(follower.user.photoUrl)"
-            [alt]="follower.user.username"
-          />
-          <span matListItemTitle>{{ follower.user.username }}</span>
-          <span matListItemLine>{{ "@" + follower.user.username }}</span>
-        </button>
-      }
-    </mat-list>
-  }
+    @if (isLoading) {
+      <div class="followers-loading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    } @else if (followers.length === 0) {
+      <div class="followers-empty">
+        <mat-icon>people_outline</mat-icon>
+        <p>Aún no hay seguidores</p>
+      </div>
+    } @else {
+      <div class="followers-list">
+        @for (follower of followers; track follower.id) {
+          <button
+            class="follower-item"
+            (click)="goToProfile(follower.user.username, follower.user.id)"
+          >
+            <img
+              class="follower-avatar"
+              [src]="getPhotoUrl(follower.user.photoUrl)"
+              [alt]="follower.user.username"
+            />
+            <div class="follower-info">
+              <span class="follower-name">{{ follower.user.username }}</span>
+              <span class="follower-handle">{{
+                "@" + follower.user.username
+              }}</span>
+            </div>
+          </button>
+        }
+      </div>
+      <div class="followers-count">
+        {{ followers.length }}
+        {{ followers.length === 1 ? "seguidor" : "seguidores" }}
+      </div>
+    }
+  </div>
 </div>

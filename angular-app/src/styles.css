@@ -1,6 +1,7 @@
 /* ================================================
    VARIABLES CSS (para facilitar mantenimiento)
    ================================================ */
+
 :root {
   --primary-blue: rgb(48, 48, 155);
   --primary-blue-hover: #6060b6;
@@ -91,9 +92,6 @@ mat-card.main-profile-card {
   background-color: transparent;
 }
 
-.post-image-container {
-  position: relative;
-}
 
 /* ================================================
    PERFILES E IMÁGENES
@@ -179,6 +177,7 @@ mat-card.main-profile-card {
 /* ================================================
    INFORMACIÓN DE USUARIO
    ================================================ */
+
 .user-info {
   display: flex;
   flex-direction: column;
@@ -210,6 +209,7 @@ mat-card.main-profile-card {
 /* ================================================
    ESTADO (PILL)
    ================================================ */
+
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -241,6 +241,7 @@ mat-card.main-profile-card {
 /* ================================================
    FOLLOW BUTTONS
    ================================================ */
+
 .follow-row {
   display: flex;
   flex-direction: column;
@@ -308,6 +309,7 @@ mat-card.main-profile-card {
 /* ================================================
    BOTONES DE ACCIÓN DEL PERFIL
    ================================================ */
+
 .action-row {
   display: flex;
   gap: 10px;
@@ -341,6 +343,7 @@ mat-card.main-profile-card {
 /* ================================================
    BOTONES DE NAVEGACIÓN (login/logout sidebar)
    ================================================ */
+
 a.link-button {
   display: inline-block;
   padding: 8px 16px;
@@ -363,6 +366,7 @@ a.link-button:hover {
 /* ================================================
    GRILLA DE INFO
    ================================================ */
+
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -419,6 +423,7 @@ a.link-button:hover {
 /* ================================================
    MENÚ DE OPCIONES (estilo Instagram)
    ================================================ */
+
 .menu-container {
   position: absolute;
   top: 12px;
@@ -487,6 +492,7 @@ a.link-button:hover {
 /* ================================================
    TOOLTIP DE COMPARTIR
    ================================================ */
+
 .share-tooltip {
   position: fixed;
   bottom: 40px;
@@ -503,6 +509,7 @@ a.link-button:hover {
 /* ================================================
    NAVBAR / SIDEBAR — protección de estilos
    ================================================ */
+
 .mat-toolbar button,
 .mat-sidenav button,
 .mat-nav-list .mat-list-item {
@@ -516,6 +523,7 @@ a.link-button:hover {
 /* ================================================
    ESTADO DE CARGA
    ================================================ */
+
 .loading-container {
   text-align: center;
   padding: 60px 20px;
@@ -535,6 +543,7 @@ a.link-button:hover {
 /* ================================================
    ANIMACIONES
    ================================================ */
+
 @keyframes fadeInScale {
   from {
     opacity: 0;
@@ -576,6 +585,7 @@ a.link-button:hover {
 /* ================================================
    FIX IMÁGENES FEED
    ================================================ */
+
 .post-card img,
 .post-image {
   width: 100%;
@@ -592,6 +602,114 @@ app-profile-feed-content-page {
   margin: 0 auto;
   overflow: hidden;
 }
+
+
+/* ================================================
+   FOLLOWERS PAGE
+   ================================================ */
+
+.followers-page-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.followers-card {
+  width: 100%;
+  max-width: 700px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 0.5px solid rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.followers-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px 16px;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
+}
+
+.followers-header h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.followers-loading,
+.followers-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 24px;
+  color: #888;
+}
+
+.followers-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.follower-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 24px;
+  border: none;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background 0.15s;
+}
+
+.follower-item:hover {
+  background: #f9f9f9;
+}
+
+.follower-item:last-child {
+  border-bottom: none;
+}
+
+.follower-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.follower-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.follower-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.follower-handle {
+  font-size: 13px;
+  color: #888;
+}
+
+.followers-count {
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 13px;
+  color: #aaa;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.08);
+}
+
 
 /* ================================================
    EDICION DE PERFIL
@@ -667,6 +785,7 @@ app-profile-feed-content-page {
 /* ================================================
    RESPONSIVE (Mobile First)
    ================================================ */
+
 @media (max-width: 768px) {
   .posts-grid {
     flex-direction: column;

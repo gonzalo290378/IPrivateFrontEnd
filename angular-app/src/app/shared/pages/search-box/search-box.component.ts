@@ -22,7 +22,8 @@ import { MaterialModule } from '../../../material/material-module';
 export class SearchBoxComponent implements OnInit, OnDestroy, OnChanges {
   private debouncer: Subject<string> = new Subject<string>();
   private debouncerSuscription?: Subscription;
-
+  @Input()
+  public disabled: boolean = false;
   @Input()
   public placeholder: string = '';
   @Input()

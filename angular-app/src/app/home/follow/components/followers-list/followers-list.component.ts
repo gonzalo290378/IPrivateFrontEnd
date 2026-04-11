@@ -5,6 +5,7 @@ import { MaterialModule } from '../../../../material/material-module';
 import { FollowService } from '../../services/follow.service';
 import { FollowResponseDTO } from '../models/follow.model';
 import { MatListModule } from '@angular/material/list';
+import { TokenService } from '../../../../users/services/token.service';
 
 @Component({
   selector: 'app-followers-list',
@@ -23,6 +24,7 @@ export class FollowersListComponent implements OnInit {
     private followService: FollowService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private tokenService: TokenService,
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +52,7 @@ export class FollowersListComponent implements OnInit {
   }
 
   goToProfile(username: string, id: number): void {
+    if (!this.tokenService.isLogged()) return;
     this.router.navigate([username, id]);
   }
 

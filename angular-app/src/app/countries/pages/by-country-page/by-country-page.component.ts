@@ -20,6 +20,7 @@ import { Country } from '../../interfaces/country';
 export class ByCountryPageComponent implements OnInit {
   @Input() selectedCountry: string = '';
   @Output() countrySelected = new EventEmitter<string>();
+  @Input() disabled: boolean = false;
 
   public initialValue: string = '';
   public countries: Country[] = [];
