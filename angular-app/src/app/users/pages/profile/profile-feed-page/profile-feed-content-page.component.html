@@ -1,0 +1,70 @@
+<div *ngIf="freeArea; else loading" class="posts-container">
+  <div class="posts-grid">
+    <div *ngFor="let content of publicContentDTO" class="post-card">
+      <div class="post-image-container">
+        <img [src]="content.contentUrl" alt="Publicación" class="post-image" />
+        <div
+          class="menu-container"
+          *ngIf="isOwner"
+          (click)="$event.stopPropagation()"
+        >
+          <button
+            class="menu-button"
+            (click)="toggleMenu(content.id!, $event)"
+            title="Opciones"
+          >
+            ⋮
+          </button>
+          <div class="menu-dropdown" *ngIf="openMenuId === content.id">
+            <button (click)="startEditFromMenu(content)">
+              ✏️ Editar descripción
+            </button>
+            <button class="delete-option" (click)="deleteContent(content)">
+              🗑️ Eliminar
+            </button>
+            <button (click)="shareContent(content)">🔗 Compartir</button>
+          </div>
+        </div>
+
+        <div class="image-overlay" (click)="$event.stopPropagation()">
+          <button class="like-button" (click)="toggleLike(content)">
+            <span class="heart-icon">❤️</span>
+            <span>{{ content.like }} </span>
+          </button>
+
+          <div class="post-description">
+            <a
+              class="username-mention"
+              [routerLink]="['/', user?.username, user?.id]"
+            >
+              {{ user?.username }}
+            </a>
+
+            <div *ngIf="selectedContent === content && isEditingDescription">
+              <textarea [(ngModel)]="editedDescription" rows="2"></textarea>
+              <div class="edit-actions">
+                <button (click)="cancelEdit()">Cancelar</button>
+                <button (click)="saveDescription()">Guardar</button>
+              </div>
+            </div>
+
+            <span
+              *ngIf="!(selectedContent === content && isEditingDescription)"
+            >
+              {{ content.description }}
+            </span>
+          </div>
+
+          <span class="post-date">{{ content.date }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Cargando...</p>
+  </div>
+</ng-template>
