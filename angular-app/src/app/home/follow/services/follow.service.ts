@@ -5,12 +5,13 @@ import {
   FollowCountDTO,
   FollowResponseDTO,
 } from '../components/models/follow.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FollowService {
-  private baseUrl = 'http://localhost:8090/ms-follow/api/v1/follow';
+  private baseUrl = environment.msFollow;
 
   constructor(private http: HttpClient) {}
 

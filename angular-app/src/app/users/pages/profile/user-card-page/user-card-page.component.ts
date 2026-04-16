@@ -31,7 +31,7 @@ import { environment } from '../../../../../environments/environment';
 export class UserCardPageComponent implements OnInit {
   @Input()
   user?: UserDTO;
-  private baseUrl = environment.msFreeArea;
+  private baseUrl = environment;
 
   ngOnInit(): void {
     if (!this.user) throw Error('User is required');

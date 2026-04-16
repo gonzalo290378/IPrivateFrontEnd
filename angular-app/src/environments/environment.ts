@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  baseUrl: 'http://localhost:8090',
   authorize_uri: 'http://localhost:8090/ms-auth-server/oauth2/authorize?',
   client_id: 'client',
   redirect_uri: 'http://localhost:4200/authorized',
@@ -11,4 +12,8 @@ export const environment = {
   resource_url: 'http://localhost:8090/ms-resource-server/resource/',
   logout_url: 'http://localhost:9000/logout',
   secret_pkce: 'secret',
+  msUsers: 'http://localhost:8090/ms-users/',
+  msFreeArea: 'http://localhost:8090/ms-free-area/',
+  msFollow: 'http://localhost:8090/ms-follow/api/v1/follow',
+  msApiExt: 'http://localhost:8090/ms-api-ext/api/v1/',
 };

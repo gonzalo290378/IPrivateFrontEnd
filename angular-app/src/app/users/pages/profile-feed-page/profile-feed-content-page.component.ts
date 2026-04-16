@@ -9,6 +9,7 @@ import { UserDTO } from '../../../dto/user-dto';
 import { switchMap } from 'rxjs';
 import { PublicContentDTO } from '../../../dto/public-content-dto';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-profile-feed-content-page',
@@ -28,7 +29,7 @@ export class ProfileFeedContentPage implements OnInit {
   isEditingDescription: boolean = false;
   editedDescription: string = '';
   showShareTooltip: boolean = false;
-  private baseUrl = `http://localhost:8090/ms-free-area`;
+  private baseUrl = environment.msFreeArea;
 
   constructor(
     private freeAreaService: FreeAreaService,

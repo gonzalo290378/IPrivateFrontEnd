@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { City } from '../interfaces/city';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CityService {
-  private apiUrl: string = 'http://localhost:8090/ms-api-ext/api/v1/';
+  private apiUrl: string = environment.msApiExt;
   private citiesSubject = new BehaviorSubject<City[]>([]);
   public cities$ = this.citiesSubject.asObservable();
   private selectedCountrySubject = new BehaviorSubject<string | null>(null);

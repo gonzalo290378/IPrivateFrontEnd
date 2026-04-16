@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, Subject } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FreeAreaDTO } from '../../dto/free-area-dto';
 import { PrincipalPhotoDTO } from '../../dto/principal-photo-dto';
-import { TokenService } from './token.service';
-import { ResourceService } from './resource.service';
 import { PublicContentDTO } from '../../dto/public-content-dto';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FreeAreaService {
-  private baseUrl = `http://localhost:8090/ms-free-area/`;
+  private baseUrl = environment.msFreeArea;
   refreshFeed$ = new Subject<void>();
 
-  constructor(
-    private http: HttpClient,
-    private tokenService: TokenService,
-    private resourceService: ResourceService
-  ) {}
+  constructor(private http: HttpClient) {}
 
   findById(id: number): Observable<any> {
     return this.http
@@ -29,18 +24,10 @@ export class FreeAreaService {
   uploadPrincipalPhoto(
     formData: FormData
   ): Observable<PrincipalPhotoDTO | undefined> {
-    const token = this.tokenService.getAccessToken();
-
-    let headers = new HttpHeaders();
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
-    }
-
     return this.http
       .post<PrincipalPhotoDTO>(
         `${this.baseUrl}api/v1/free-area/principal-photo/upload`,
-        formData,
-        { headers }
+        formData
       )
       .pipe(catchError(() => of(undefined)));
   }
@@ -49,15 +36,10 @@ export class FreeAreaService {
     formData: FormData,
     freeAreaId: number
   ): Observable<PublicContentDTO | undefined> {
-    const token = this.tokenService.getAccessToken();
-    let headers = new HttpHeaders();
-    if (token) headers = headers.set('Authorization', `Bearer ${token}`);
-
     return this.http
       .post<PublicContentDTO>(
         `${this.baseUrl}api/v1/free-area/${freeAreaId}/public-content`,
-        formData,
-        { headers }
+        formData
       )
       .pipe(catchError(() => of(undefined)));
   }
@@ -67,10 +49,7 @@ export class FreeAreaService {
     contentId: number,
     description: string
   ): Observable<PublicContentDTO | undefined> {
-    const token = this.tokenService.getAccessToken();
-    console.log('descripcion nueva', description);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    if (token) headers = headers.set('Authorization', `Bearer ${token}`);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http
       .put<PublicContentDTO>(
@@ -82,13 +61,8 @@ export class FreeAreaService {
   }
 
   deletePublicContent(freeAreaId: number, contentId: number): Observable<void> {
-    const token = this.tokenService.getAccessToken();
-    let headers = new HttpHeaders();
-    if (token) headers = headers.set('Authorization', `Bearer ${token}`);
-
     return this.http.delete<void>(
-      `${this.baseUrl}api/v1/free-area/${freeAreaId}/public-content/${contentId}`,
-      { headers }
+      `${this.baseUrl}api/v1/free-area/${freeAreaId}/public-content/${contentId}`
     );
   }
 }
