@@ -27,6 +27,7 @@ import { ByCityPageComponent } from '../../../countries/pages/by-city-page/by-ci
 import { CityService } from '../../../countries/services/city.service';
 import { FollowService } from '../../../home/follow/services/follow.service';
 import { FollowButtonComponent } from '../../../home/follow/components/follow-button/follow-button.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-free-content-page',
@@ -55,7 +56,7 @@ export class FreeContentPageComponent {
   isOwner: boolean = false;
   profileImageUrl: string = '/assets/default-avatar.png';
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-  private baseUrl = `http://localhost:8090/ms-free-area`;
+  private baseUrl = environment.msFreeArea;
   userForm!: FormGroup;
   isLoading: boolean = false;
   showPauseConfirmation: boolean = false;

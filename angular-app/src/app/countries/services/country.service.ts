@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 import { Country } from '../interfaces/country';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CountryService {
-  private apiUrl: string = 'http://localhost:8090/ms-api-ext/api/v1/';
+  private apiUrl: string = environment.msApiExt;
   constructor(private http: HttpClient) {}
 
   private getCountriesRequest(url: string): Observable<Country[]> {

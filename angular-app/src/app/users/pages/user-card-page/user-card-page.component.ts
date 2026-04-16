@@ -11,6 +11,7 @@ import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { UserImagePipe } from '../../pipes/user-image.pipe';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-user-card-page',
@@ -30,7 +31,7 @@ import { CommonModule } from '@angular/common';
 export class UserCardPageComponent implements OnInit {
   @Input()
   user?: UserDTO;
-  private baseUrl = `http://localhost:8090/ms-free-area`;
+  private baseUrl = environment.msFreeArea;
 
   ngOnInit(): void {
     if (!this.user) throw Error('User is required');

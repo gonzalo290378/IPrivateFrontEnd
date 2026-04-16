@@ -6,6 +6,7 @@ import { FollowService } from '../../services/follow.service';
 import { FollowResponseDTO } from '../models/follow.model';
 import { MatListModule } from '@angular/material/list';
 import { TokenService } from '../../../../users/services/token.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-followers-list',
@@ -18,7 +19,7 @@ export class FollowersListComponent implements OnInit {
   followers: FollowResponseDTO[] = [];
   isLoading = true;
   username = '';
-  private baseUrl = 'http://localhost:8090/ms-free-area';
+  private baseUrl = environment.msFreeArea;
 
   constructor(
     private followService: FollowService,

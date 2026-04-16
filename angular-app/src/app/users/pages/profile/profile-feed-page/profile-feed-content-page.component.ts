@@ -30,7 +30,7 @@ export class ProfileFeedContentPage implements OnInit {
   isEditingDescription: boolean = false;
   editedDescription: string = '';
   showShareTooltip: boolean = false;
-  private baseUrl = `http://localhost:8090/ms-free-area`;
+  private baseUrl = environment.msFreeArea;
 
   constructor(
     private freeAreaService: FreeAreaService,

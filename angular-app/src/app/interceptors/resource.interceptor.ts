@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenService } from '../users/services/token.service';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ResourceInterceptor implements HttpInterceptor {
@@ -18,7 +19,7 @@ export class ResourceInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     let intReq = request;
     const token = this.tokenService.getAccessToken();
-    if (token != null && request.url.includes('localhost:8090')) {
+    if (token != null && request.url.includes(environment.baseUrl)) {
       intReq = request.clone({
         headers: request.headers.set('Authorization', 'Bearer ' + token),
       });

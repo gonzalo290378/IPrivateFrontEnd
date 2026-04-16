@@ -7,12 +7,13 @@ import { User } from '../../models/user';
 import { UserDetailsFreeAreaDTO } from '../../dto/user-details-free-area-dto';
 import { TokenService } from './token.service';
 import { ResourceService } from './resource.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private baseUrl = `http://localhost:8090/ms-users/`;
+  private baseUrl = environment.msUsers;
 
   constructor(
     private http: HttpClient,
