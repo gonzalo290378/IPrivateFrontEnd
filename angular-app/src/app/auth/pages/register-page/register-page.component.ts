@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
 import { ByCityPageComponent } from '../../../countries/pages/by-city-page/by-city-page.component';
 import { ByCountryPageComponent } from '../../../countries/pages/by-country-page/by-country-page.component';
@@ -10,7 +10,7 @@ import { UserService } from '../../../users/services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, of, switchMap } from 'rxjs';
+import { catchError, of, switchMap, takeUntil, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-register-page',
@@ -25,11 +25,12 @@ import { catchError, of, switchMap } from 'rxjs';
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterPageComponent implements OnInit, OnDestroy {
   userForm!: FormGroup;
   locationForm!: FormGroup;
   preferencesForm!: FormGroup;
   filteredStates: string[] = [];
+  private destroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -168,19 +169,21 @@ export class RegisterPageComponent implements OnInit {
 
     console.log('Payload from RegisterPage:', payload);
 
-    this.userService.save(payload).subscribe({
-      next: (response) => {
-        if (response) {
-          this.router.navigate(['/register-success']);
-        } else {
+    this.userService.save(payload)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.router.navigate(['/register-success']);
+          } else {
+            alert('Hubo un problema al crear el usuario.');
+          }
+        },
+        error: (err) => {
+          console.error('Error al crear usuario:', err);
           alert('Hubo un problema al crear el usuario.');
-        }
-      },
-      error: (err) => {
-        console.error('Error al crear usuario:', err);
-        alert('Hubo un problema al crear el usuario.');
-      },
-    });
+        },
+      });
   }
 
   validateUsernameAndEmail(stepper: MatStepper): void {
@@ -206,7 +209,8 @@ export class RegisterPageComponent implements OnInit {
         catchError((err: HttpErrorResponse) => {
           console.error('Error checking availability:', err);
           return of(null);
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((emailResponse) => {
         if (emailResponse === null) return;
@@ -218,5 +222,10 @@ export class RegisterPageComponent implements OnInit {
           stepper.next();
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

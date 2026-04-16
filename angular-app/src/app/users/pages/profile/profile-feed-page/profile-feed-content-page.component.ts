@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
-import { switchMap } from 'rxjs';
+import { switchMap, takeUntil, Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FreeAreaDTO } from '../../../../dto/free-area-dto';
@@ -19,7 +19,7 @@ import { environment } from '../../../../../environments/environment';
   templateUrl: './profile-feed-content-page.component.html',
   styleUrls: ['./profile-feed-content-page.component.css'],
 })
-export class ProfileFeedContentPage implements OnInit {
+export class ProfileFeedContentPage implements OnInit, OnDestroy {
   freeArea?: FreeAreaDTO;
   user?: UserDTO;
   publicContentDTO: PublicContentDTO[] = [];
@@ -31,6 +31,7 @@ export class ProfileFeedContentPage implements OnInit {
   editedDescription: string = '';
   showShareTooltip: boolean = false;
   private baseUrl = environment.msFreeArea;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private freeAreaService: FreeAreaService,
@@ -49,6 +50,7 @@ export class ProfileFeedContentPage implements OnInit {
         switchMap(({ username }) =>
           this.userService.getEntityByUsername(username),
         ),
+        takeUntil(this.destroy$),
       )
       .subscribe((user) => {
         if (!user) return this.router.navigate(['/']);
@@ -60,36 +62,46 @@ export class ProfileFeedContentPage implements OnInit {
         const idFreeArea = user.freeAreaDTO?.id;
         if (idFreeArea !== undefined) {
           this.loadFreeArea(idFreeArea);
-          this.freeAreaService.refreshFeed$.subscribe(() => {
-            console.log('Detectado nuevo contenido, recargando feed...');
-            this.loadFreeArea(idFreeArea);
-          });
+          this.freeAreaService.refreshFeed$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+              console.log('Detectado nuevo contenido, recargando feed...');
+              this.loadFreeArea(idFreeArea);
+            });
         }
         return;
       });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   private loadFreeArea(id: number): void {
-    this.freeAreaService.findById(id).subscribe((freeArea) => {
-      if (freeArea) {
-        this.freeArea = freeArea;
-        this.publicContentDTO = (freeArea.publicContentDTO || [])
-          .filter((c: any) => c.isEnabled === true)
-          .map((c: any) => ({
-            ...c,
-            contentUrl: this.baseUrl + c.contentUrl,
-            date:
-              c.date ||
-              c.createdDate ||
-              c.dateCreated ||
-              c.timestamp ||
-              c.createdAt ||
-              c.created ||
-              new Date().toISOString(),
-          }))
-          .sort((a: PublicContentDTO, b: PublicContentDTO) => b.id! - a.id!);
-      }
-    });
+    this.freeAreaService
+      .findById(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((freeArea) => {
+        if (freeArea) {
+          this.freeArea = freeArea;
+          this.publicContentDTO = (freeArea.publicContentDTO || [])
+            .filter((c: any) => c.isEnabled === true)
+            .map((c: any) => ({
+              ...c,
+              contentUrl: this.baseUrl + c.contentUrl,
+              date:
+                c.date ||
+                c.createdDate ||
+                c.dateCreated ||
+                c.timestamp ||
+                c.createdAt ||
+                c.created ||
+                new Date().toISOString(),
+            }))
+            .sort((a: PublicContentDTO, b: PublicContentDTO) => b.id! - a.id!);
+        }
+      });
   }
 
   toggleLike(content: PublicContentDTO): void {
@@ -128,6 +140,7 @@ export class ProfileFeedContentPage implements OnInit {
 
     this.freeAreaService
       .updatePublicContent(freeAreaId, contentId, this.editedDescription)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((updatedContent) => {
         if (updatedContent) {
           this.selectedContent!.description = updatedContent.description;
@@ -177,14 +190,17 @@ export class ProfileFeedContentPage implements OnInit {
     if (!confirm('¿Estás seguro de que quieres eliminar esta publicación?'))
       return;
 
-    this.freeAreaService.deletePublicContent(freeAreaId, contentId).subscribe({
-      next: () => {
-        this.publicContentDTO = this.publicContentDTO.filter(
-          (c) => c.id !== contentId,
-        );
-        this.closeMenu();
-      },
-      error: (err) => console.error('Error al eliminar la publicación', err),
-    });
+    this.freeAreaService
+      .deletePublicContent(freeAreaId, contentId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.publicContentDTO = this.publicContentDTO.filter(
+            (c) => c.id !== contentId,
+          );
+          this.closeMenu();
+        },
+        error: (err) => console.error('Error al eliminar la publicación', err),
+      });
   }
 }
