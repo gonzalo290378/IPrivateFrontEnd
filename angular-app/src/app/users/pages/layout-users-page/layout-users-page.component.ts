@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavbarPageComponent } from '../../../shared/pages/navbar-page/navbar-page.component';
 import { FreeContentPageComponent } from '../../../shared/pages/free-content-page/free-content-page.component';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkLoginAndCreateAccountComponent } from '../../../shared/pages/link-login-and-create-account/link-login-and-create-account.component';
-import { switchMap } from 'rxjs';
+import { switchMap, takeUntil, Subject } from 'rxjs';
 import { UserDTO } from '../../../dto/user-dto';
 
 @Component({
@@ -17,8 +17,9 @@ import { UserDTO } from '../../../dto/user-dto';
   templateUrl: './layout-users-page.component.html',
   styleUrl: './layout-users-page.component.css',
 })
-export class LayoutUsersPageComponent implements OnInit {
+export class LayoutUsersPageComponent implements OnInit, OnDestroy {
   public user?: UserDTO;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private userService: UserService,
@@ -31,12 +32,19 @@ export class LayoutUsersPageComponent implements OnInit {
       .pipe(
         switchMap(({ username }) =>
           this.userService.checkAvailabilityUsername(username)
-        )
+        ),
+        takeUntil(this.destroy$)
       )
       .subscribe((user) => {
         console.log("User from Layout-users", user);
         if (!user) return this.router.navigate(['/']);
+        this.user = user;
         return;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
