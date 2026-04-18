@@ -1,31 +1,55 @@
 import { Injectable } from '@angular/core';
+import { Client, IMessage } from '@stomp/stompjs';
 import { Message } from '../../models/messages';
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class WebSocketService {
-  private stompClient: any;
+  private client!: Client;
 
-  connect(conversationId: string, callback: (msg: any) => void) {
-    const socket = new SockJS('/ws-chat');
-    this.stompClient = Stomp.over(socket);
+  connect(conversationId: string, callback: (msg: any) => void): void {
+    const wsUrl =
+      environment.baseUrl.replace('http', 'ws') +
+      '/ms-messages/ws-chat/websocket';
 
-    this.stompClient.connect({}, () => {
-      this.stompClient.subscribe(
-        `/topic/conversations/${conversationId}`,
-        (msg: any) => {
-          callback(JSON.parse(msg.body));
-        },
-      );
+    this.client = new Client({
+      brokerURL: wsUrl,
+      reconnectDelay: 5000,
+      onConnect: () => {
+        this.client.subscribe(
+          `/topic/conversations/${conversationId}`,
+          (msg: IMessage) => {
+            callback(JSON.parse(msg.body));
+          },
+        );
+      },
+      onStompError: (frame) => {
+        console.error('STOMP error:', frame);
+      },
+    });
+
+    this.client.activate();
+  }
+
+  sendMessage(message: Message): void {
+    if (!this.client?.connected) return;
+    this.client.publish({
+      destination: '/app/chat.send',
+      body: JSON.stringify(message),
     });
   }
 
-  sendMessage(message: Message) {
-    this.stompClient.send('/app/chat.send', {}, JSON.stringify(message));
+  markAsSeen(dto: any): void {
+    if (!this.client?.connected) return;
+    this.client.publish({
+      destination: '/app/chat.seen',
+      body: JSON.stringify(dto),
+    });
   }
 
-  markAsSeen(dto: any) {
-    this.stompClient.send('/app/chat.seen', {}, JSON.stringify(dto));
+  disconnect(): void {
+    if (this.client?.active) {
+      this.client.deactivate();
+    }
   }
 }

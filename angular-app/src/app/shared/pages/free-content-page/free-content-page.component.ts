@@ -48,7 +48,7 @@ import { RouterLink } from '@angular/router';
     ByStatePageComponent,
     ByCityPageComponent,
     FollowButtonComponent,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './free-content-page.component.html',
 })

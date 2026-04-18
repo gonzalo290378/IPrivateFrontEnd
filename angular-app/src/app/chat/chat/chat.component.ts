@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     const otherUserId = this.route.snapshot.paramMap.get('id')!;
 
-    const currentUserId = 'userA'; // ⚠️ luego lo sacamos de auth
+    const currentUserId = 'userA';
 
     this.conversationId = this.buildConversationId(currentUserId, otherUserId);
 
