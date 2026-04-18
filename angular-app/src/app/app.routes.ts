@@ -10,61 +10,13 @@ export const routes: Routes = [
         (m) => m.LayoutHomePageComponent,
       ),
   },
-  {
-    path: 'edit/:username',
-    canActivate: [AuthGuard, OwnerGuard],
-    loadComponent: () =>
-      import('./users/pages/layout-users-page/layout-users-page.component').then(
-        (m) => m.LayoutUsersPageComponent,
-      ),
-  },
-  {
-    path: ':username/:id/followers',
-    loadComponent: () =>
-      import('./home/follow/components/followers-list/followers-list.component').then(
-        (m) => m.FollowersListComponent,
-      ),
-  },
-  {
-    path: ':username/:id/following',
-    loadComponent: () =>
-      import('./home/follow/components/following-list/following-list.component').then(
-        (m) => m.FollowingListComponent,
-      ),
-  },
-  {
-    path: ':username/:id',
-    loadComponent: () =>
-      import('./users/pages/layout-users-page/layout-users-page.component').then(
-        (m) => m.LayoutUsersPageComponent,
-      ),
-  },
+
+  // Estáticas primero
   {
     path: 'register-success',
     loadComponent: () =>
       import('./auth/pages/register-success/register-success-page.component').then(
         (m) => m.RegisterSuccessPageComponent,
-      ),
-  },
-  {
-    path: ':username/suscriptions',
-    loadComponent: () =>
-      import('./users/pages/suscription-page/suscription-page.component').then(
-        (m) => m.SuscriptionPageComponent,
-      ),
-  },
-  {
-    path: ':username/messages',
-    loadComponent: () =>
-      import('./users/pages/message-page/message-page.component').then(
-        (m) => m.MessagePageComponent,
-      ),
-  },
-  {
-    path: 'chat/:id',
-    loadComponent: () =>
-      import('./chat/chat/chat.component').then(
-        (m) => m.ChatComponent,
       ),
   },
   {
@@ -89,8 +41,55 @@ export const routes: Routes = [
       ),
   },
   {
-    path: '**',
-    redirectTo: '',
-    pathMatch: 'full',
+    path: 'chat/:id',
+    loadComponent: () =>
+      import('./chat/chat/chat.component').then((m) => m.ChatComponent),
   },
+  {
+    path: 'edit/:username',
+    canActivate: [AuthGuard, OwnerGuard],
+    loadComponent: () =>
+      import('./users/pages/layout-users-page/layout-users-page.component').then(
+        (m) => m.LayoutUsersPageComponent,
+      ),
+  },
+
+  // Dinámicas después
+  {
+    path: ':username/:id/followers',
+    loadComponent: () =>
+      import('./home/follow/components/followers-list/followers-list.component').then(
+        (m) => m.FollowersListComponent,
+      ),
+  },
+  {
+    path: ':username/:id/following',
+    loadComponent: () =>
+      import('./home/follow/components/following-list/following-list.component').then(
+        (m) => m.FollowingListComponent,
+      ),
+  },
+  {
+    path: ':username/suscriptions',
+    loadComponent: () =>
+      import('./users/pages/suscription-page/suscription-page.component').then(
+        (m) => m.SuscriptionPageComponent,
+      ),
+  },
+  {
+    path: ':username/messages',
+    loadComponent: () =>
+      import('./users/pages/message-page/message-page.component').then(
+        (m) => m.MessagePageComponent,
+      ),
+  },
+  {
+    path: ':username/:id',
+    loadComponent: () =>
+      import('./users/pages/layout-users-page/layout-users-page.component').then(
+        (m) => m.LayoutUsersPageComponent,
+      ),
+  },
+
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

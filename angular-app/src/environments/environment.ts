@@ -16,4 +16,5 @@ export const environment = {
   msFreeArea: 'http://localhost:8090/ms-free-area/',
   msFollow: 'http://localhost:8090/ms-follow/api/v1/follow',
   msApiExt: 'http://localhost:8090/ms-api-ext/api/v1/',
+  msMessages: 'http://localhost:8090/ms-messages/api/v1/',
 };
