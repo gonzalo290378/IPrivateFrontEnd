@@ -61,6 +61,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'chat/:id',
+    loadComponent: () =>
+      import('./chat/chat/chat.component').then(
+        (m) => m.ChatComponent,
+      ),
+  },
+  {
     path: 'authorized',
     loadComponent: () =>
       import('./auth/pages/authorized-page/authorized-page.component').then(
