@@ -49,10 +49,6 @@
             <div class="profile-username">{{ user.username }}</div>
             <div class="profile-handle">{{ "@" + user.username }}</div>
 
-            <div *ngIf="!isEditMode" class="profile-bio">
-              {{ user.description }}
-            </div>
-
             <span
               class="status-pill"
               [class.status-pill--active]="user.isEnabled"
@@ -63,6 +59,15 @@
             </span>
 
             <div class="follow-row">
+              <ng-container *ngIf="!isOwner">
+  <button
+    mat-stroked-button
+    class="btn-msg"
+    [routerLink]="['/chat', user.id]"
+  >
+    Mensaje
+  </button>
+</ng-container>
               <div class="follow-stats">
                 <button
                   mat-button
@@ -350,7 +355,6 @@
                   "
                 >
                   <ng-container *ngIf="!isOwner">
-                    <button mat-stroked-button class="btn-msg">Mensaje</button>
                     <button
                       mat-raised-button
                       color="primary"
@@ -414,6 +418,9 @@
               </div>
             </form>
           </ng-template>
+          <div *ngIf="!isEditMode" class="profile-bio">
+            {{ user.description }}
+          </div>
         </mat-card-content>
       </div>
     </mat-card>

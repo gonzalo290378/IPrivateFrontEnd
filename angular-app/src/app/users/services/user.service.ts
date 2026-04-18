@@ -132,10 +132,7 @@ export class UserService {
 
   reactivateUser(id: number) {
     return this.http
-      .put<UserDetailsFreeAreaDTO>(
-        `${this.baseUrl}${id}/reactivate`,
-        {},
-      )
+      .put<UserDetailsFreeAreaDTO>(`${this.baseUrl}${id}/reactivate`, {})
       .pipe(catchError((error) => of(undefined)));
   }
 }

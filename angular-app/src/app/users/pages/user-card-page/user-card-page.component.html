@@ -1,7 +1,12 @@
 <div class="grid-container">
   <mat-card
     class="user-card shadow-lg"
-    style="border-radius: 12px; transition: transform 0.3s, box-shadow 0.3s"
+    style="
+      border-radius: 12px;
+      transition:
+        transform 0.3s,
+        box-shadow 0.3s;
+    "
   >
     <div
       class="flex justify-content-center align-items-center"
@@ -22,7 +27,7 @@
     <mat-card-content>
       <div class="user-info">
         <p class="username" [routerLink]="['/', user?.username, user?.id]">
-          {{ '@' + user?.username }}
+          {{ "@" + user?.username }}
         </p>
         <p>
           <span class="age">{{ user?.age }} años - </span>
@@ -45,14 +50,7 @@
       >
         <mat-icon>account_circle</mat-icon> Ver Perfil
       </button>
-      <button
-        mat-button
-        mat-raised
-        color="primary"
-        [routerLink]="['/chat', user?.id]"
-      >
-        <mat-icon>chat</mat-icon> Enviar Mensaje
-      </button>
+      
     </mat-card-actions>
   </mat-card>
 </div>

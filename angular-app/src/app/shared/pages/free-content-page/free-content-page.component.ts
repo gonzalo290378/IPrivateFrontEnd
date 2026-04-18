@@ -28,6 +28,7 @@ import { CityService } from '../../../countries/services/city.service';
 import { FollowService } from '../../../home/follow/services/follow.service';
 import { FollowButtonComponent } from '../../../home/follow/components/follow-button/follow-button.component';
 import { environment } from '../../../../environments/environment';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-free-content-page',
@@ -47,6 +48,7 @@ import { environment } from '../../../../environments/environment';
     ByStatePageComponent,
     ByCityPageComponent,
     FollowButtonComponent,
+    RouterLink
   ],
   templateUrl: './free-content-page.component.html',
 })
