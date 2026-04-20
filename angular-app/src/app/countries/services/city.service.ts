@@ -11,7 +11,12 @@ export class CityService {
   public cities$ = this.citiesSubject.asObservable();
   private selectedCountrySubject = new BehaviorSubject<string | null>(null);
   public selectedCountry$ = this.selectedCountrySubject.asObservable();
+  private selectedStateSubject = new BehaviorSubject<string | null>(null);
+  selectedState$ = this.selectedStateSubject.asObservable();
 
+  setSelectedState(state: string) {
+    this.selectedStateSubject.next(state);
+  }
   constructor(private http: HttpClient) {}
 
   getCities(term: string): Observable<City[]> {
