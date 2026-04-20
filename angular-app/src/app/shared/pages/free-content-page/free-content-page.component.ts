@@ -132,6 +132,10 @@ export class FreeContentPageComponent {
           this.cityService.setSelectedCountry(user.countryDTO.country);
         }
 
+        if (user.stateDTO?.state) {
+          this.cityService.setSelectedState(user.stateDTO.state);
+        }
+
         if (!user.isEnabled) {
           this.userForm.disable();
           this.isAccountEnabled = user.isEnabled ?? true;
