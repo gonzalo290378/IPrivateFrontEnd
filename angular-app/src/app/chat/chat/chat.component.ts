@@ -29,26 +29,19 @@ export class ChatComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // 1️⃣ usuario con el que hablas (de la URL)
     this.otherUserId = this.route.snapshot.paramMap.get('id')!;
-
-    // 2️⃣ usuario logueado
     this.currentUserId = this.tokenService.getUsernameFromToken()!;
-
-    // 3️⃣ 🔥 ACÁ VA LO TUYO
     this.conversationId = this.buildConversationId(
       this.currentUserId,
       this.otherUserId,
     );
 
-    // 4️⃣ historial
     this.messageService
       .getConversation(this.currentUserId, this.otherUserId)
       .subscribe((msgs) => {
         this.messages = msgs;
       });
 
-    // 5️⃣ realtime
     this.ws.connect(this.conversationId, (msg: any) => {
       if (msg.type === 'SEEN') {
         console.log('seen update');
@@ -56,8 +49,6 @@ export class ChatComponent implements OnInit {
         this.messages.push(msg);
       }
     });
-    console.log('TOKEN COMPLETO:', this.tokenService.getAccessToken());
-    console.log('USER DEL TOKEN:', this.tokenService.getUsernameFromToken());
   }
 
   sendMessage() {
@@ -70,9 +61,6 @@ export class ChatComponent implements OnInit {
     };
 
     this.ws.sendMessage(message);
-
-    this.messages.push(message);
-
     this.newMessage = '';
   }
 
