@@ -1,5 +1,4 @@
 <div class="chat-container">
-
   <div *ngFor="let msg of messages">
     <b>{{ msg.senderId }}:</b> {{ msg.body }}
   </div>
@@ -8,5 +7,7 @@
     <input [(ngModel)]="newMessage" placeholder="Escribe..." />
     <button (click)="sendMessage()">Enviar</button>
   </div>
-
 </div>
+<p>YO: {{ currentUserId }}</p>
+<p>OTRO: {{ otherUserId }}</p>
+<p>CONV: {{ conversationId }}</p>

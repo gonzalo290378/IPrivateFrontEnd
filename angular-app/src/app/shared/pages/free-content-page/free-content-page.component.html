@@ -60,14 +60,14 @@
 
             <div class="follow-row">
               <ng-container *ngIf="!isOwner">
-  <button
-    mat-stroked-button
-    class="btn-msg"
-    [routerLink]="['/chat', user.id]"
-  >
-    Mensaje
-  </button>
-</ng-container>
+                <button
+                  mat-stroked-button
+                  class="btn-msg"
+                  [routerLink]="['/chat', user.id]"
+                >
+                  Mensaje
+                </button>
+              </ng-container>
               <div class="follow-stats">
                 <button
                   mat-button

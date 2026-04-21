@@ -12,4 +12,11 @@ export class MessageService {
   getConversation(senderId: string, receiverId: string) {
     return this.http.get<Message[]>(`${this.api}/${senderId}/${receiverId}`);
   }
+
+  getConversationId(user1: string, user2: string) {
+  return this.http.get<string>(
+    `${this.api}/conversation-id?user1=${user1}&user2=${user2}`
+  );
+}
+  
 }
