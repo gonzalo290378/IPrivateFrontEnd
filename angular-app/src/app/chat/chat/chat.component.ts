@@ -5,6 +5,7 @@ import { MessageService } from '../../users/services/message.service';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TokenService } from '../../users/services/token.service';
 
 @Component({
   selector: 'app-chat',
@@ -17,30 +18,37 @@ export class ChatComponent implements OnInit {
   messages: Message[] = [];
   conversationId!: string;
   newMessage: string = '';
-  currentUserId = 'userA';
-  otherUserId = 'userB';
+  currentUserId!: string;
+  otherUserId!: string;
 
   constructor(
     private ws: WebSocketService,
     private messageService: MessageService,
     private route: ActivatedRoute,
+    private tokenService: TokenService,
   ) {}
 
   ngOnInit() {
-    const otherUserId = this.route.snapshot.paramMap.get('id')!;
+    // 1️⃣ usuario con el que hablas (de la URL)
+    this.otherUserId = this.route.snapshot.paramMap.get('id')!;
 
-    const currentUserId = 'userA';
+    // 2️⃣ usuario logueado
+    this.currentUserId = this.tokenService.getUsernameFromToken()!;
 
-    this.conversationId = this.buildConversationId(currentUserId, otherUserId);
+    // 3️⃣ 🔥 ACÁ VA LO TUYO
+    this.conversationId = this.buildConversationId(
+      this.currentUserId,
+      this.otherUserId,
+    );
 
-    // 🟢 historial
+    // 4️⃣ historial
     this.messageService
-      .getConversation(currentUserId, otherUserId)
+      .getConversation(this.currentUserId, this.otherUserId)
       .subscribe((msgs) => {
         this.messages = msgs;
       });
 
-    // 🟢 realtime
+    // 5️⃣ realtime
     this.ws.connect(this.conversationId, (msg: any) => {
       if (msg.type === 'SEEN') {
         console.log('seen update');
@@ -48,6 +56,8 @@ export class ChatComponent implements OnInit {
         this.messages.push(msg);
       }
     });
+    console.log('TOKEN COMPLETO:', this.tokenService.getAccessToken());
+    console.log('USER DEL TOKEN:', this.tokenService.getUsernameFromToken());
   }
 
   sendMessage() {
@@ -61,10 +71,12 @@ export class ChatComponent implements OnInit {
 
     this.ws.sendMessage(message);
 
+    this.messages.push(message);
+
     this.newMessage = '';
   }
 
-  buildConversationId(id1: string, id2: string): string {
-    return id1 < id2 ? `${id1}_${id2}` : `${id2}_${id1}`;
-  }
+  buildConversationId = (user1: string, user2: string) => {
+    return [user1, user2].sort().join('_');
+  };
 }

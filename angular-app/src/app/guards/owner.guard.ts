@@ -6,7 +6,10 @@ import { TokenService } from '../users/services/token.service';
   providedIn: 'root',
 })
 export class OwnerGuard implements CanActivate {
-  constructor(private tokenService: TokenService, private router: Router) {}
+  constructor(
+    private tokenService: TokenService,
+    private router: Router,
+  ) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const loggedUsername = this.tokenService.getUsernameFromToken();

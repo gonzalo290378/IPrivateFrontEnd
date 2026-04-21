@@ -11,7 +11,6 @@ export const routes: Routes = [
       ),
   },
 
-  // Estáticas primero
   {
     path: 'register-success',
     loadComponent: () =>
@@ -54,7 +53,6 @@ export const routes: Routes = [
       ),
   },
 
-  // Dinámicas después
   {
     path: ':username/:id/followers',
     loadComponent: () =>
