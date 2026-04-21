@@ -9,13 +9,16 @@ export class WebSocketService {
 
   connect(conversationId: string, callback: (msg: any) => void): void {
     const wsUrl =
-      environment.baseUrl.replace('http', 'ws') +
-      '/ms-messages/ws-chat/websocket';
+      environment.baseUrl.replace('http', 'ws') + '/ms-messages/ws-chat';
+
+    console.log('🔌 Intentando conectar a:', wsUrl);
 
     this.client = new Client({
       brokerURL: wsUrl,
       reconnectDelay: 5000,
+      debug: (str) => console.log('[STOMP DEBUG]', str),
       onConnect: () => {
+        console.log('✅ Conectado!');
         this.client.subscribe(
           `/topic/conversations/${conversationId}`,
           (msg: IMessage) => {
@@ -23,12 +26,12 @@ export class WebSocketService {
           },
         );
       },
-      onStompError: (frame) => {
-        console.error('STOMP error:', frame);
-      },
+      onWebSocketError: (error) => console.error('🔴 WS Error:', error),
+      onStompError: (frame) => console.error('🔴 STOMP Error:', frame),
     });
 
     this.client.activate();
+    console.log('▶️ activate() llamado');
   }
 
   sendMessage(message: Message): void {
