@@ -35,7 +35,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -169,7 +169,8 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
     console.log('Payload from RegisterPage:', payload);
 
-    this.userService.save(payload)
+    this.userService
+      .save(payload)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
@@ -210,7 +211,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
           console.error('Error checking availability:', err);
           return of(null);
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((emailResponse) => {
         if (emailResponse === null) return;

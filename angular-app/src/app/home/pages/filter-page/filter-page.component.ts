@@ -24,9 +24,7 @@ import { TokenService } from '../../../users/services/token.service';
 })
 export class FilterPageComponent implements OnInit {
   ngOnInit() {
-    if (!this.tokenService.isLogged()) {
-      return;
-    }
+    if (!this.tokenService.isLogged()) return;
 
     this.userService.getPreferences().subscribe({
       next: (pref) => {
@@ -45,11 +43,14 @@ export class FilterPageComponent implements OnInit {
           this.cityService.setSelectedCountry(this.filters.country);
         }
 
+        // ⬇️ faltaba esto
+        if (this.filters.state) {
+          this.cityService.setSelectedState(this.filters.state);
+        }
+
         this.filtersEmitted.emit({ ...this.filters });
       },
-      error: (err) => {
-        console.error('Error loading preferences', err);
-      },
+      error: (err) => console.error('Error loading preferences', err),
     });
   }
 
@@ -172,7 +173,10 @@ export class FilterPageComponent implements OnInit {
         },
       });
     } else {
-      console.log('Usuario invitado: no se guardan preferencias en el servidor', preferenceDTO);
+      console.log(
+        'Usuario invitado: no se guardan preferencias en el servidor',
+        preferenceDTO,
+      );
     }
 
     console.log('Filter Options Selected', preferenceDTO);
@@ -186,6 +190,8 @@ export class FilterPageComponent implements OnInit {
       city: '',
     };
     this.cityService.setSelectedCountry(country);
+    // ⬇️ esto sobraba — si cambia país, el estado se limpió arriba
+    // quitar el bloque que tenías con if (this.filters.state)
   }
 
   onStateSelected(state: string): void {
@@ -194,6 +200,8 @@ export class FilterPageComponent implements OnInit {
       state: state,
       city: '',
     };
+    // ⬇️ faltaba esto
+    this.cityService.setSelectedState(state);
   }
 
   onCitySelected(city: string): void {
