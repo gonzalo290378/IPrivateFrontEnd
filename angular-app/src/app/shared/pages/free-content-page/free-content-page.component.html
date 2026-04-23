@@ -142,6 +142,8 @@
                       <div class="info-lbl">Ciudad</div>
                       <app-by-city-page
                         [selectedCity]="userForm.get('city')?.value"
+                        [selectedCountry]="userForm.get('country')?.value"
+                        [selectedState]="userForm.get('state')?.value"
                         (citySelected)="onCitySelected($event)"
                         [disabled]="!isAccountEnabled"
                       ></app-by-city-page>

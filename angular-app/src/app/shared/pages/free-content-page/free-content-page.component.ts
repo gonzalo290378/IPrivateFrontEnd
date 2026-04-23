@@ -128,14 +128,6 @@ export class FreeContentPageComponent {
             : '',
         });
 
-        if (user.countryDTO?.country) {
-          this.cityService.setSelectedCountry(user.countryDTO.country);
-        }
-
-        if (user.stateDTO?.state) {
-          this.cityService.setSelectedState(user.stateDTO.state);
-        }
-
         if (!user.isEnabled) {
           this.userForm.disable();
           this.isAccountEnabled = user.isEnabled ?? true;
@@ -199,7 +191,6 @@ export class FreeContentPageComponent {
     }
 
     this.isLoading = true;
-
     const formValues = this.userForm.value;
 
     const userDetailsFreeAreaDTO: UserDetailsFreeAreaDTO = {
@@ -213,6 +204,22 @@ export class FreeContentPageComponent {
 
     this.userService
       .updateDetailsFreeArea(this.user.username, userDetailsFreeAreaDTO)
+      .pipe(
+        switchMap(() => this.userService.getPreferences()),
+        switchMap((currentPrefs) => {
+          const preferenceDTO = {
+            ageFrom: currentPrefs?.ageFrom ?? null,
+            ageTo: currentPrefs?.ageTo ?? null,
+            sexPreference: currentPrefs?.sexPreference ?? formValues.sex,
+            filterCountry: formValues.country
+              ? { country: formValues.country }
+              : null,
+            filterState: formValues.state ? { state: formValues.state } : null,
+            filterCity: formValues.city ? { city: formValues.city } : null,
+          };
+          return this.userService.updatePreferences(preferenceDTO);
+        }),
+      )
       .subscribe({
         next: () => {
           this.isLoading = false;

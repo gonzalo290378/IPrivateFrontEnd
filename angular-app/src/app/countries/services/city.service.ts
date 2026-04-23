@@ -24,7 +24,7 @@ export class CityService {
   constructor(private http: HttpClient) {}
 
   setSelectedState(state: string): void {
-    this.selectedStateSubject.next(state);
+    this.selectedStateSubject.next(state || null);
     this.citiesSubject.next([]);
   }
 
@@ -34,7 +34,7 @@ export class CityService {
 
   setSelectedCountry(country: string): void {
     this.selectedCountrySubject.next(country);
-    this.citiesSubject.next([]); 
+    this.citiesSubject.next([]);
   }
 
   getSelectedCountry(): string | null {
@@ -49,7 +49,6 @@ export class CityService {
     return this.citiesSubject.getValue();
   }
 
-  // Alias para que loadAndSearchCity pueda cachear
   private setCurrentCities(cities: City[]): void {
     this.citiesSubject.next(cities);
   }
@@ -61,17 +60,17 @@ export class CityService {
   }
 
   loadCitiesByState(): Observable<City[]> {
-  const country = this.getSelectedCountry();
-  const state = this.getSelectedState();
+    const country = this.getSelectedCountry();
+    const state = this.getSelectedState();
 
-  if (!country || !state) return of([]);
+    if (!country || !state) return of([]);
 
-  const url = `${this.apiUrl}cities/citiesByStates?name=${encodeURIComponent(state)}&country=${encodeURIComponent(country)}`;
+    const url = `${this.apiUrl}cities/citiesByStates?name=${encodeURIComponent(state)}&country=${encodeURIComponent(country)}`;
 
-  return this.getCitiesRequest(url).pipe(
-    tap((cities: City[]) => this.citiesSubject.next(cities))
-  );
-}
+    return this.getCitiesRequest(url).pipe(
+      tap((cities: City[]) => this.citiesSubject.next(cities)),
+    );
+  }
 
   searchCity(term: string, listCities: City[]): Observable<City[]> {
     const url = `${this.apiUrl}cities/search`;
@@ -79,21 +78,36 @@ export class CityService {
     return this.http.post<City[]>(url, body);
   }
 
-loadAndSearchCity(term: string): Observable<City[]> {
-  const country = this.getSelectedCountry();
-  const state = this.getSelectedState();
+  loadAndSearchCity(term: string): Observable<City[]> {
+    const country = this.getSelectedCountry();
+    const state = this.getSelectedState();
 
-  if (!country || !state) return of([]);
+    if (!country || !state) return of([]);
 
-  const url = `${this.apiUrl}cities/citiesByStates?name=${encodeURIComponent(state)}&country=${encodeURIComponent(country)}`;
+    const url = `${this.apiUrl}cities/citiesByStates?name=${encodeURIComponent(state)}&country=${encodeURIComponent(country)}`;
 
-  return this.getCitiesRequest(url).pipe(
-    tap((cities: City[]) => this.citiesSubject.next(cities)),
-    switchMap((cities: City[]) => this.searchCity(term, cities))
-  );
-}
+    return this.getCitiesRequest(url).pipe(
+      tap((cities: City[]) => this.citiesSubject.next(cities)),
+      switchMap((cities: City[]) => this.searchCity(term, cities)),
+    );
+  }
 
   private getCitiesRequest(url: string): Observable<City[]> {
     return this.http.get<City[]>(url).pipe(catchError(() => of([])));
+  }
+
+  searchByCountryAndState(
+    term: string,
+    country: string,
+    state: string,
+  ): Observable<City[]> {
+    const url = `${this.apiUrl}cities/citiesByStates?name=${encodeURIComponent(state)}&country=${encodeURIComponent(country)}`;
+
+    return this.getCitiesRequest(url).pipe(
+      catchError(() => of([])),
+      switchMap((cities: City[]) =>
+        cities.length > 0 ? this.searchCity(term, cities) : of([]),
+      ),
+    );
   }
 }

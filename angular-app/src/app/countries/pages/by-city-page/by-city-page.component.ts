@@ -5,7 +5,6 @@ import { SearchBoxComponent } from '../../../shared/pages/search-box/search-box.
 import { CityTableComponent } from '../../components/city-table/city-table.component';
 import { MaterialModule } from '../../../material/material-module';
 import { FormsModule } from '@angular/forms';
-import { filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-by-city-page',
@@ -19,6 +18,8 @@ import { filter, switchMap } from 'rxjs';
 })
 export class ByCityPageComponent implements OnInit {
   @Input() selectedCity: string = '';
+  @Input() selectedCountry: string = '';
+  @Input() selectedState: string = '';
   @Input() disabled: boolean = false;
   @Output() citySelected = new EventEmitter<string>();
   public cities: City[] = [];
@@ -27,12 +28,6 @@ export class ByCityPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.cities = [];
-
-    // Precarga ciudades si ya hay país y estado seteados
-    this.cityService.selectedState$.pipe(
-      filter(state => !!state),
-      switchMap(() => this.cityService.loadCitiesByState())
-    ).subscribe();
   }
 
   searchByCity(term: string): void {
@@ -42,17 +37,19 @@ export class ByCityPageComponent implements OnInit {
       return;
     }
 
-    const currentCities = this.cityService.getCurrentCities();
+    const country = this.selectedCountry;
+    const state = this.selectedState;
 
-    if (currentCities.length > 0) {
-      this.cityService.searchCity(term, currentCities).subscribe((cities) => {
-        this.cities = cities;
-      });
-    } else {
-      this.cityService.loadAndSearchCity(term).subscribe((cities) => {
-        this.cities = cities;
-      });
+    if (!country || !state) {
+      this.cities = [];
+      return;
     }
+
+    const url = this.cityService
+      .searchByCountryAndState(term, country, state)
+      .subscribe((cities) => {
+        this.cities = cities;
+      });
   }
 
   updateSearchBox(cityName: string): void {

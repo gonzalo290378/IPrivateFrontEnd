@@ -43,7 +43,6 @@ export class FilterPageComponent implements OnInit {
           this.cityService.setSelectedCountry(this.filters.country);
         }
 
-        // ⬇️ faltaba esto
         if (this.filters.state) {
           this.cityService.setSelectedState(this.filters.state);
         }
@@ -190,8 +189,6 @@ export class FilterPageComponent implements OnInit {
       city: '',
     };
     this.cityService.setSelectedCountry(country);
-    // ⬇️ esto sobraba — si cambia país, el estado se limpió arriba
-    // quitar el bloque que tenías con if (this.filters.state)
   }
 
   onStateSelected(state: string): void {
@@ -200,7 +197,6 @@ export class FilterPageComponent implements OnInit {
       state: state,
       city: '',
     };
-    // ⬇️ faltaba esto
     this.cityService.setSelectedState(state);
   }
 
