@@ -143,8 +143,12 @@
           <div class="mat-field-wrapper">
             <span class="field-label">Ciudad</span>
             <app-by-city-page
+              [selectedCity]="locationForm.get('city')?.value"
+              [selectedCountry]="locationForm.get('country')?.value"
+              [selectedState]="locationForm.get('state')?.value"
               (citySelected)="onCityChange($event)"
-            ></app-by-city-page>
+            >
+            </app-by-city-page>
           </div>
 
           <div class="step-buttons">

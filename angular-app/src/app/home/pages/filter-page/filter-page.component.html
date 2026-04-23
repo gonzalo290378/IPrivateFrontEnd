@@ -20,6 +20,8 @@
       <span class="field-label">Ciudad</span>
       <app-by-city-page
         [selectedCity]="filters.city"
+        [selectedCountry]="filters.country"
+        [selectedState]="filters.state"
         (citySelected)="onCitySelected($event)"
       >
       </app-by-city-page>
