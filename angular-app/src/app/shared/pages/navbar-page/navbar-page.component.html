@@ -1,40 +1,42 @@
-@if(isLogged){
-<mat-sidenav-container>
-  <div class="flex flex-center">
-    <button mat-button mat-raised color="primary">
-      <mat-icon>account_circle</mat-icon> {{ userProfile?.username }}
+@if (isLogged) {
+  <mat-sidenav-container>
+    <div class="flex flex-center">
+      <button mat-button mat-raised color="primary">
+        <mat-icon>account_circle</mat-icon> {{ userProfile?.username }}
 
-      <span
-        class="status-text"
-        [ngClass]="{ 'active-status': isLogged, 'inactive-status': !isLogged }"
-      >
-        {{ isLogged ? "Sin notificaciones" : "Notificaciones" }}
-      </span>
-    </button>
-  </div>
+        <span
+          class="status-text"
+          [ngClass]="{
+            'active-status': isLogged,
+            'inactive-status': !isLogged,
+          }"
+        >
+          {{ isLogged ? "Sin notificaciones" : "Notificaciones" }}
+        </span>
+      </button>
+    </div>
 
-  <mat-nav-list class="flex-container">
-    <a mat-list-item [routerLink]="['/']">
-      <span class="entry">
-        <mat-icon class="icon">house</mat-icon>
-        <span class="text">Inicio</span>
-      </span>
-    </a>
+    <mat-nav-list class="flex-container">
+      <a mat-list-item [routerLink]="['/']">
+        <span class="entry">
+          <mat-icon class="icon">house</mat-icon>
+          <span class="text">Inicio</span>
+        </span>
+      </a>
 
-    <a mat-list-item [routerLink]="['/', 'username', 'messages']">
-      <span class="entry">
-        <mat-icon class="icon">chat</mat-icon>
-        <span class="text">Mis Mensajes</span>
-      </span>
-    </a>
+      <a mat-list-item [routerLink]="[userProfile?.username, 'messages']">
+        <span class="entry">
+          <mat-icon class="icon">chat</mat-icon>
+          <span class="text">Mis Mensajes</span>
+        </span>
+      </a>
 
-    <a mat-list-item [routerLink]="['/edit', userProfile?.username]">
-      <span class="entry">
-        <mat-icon class="icon">settings</mat-icon>
-        <span class="text">Mi Perfil Publico</span>
-      </span>
-    </a>
-  </mat-nav-list>
-</mat-sidenav-container>
+      <a mat-list-item [routerLink]="['/edit', userProfile?.username]">
+        <span class="entry">
+          <mat-icon class="icon">settings</mat-icon>
+          <span class="text">Mi Perfil Publico</span>
+        </span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav-container>
 }
-
