@@ -39,10 +39,9 @@ export class MeetingRoomPageComponent implements OnInit {
       this.size = isMobile ? 10 : 5;
     }
 
-    const token = this.tokenService.getAccessToken();
-    if (!token) {
-      this.loadUsers();
-    }
+    this.page = 0;
+    this.users = [];
+    this.loadUsers();
   }
 
   loadUsers(): void {

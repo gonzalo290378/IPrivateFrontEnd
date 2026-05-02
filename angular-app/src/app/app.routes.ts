@@ -40,11 +40,6 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'chat/:id',
-    loadComponent: () =>
-      import('./chat/chat/chat.component').then((m) => m.ChatComponent),
-  },
-  {
     path: 'edit/:username',
     canActivate: [AuthGuard, OwnerGuard],
     loadComponent: () =>

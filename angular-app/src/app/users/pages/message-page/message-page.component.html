@@ -1,1 +1,89 @@
-<p>message-page works!</p>
+<div class="grid flex flex-column md:flex-row justify-content-center">
+  <!-- Columna izquierda: navbar (igual que el home) -->
+  <div class="col-12 md:col-3">
+    <app-link-login-and-create-account></app-link-login-and-create-account>
+    <app-navbar-page></app-navbar-page>
+  </div>
+
+  <!-- Columna derecha: chat -->
+  <div class="col-12 md:col-9 flex flex-column">
+    <app-upload-content-page></app-upload-content-page>
+    <div class="whatsapp-layout">
+      <!-- Panel izquierdo: lista conversaciones -->
+      <div class="conversations-panel">
+        <div class="conversations-header">
+          <h3>Mensajes</h3>
+        </div>
+
+        <div
+          *ngFor="let conv of conversations"
+          class="conversation-item"
+          [class.active]="
+            selectedConversation?.conversationId === conv.conversationId
+          "
+          (click)="selectConversation(conv)"
+        >
+          <div class="chat-avatar">
+            <img
+              *ngIf="conv.profilePhotoUrl"
+              [src]="'http://localhost:8002' + conv.profilePhotoUrl"
+              [alt]="conv.otherUsername"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+              "
+            />
+            <span *ngIf="!conv.profilePhotoUrl">
+              {{ conv.otherUsername[0].toUpperCase() }}
+            </span>
+          </div>
+          <div class="conversation-info">
+            <span class="chat-username">{{ "@" + conv.otherUsername }}</span>
+            <span class="chat-last-message">{{ conv.lastMessage }}</span>
+          </div>
+        </div>
+
+        <div *ngIf="conversations.length === 0" class="chat-empty-state">
+          No tenés conversaciones aún.
+        </div>
+      </div>
+
+      <!-- Panel derecho: conversación activa -->
+      <div class="chat-panel">
+        <ng-container *ngIf="selectedConversation; else noSelection">
+          <div class="chat-header">
+            <span>{{ "@" + selectedConversation.otherUsername }}</span>
+          </div>
+
+          <div class="messages-list">
+            <div
+              *ngFor="let msg of messages"
+              class="message-bubble"
+              [class.sent]="msg.senderId === currentUsername"
+              [class.received]="msg.senderId !== currentUsername"
+            >
+              <span>{{ msg.body }}</span>
+            </div>
+          </div>
+
+          <div class="chat-input-row">
+            <input
+              [(ngModel)]="newMessage"
+              placeholder="Escribe un mensaje..."
+              (keyup.enter)="sendMessage()"
+            />
+            <button (click)="sendMessage()">Enviar</button>
+          </div>
+        </ng-container>
+
+        <ng-template #noSelection>
+          <div class="chat-no-selection">
+            <p>Seleccioná una conversación para comenzar</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

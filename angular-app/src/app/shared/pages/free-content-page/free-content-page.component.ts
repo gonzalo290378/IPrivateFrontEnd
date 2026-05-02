@@ -48,7 +48,6 @@ import { RouterLink } from '@angular/router';
     ByStatePageComponent,
     ByCityPageComponent,
     FollowButtonComponent,
-    RouterLink,
   ],
   templateUrl: './free-content-page.component.html',
 })
@@ -219,11 +218,27 @@ export class FreeContentPageComponent {
           };
           return this.userService.updatePreferences(preferenceDTO);
         }),
+        switchMap(() =>
+          this.userService.getEntityByUsername(this.user!.username),
+        ),
       )
       .subscribe({
-        next: () => {
+        next: (updatedUser) => {
           this.isLoading = false;
-          this.router.navigate(['/edit', this.user?.username]);
+          if (updatedUser) {
+            this.user = updatedUser;
+            this.userForm.patchValue({
+              country: updatedUser.countryDTO?.country || '',
+              state: updatedUser.stateDTO?.state || '',
+              city: updatedUser.cityDTO?.city || '',
+              sex: updatedUser.sex || '',
+              description: updatedUser.description || '',
+              birthdate: updatedUser.birthdate
+                ? this.formatDateForInput(updatedUser.birthdate)
+                : '',
+            });
+            this.updateProfileImageUrl();
+          }
         },
         error: (err) => {
           console.error('Error al actualizar el perfil:', err);
@@ -443,5 +458,10 @@ export class FreeContentPageComponent {
       return;
     }
     this.router.navigate([this.user?.username, this.user?.id, 'following']);
+  }
+
+  goToMessages(): void {
+    const myUsername = this.tokenService.getUsernameFromToken();
+    this.router.navigate(['/', myUsername, 'messages']);
   }
 }
