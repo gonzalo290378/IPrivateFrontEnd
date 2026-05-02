@@ -1,7 +1,6 @@
 /* ================================================
    VARIABLES CSS (para facilitar mantenimiento)
    ================================================ */
-
 :root {
   --primary-blue: rgb(48, 48, 155);
   --primary-blue-hover: #6060b6;
@@ -37,6 +36,15 @@
   --transition-fast: 0.15s ease;
   --transition-medium: 0.2s ease;
   --transition-slow: 0.3s ease;
+
+  /* Chat / Mensajes */
+  --chat-blue: #1976d2;
+  --chat-blue-hover: #1565c0;
+  --chat-border: #e0e0e0;
+  --chat-bg: #f9f9f9;
+  --chat-bubble-received: #ffffff;
+  --chat-sidebar-width: 320px;
+  --navbar-height: 80px;
 }
 
 /* ================================================
@@ -91,7 +99,6 @@ mat-card.main-profile-card {
   border-radius: var(--border-radius-md);
   background-color: transparent;
 }
-
 
 /* ================================================
    PERFILES E IMÁGENES
@@ -603,7 +610,6 @@ app-profile-feed-content-page {
   overflow: hidden;
 }
 
-
 /* ================================================
    FOLLOWERS PAGE
    ================================================ */
@@ -710,6 +716,214 @@ app-profile-feed-content-page {
   border-top: 0.5px solid rgba(0, 0, 0, 0.08);
 }
 
+/* ================================================
+   CHAT / MENSAJES (WhatsApp layout)
+   ================================================ */
+
+.whatsapp-layout {
+  display: flex;
+  height: calc(100vh - var(--navbar-height));
+  border: 1px solid var(--chat-border);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+/* Panel izquierdo - lista conversaciones */
+.conversations-panel {
+  width: var(--chat-sidebar-width);
+  min-width: var(--chat-sidebar-width);
+  border-right: 1px solid var(--chat-border);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.conversations-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--chat-border);
+  font-weight: bold;
+}
+
+.conversations-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+}
+
+.conversation-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background var(--transition-medium);
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.conversation-item:hover,
+.conversation-item.active {
+  background: #f0f4ff;
+}
+
+/* Avatar del chat - renombrado para evitar colisiones */
+.chat-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--chat-blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.conversation-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Renombrado de .username a .chat-username para evitar colisiones */
+.chat-username {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+}
+
+.chat-last-message {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-empty-state {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Panel derecho - conversación activa */
+.chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--chat-bg);
+  min-width: 0; /* evita overflow en flex */
+}
+
+.chat-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--chat-border);
+  background: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+
+.messages-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.message-bubble {
+  max-width: 65%;
+  padding: 8px 12px;
+  border-radius: var(--border-radius-md);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  word-break: break-word; /* evita overflow en mensajes largos */
+}
+
+.message-bubble.sent {
+  align-self: flex-end;
+  background: var(--chat-blue);
+  color: white;
+  border-bottom-right-radius: 2px;
+}
+
+.message-bubble.received {
+  align-self: flex-start;
+  background: var(--chat-bubble-received);
+  border: 1px solid var(--chat-border);
+  border-bottom-left-radius: 2px;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--chat-border);
+  background: #fff;
+}
+
+.chat-input-row input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--chat-border);
+  border-radius: var(--border-radius-full);
+  outline: none;
+  font-size: 0.9rem;
+  transition: border-color var(--transition-fast);
+}
+
+.chat-input-row input:focus {
+  border-color: var(--chat-blue);
+}
+
+.chat-input-row button {
+  padding: 10px 20px;
+  background: var(--chat-blue);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background var(--transition-fast);
+}
+
+.chat-input-row button:hover {
+  background: var(--chat-blue-hover);
+}
+
+.chat-no-selection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* Responsive chat */
+@media (max-width: 768px) {
+  .whatsapp-layout {
+    height: calc(100vh - 60px);
+  }
+
+  .conversations-panel {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* En mobile: si hay conversación seleccionada, ocultar lista */
+  .conversations-panel.hidden-mobile {
+    display: none;
+  }
+
+  .chat-panel.hidden-mobile {
+    display: none;
+  }
+}
 
 /* ================================================
    EDICION DE PERFIL

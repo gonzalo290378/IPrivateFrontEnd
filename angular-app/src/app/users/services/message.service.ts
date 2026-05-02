@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Message } from '../../models/messages';
 import { environment } from '../../../environments/environment';
+import { Conversation } from '../../chat/chat/interfaces/conversation';
 
 @Injectable({ providedIn: 'root' })
 export class MessageService {
@@ -16,6 +17,12 @@ export class MessageService {
   getConversationId(user1: string, user2: string) {
     return this.http.get<string>(
       `${this.api}/conversation-id?user1=${user1}&user2=${user2}`,
+    );
+  }
+
+  getConversations(username: string) {
+    return this.http.get<Conversation[]>(
+      `${this.api}/conversations/${username}`,
     );
   }
 }

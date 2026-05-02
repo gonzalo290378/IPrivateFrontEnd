@@ -24,7 +24,7 @@
         </span>
       </a>
 
-      <a mat-list-item [routerLink]="[userProfile?.username, 'messages']">
+      <a mat-list-item [routerLink]="['/', userProfile?.username, 'messages']">
         <span class="entry">
           <mat-icon class="icon">chat</mat-icon>
           <span class="text">Mis Mensajes</span>
