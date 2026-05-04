@@ -9,11 +9,18 @@ import { NavbarPageComponent } from '../../../shared/pages/navbar-page/navbar-pa
 import { LinkLoginAndCreateAccountComponent } from '../../../shared/pages/link-login-and-create-account/link-login-and-create-account.component';
 import { Conversation } from '../../../chat/chat/interfaces/conversation';
 import { UploadContentPageComponent } from '../../../shared/pages/uploader-page-component/uploader-page-component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-message-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarPageComponent, LinkLoginAndCreateAccountComponent, UploadContentPageComponent,],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NavbarPageComponent,
+    LinkLoginAndCreateAccountComponent,
+    UploadContentPageComponent,
+  ],
   templateUrl: './message-page.component.html',
   styleUrl: './message-page.component.css',
 })
@@ -28,17 +35,40 @@ export class MessagePageComponent implements OnInit {
     private tokenService: TokenService,
     private messageService: MessageService,
     private ws: WebSocketService,
-    
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.currentUsername = this.tokenService.getUsernameFromToken()!;
+
     this.messageService.getConversations(this.currentUsername).subscribe({
-      next: (data) => (this.conversations = data),
+      next: (data) => {
+        this.conversations = data;
+
+        const withUsername = this.route.snapshot.queryParamMap.get('with');
+        if (withUsername) {
+          const existing = this.conversations.find(
+            (c) => c.otherUsername === withUsername,
+          );
+          if (existing) {
+            this.selectConversation(existing);
+          } else {
+            const newConv: Conversation = {
+              conversationId: [this.currentUsername, withUsername]
+                .sort()
+                .join('_'),
+              otherUsername: withUsername,
+              lastMessage: '',
+              lastMessageDate: '',
+            };
+            this.conversations.unshift(newConv);
+            this.selectConversation(newConv);
+          }
+        }
+      },
       error: (err) => console.error('Error loading conversations:', err),
     });
   }
-
   selectConversation(conv: Conversation): void {
     this.selectedConversation = conv;
     this.messages = [];

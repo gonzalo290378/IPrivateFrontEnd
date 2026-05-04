@@ -462,6 +462,8 @@ export class FreeContentPageComponent {
 
   goToMessages(): void {
     const myUsername = this.tokenService.getUsernameFromToken();
-    this.router.navigate(['/', myUsername, 'messages']);
+    this.router.navigate(['/', myUsername, 'messages'], {
+      queryParams: { with: this.user?.username },
+    });
   }
 }
