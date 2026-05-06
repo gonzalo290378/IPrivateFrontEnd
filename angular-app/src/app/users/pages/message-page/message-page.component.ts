@@ -9,7 +9,10 @@ import { NavbarPageComponent } from '../../../shared/pages/navbar-page/navbar-pa
 import { LinkLoginAndCreateAccountComponent } from '../../../shared/pages/link-login-and-create-account/link-login-and-create-account.component';
 import { Conversation } from '../../../chat/chat/interfaces/conversation';
 import { UploadContentPageComponent } from '../../../shared/pages/uploader-page-component/uploader-page-component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MaterialModule } from '../../../material/material-module';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-message-page',
@@ -20,6 +23,9 @@ import { ActivatedRoute } from '@angular/router';
     NavbarPageComponent,
     LinkLoginAndCreateAccountComponent,
     UploadContentPageComponent,
+    MaterialModule,
+    MatTooltipModule,
+    MatIconModule,
   ],
   templateUrl: './message-page.component.html',
   styleUrl: './message-page.component.css',
@@ -36,6 +42,7 @@ export class MessagePageComponent implements OnInit {
     private messageService: MessageService,
     private ws: WebSocketService,
     private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -96,5 +103,9 @@ export class MessagePageComponent implements OnInit {
 
     this.ws.sendMessage(message);
     this.newMessage = '';
+  }
+
+  goToProfile(conv: Conversation): void {
+    this.router.navigate(['/', conv.otherUsername, conv.otherUserId]);
   }
 }

@@ -28,7 +28,6 @@ import { CityService } from '../../../countries/services/city.service';
 import { FollowService } from '../../../home/follow/services/follow.service';
 import { FollowButtonComponent } from '../../../home/follow/components/follow-button/follow-button.component';
 import { environment } from '../../../../environments/environment';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-free-content-page',
@@ -50,6 +49,7 @@ import { RouterLink } from '@angular/router';
     FollowButtonComponent,
   ],
   templateUrl: './free-content-page.component.html',
+  styleUrl: './free-content-page.component.css',
 })
 export class FreeContentPageComponent {
   user?: UserDTO;
