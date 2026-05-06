@@ -56,10 +56,6 @@ body {
   width: 100%;
 }
 
-/* ::-webkit-scrollbar {
-  display: none;
-} */
-
 div[infinite-scroll]::-webkit-scrollbar {
   display: none;
 }
