@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialModule } from '../../../material/material-module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-message-page',
@@ -43,6 +44,7 @@ export class MessagePageComponent implements OnInit {
     private ws: WebSocketService,
     private route: ActivatedRoute,
     private router: Router,
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -60,16 +62,38 @@ export class MessagePageComponent implements OnInit {
           if (existing) {
             this.selectConversation(existing);
           } else {
-            const newConv: Conversation = {
-              conversationId: [this.currentUsername, withUsername]
-                .sort()
-                .join('_'),
-              otherUsername: withUsername,
-              lastMessage: '',
-              lastMessageDate: '',
-            };
-            this.conversations.unshift(newConv);
-            this.selectConversation(newConv);
+            // buscar datos del usuario antes de crear la conversación
+            this.userService.getEntityByUsername(withUsername).subscribe({
+              next: (userData) => {
+                const newConv: Conversation = {
+                  conversationId: [this.currentUsername, withUsername]
+                    .sort()
+                    .join('_'),
+                  otherUsername: withUsername,
+                  lastMessage: '',
+                  lastMessageDate: '',
+                  otherUserId: userData?.id,
+                  profilePhotoUrl:
+                    userData?.freeAreaDTO?.principalPhotoDTO?.[0]?.url ??
+                    undefined,
+                };
+                this.conversations.unshift(newConv);
+                this.selectConversation(newConv);
+              },
+              error: () => {
+                // si falla, crear igual sin datos extra
+                const newConv: Conversation = {
+                  conversationId: [this.currentUsername, withUsername]
+                    .sort()
+                    .join('_'),
+                  otherUsername: withUsername,
+                  lastMessage: '',
+                  lastMessageDate: '',
+                };
+                this.conversations.unshift(newConv);
+                this.selectConversation(newConv);
+              },
+            });
           }
         }
       },
