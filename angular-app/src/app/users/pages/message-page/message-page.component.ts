@@ -62,7 +62,6 @@ export class MessagePageComponent implements OnInit {
           if (existing) {
             this.selectConversation(existing);
           } else {
-            // buscar datos del usuario antes de crear la conversación
             this.userService.getEntityByUsername(withUsername).subscribe({
               next: (userData) => {
                 const newConv: Conversation = {
@@ -81,7 +80,6 @@ export class MessagePageComponent implements OnInit {
                 this.selectConversation(newConv);
               },
               error: () => {
-                // si falla, crear igual sin datos extra
                 const newConv: Conversation = {
                   conversationId: [this.currentUsername, withUsername]
                     .sort()
