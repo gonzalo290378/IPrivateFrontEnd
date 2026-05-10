@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MaterialModule } from '../../../material/material-module';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -6,20 +6,25 @@ import { TokenService } from '../../../users/services/token.service';
 import { ResourceService } from '../../../users/services/resource.service';
 import { UserProfile } from '../../../models/user-profle';
 import { CommonModule } from '@angular/common';
+import { MessageService } from '../../../users/services/message.service';
+import { WebSocketService } from '../../../users/services/websocket.service';
 
 @Component({
   selector: 'app-navbar-page',
-  imports: [MaterialModule, FormsModule, RouterLink, CommonModule ],
+  imports: [MaterialModule, FormsModule, RouterLink, CommonModule],
   templateUrl: './navbar-page.component.html',
 })
-export class NavbarPageComponent implements OnInit {
+export class NavbarPageComponent implements OnInit, OnDestroy {
   userProfile: UserProfile | undefined;
   isLogged: boolean = false;
   isUser: boolean = false;
+  unreadCount: number = 0;
 
   constructor(
     private tokenService: TokenService,
-    private resourceService: ResourceService
+    private resourceService: ResourceService,
+    private messageService: MessageService,
+    private ws: WebSocketService,
   ) {}
 
   ngOnInit(): void {
@@ -29,16 +34,25 @@ export class NavbarPageComponent implements OnInit {
       this.resourceService.user().subscribe({
         next: (data) => {
           this.userProfile = data.user;
-          console.log('User from Navbar:', this.userProfile);
+          this.initUnread(this.userProfile!.username);
         },
         error: (err) => {
           console.log('Error to get User:', err);
           this.handleAuthError();
         },
       });
-    } else {
-      console.log('Usuario not authenticated');
     }
+  }
+
+  private initUnread(username: string): void {
+    this.messageService.getTotalUnread(username).subscribe({
+      next: (count) => (this.unreadCount = count),
+      error: (err) => console.warn('Error cargando unread:', err),
+    });
+
+    this.ws.subscribeToUnread(username, (count: number) => {
+      this.unreadCount = count;
+    });
   }
 
   getLogged(): void {
@@ -50,5 +64,9 @@ export class NavbarPageComponent implements OnInit {
     this.userProfile = undefined;
     this.isLogged = false;
     this.isUser = false;
+  }
+
+  ngOnDestroy(): void {
+    this.ws.unsubscribeUnread();
   }
 }

@@ -107,11 +107,20 @@ export class MessagePageComponent implements OnInit {
       .getConversation(this.currentUsername, conv.otherUsername)
       .subscribe((msgs) => (this.messages = msgs));
 
-    this.ws.connect(conv.conversationId, (msg: any) => {
-      if (msg.type !== 'SEEN') {
-        this.messages.push(msg);
-      }
-    });
+    this.ws.connect(
+      conv.conversationId,
+      (msg: any) => {
+        if (msg.type !== 'SEEN') {
+          this.messages.push(msg);
+        }
+      },
+      () => {
+        this.ws.markAsSeen({
+          conversationId: conv.conversationId,
+          viewerId: this.currentUsername,
+        });
+      },
+    );
   }
 
   sendMessage(): void {

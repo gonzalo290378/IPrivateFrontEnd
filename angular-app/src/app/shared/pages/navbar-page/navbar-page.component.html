@@ -28,6 +28,9 @@
         <span class="entry">
           <mat-icon class="icon">chat</mat-icon>
           <span class="text">Mis Mensajes</span>
+          <span *ngIf="unreadCount > 0" class="nav-badge">
+            {{ unreadCount > 99 ? "99+" : unreadCount }}
+          </span>
         </span>
       </a>
 

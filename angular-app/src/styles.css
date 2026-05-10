@@ -526,6 +526,29 @@ a.link-button:hover {
   padding: revert !important;
 }
 
+.nav-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #e53935;
+  color: white;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  line-height: 1;
+  margin-left: auto; /* lo empuja al extremo derecho del entry */
+}
+
 /* ================================================
    ESTADO DE CARGA
    ================================================ */
