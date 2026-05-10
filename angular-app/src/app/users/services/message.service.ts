@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Message } from '../../models/messages';
 import { environment } from '../../../environments/environment';
 import { Conversation } from '../../chat/chat/interfaces/conversation';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MessageService {
@@ -25,4 +26,10 @@ export class MessageService {
       `${this.api}/conversations/${username}`,
     );
   }
+
+  getTotalUnread(username: string): Observable<number> {
+  return this.http.get<number>(
+    `${this.api}/unread/${username}`
+  );
+}
 }
