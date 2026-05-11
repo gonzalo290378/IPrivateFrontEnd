@@ -50,9 +50,15 @@ export class NavbarPageComponent implements OnInit, OnDestroy {
       error: (err) => console.warn('Error cargando unread:', err),
     });
 
-    this.ws.subscribeToUnread(username, (count: number) => {
-      this.unreadCount = count;
-    });
+    this.ws.subscribeToUnread(
+      username,
+      (count: number) => {
+        this.unreadCount = count;
+      },
+      () => {
+        this.messageService.triggerConversationsRefresh();
+      },
+    );
   }
 
   getLogged(): void {
