@@ -60,7 +60,11 @@ export class WebSocketService {
     }
   }
 
-  subscribeToUnread(username: string, callback: (count: number) => void): void {
+  subscribeToUnread(
+    username: string,
+    callback: (count: number) => void,
+    onNewMessage?: () => void,
+  ): void {
     const wsUrl =
       environment.baseUrl.replace('http', 'ws') + '/ms-messages/ws-chat';
 
@@ -72,6 +76,7 @@ export class WebSocketService {
           `/topic/unread/${username}`,
           (msg: IMessage) => {
             callback(Number(JSON.parse(msg.body)));
+            onNewMessage?.();
           },
         );
       },

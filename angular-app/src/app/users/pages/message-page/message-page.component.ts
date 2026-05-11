@@ -14,6 +14,7 @@ import { MaterialModule } from '../../../material/material-module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-message-page',
@@ -37,6 +38,7 @@ export class MessagePageComponent implements OnInit {
   selectedConversation: Conversation | null = null;
   messages: Message[] = [];
   newMessage: string = '';
+  private refreshSub?: Subscription;
 
   constructor(
     private tokenService: TokenService,
@@ -49,6 +51,13 @@ export class MessagePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUsername = this.tokenService.getUsernameFromToken()!;
+    this.loadConversations();
+
+    this.refreshSub = this.messageService.onConversationsRefresh$.subscribe(
+      () => {
+        this.loadConversations();
+      },
+    );
 
     this.messageService.getConversations(this.currentUsername).subscribe({
       next: (data) => {
@@ -98,6 +107,11 @@ export class MessagePageComponent implements OnInit {
       error: (err) => console.error('Error loading conversations:', err),
     });
   }
+
+  ngOnDestroy(): void {
+    this.refreshSub?.unsubscribe();
+  }
+
   selectConversation(conv: Conversation): void {
     this.selectedConversation = conv;
     this.messages = [];
@@ -112,6 +126,7 @@ export class MessagePageComponent implements OnInit {
       (msg: any) => {
         if (msg.type !== 'SEEN') {
           this.messages.push(msg);
+          this.bringConversationToTop(msg.conversationId, msg.body);
         }
       },
       () => {
@@ -121,6 +136,25 @@ export class MessagePageComponent implements OnInit {
         });
       },
     );
+  }
+
+  private bringConversationToTop(
+    conversationId: string,
+    lastBody: string,
+  ): void {
+    const idx = this.conversations.findIndex(
+      (c) => c.conversationId === conversationId,
+    );
+    if (idx > 0) {
+      const conv = { ...this.conversations[idx], lastMessage: lastBody };
+      this.conversations.splice(idx, 1);
+      this.conversations.unshift(conv);
+    } else if (idx === 0) {
+      this.conversations[0] = {
+        ...this.conversations[0],
+        lastMessage: lastBody,
+      };
+    }
   }
 
   sendMessage(): void {
@@ -138,5 +172,55 @@ export class MessagePageComponent implements OnInit {
 
   goToProfile(conv: Conversation): void {
     this.router.navigate(['/', conv.otherUsername, conv.otherUserId]);
+  }
+
+  private loadConversations(): void {
+    this.messageService.getConversations(this.currentUsername).subscribe({
+      next: (data) => {
+        this.conversations = data;
+
+        const withUsername = this.route.snapshot.queryParamMap.get('with');
+        if (withUsername) {
+          const existing = this.conversations.find(
+            (c) => c.otherUsername === withUsername,
+          );
+          if (existing) {
+            this.selectConversation(existing);
+          } else {
+            this.userService.getEntityByUsername(withUsername).subscribe({
+              next: (userData) => {
+                const newConv: Conversation = {
+                  conversationId: [this.currentUsername, withUsername]
+                    .sort()
+                    .join('_'),
+                  otherUsername: withUsername,
+                  lastMessage: '',
+                  lastMessageDate: '',
+                  otherUserId: userData?.id,
+                  profilePhotoUrl:
+                    userData?.freeAreaDTO?.principalPhotoDTO?.[0]?.url ??
+                    undefined,
+                };
+                this.conversations.unshift(newConv);
+                this.selectConversation(newConv);
+              },
+              error: () => {
+                const newConv: Conversation = {
+                  conversationId: [this.currentUsername, withUsername]
+                    .sort()
+                    .join('_'),
+                  otherUsername: withUsername,
+                  lastMessage: '',
+                  lastMessageDate: '',
+                };
+                this.conversations.unshift(newConv);
+                this.selectConversation(newConv);
+              },
+            });
+          }
+        }
+      },
+      error: (err) => console.error('Error loading conversations:', err),
+    });
   }
 }

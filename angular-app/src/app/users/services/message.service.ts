@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { Message } from '../../models/messages';
 import { environment } from '../../../environments/environment';
 import { Conversation } from '../../chat/chat/interfaces/conversation';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MessageService {
   private api = `${environment.msMessages}messages`;
+  private conversationsRefresh$ = new Subject<void>();
+  readonly onConversationsRefresh$ = this.conversationsRefresh$.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -28,8 +30,10 @@ export class MessageService {
   }
 
   getTotalUnread(username: string): Observable<number> {
-  return this.http.get<number>(
-    `${this.api}/unread/${username}`
-  );
-}
+    return this.http.get<number>(`${this.api}/unread/${username}`);
+  }
+
+  triggerConversationsRefresh(): void {
+    this.conversationsRefresh$.next();
+  }
 }
