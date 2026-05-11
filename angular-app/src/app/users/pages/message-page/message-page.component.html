@@ -37,20 +37,27 @@
             </span>
           </div>
           <div class="conversation-info">
-    <div class="conversation-info-header">
-        <span class="chat-username">{{ "@" + conv.otherUsername }}</span>
-        <button 
-            *ngIf="conv.otherUserId"
-            (click)="goToProfile(conv); $event.stopPropagation()"
-            mat-mini-fab
-            color="primary"
-            matTooltip="Ver perfil"
-            class="btn-profile-small">
-            <mat-icon>person</mat-icon>
-        </button>
-    </div>
-    <span class="chat-last-message">{{ conv.lastMessage }}</span>
-</div>
+            <div class="conversation-info-header">
+              <span class="chat-username">{{ "@" + conv.otherUsername }}</span>
+              <button
+                *ngIf="conv.otherUserId"
+                (click)="goToProfile(conv); $event.stopPropagation()"
+                mat-mini-fab
+                color="primary"
+                matTooltip="Ver perfil"
+                class="btn-profile-small"
+              >
+                <mat-icon>person</mat-icon>
+              </button>
+            </div>
+            <div class="conversation-last-row">
+              <span class="chat-last-message">{{ conv.lastMessage }}</span>
+              <span
+                *ngIf="conv.unreadCount && conv.unreadCount > 0"
+                class="conv-unread-dot"
+              ></span>
+            </div>
+          </div>
         </div>
 
         <div *ngIf="conversations.length === 0" class="chat-empty-state">

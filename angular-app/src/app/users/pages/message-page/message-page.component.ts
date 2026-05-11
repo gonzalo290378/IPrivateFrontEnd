@@ -117,6 +117,9 @@ export class MessagePageComponent implements OnInit {
     this.messages = [];
     this.ws.disconnect();
 
+    // ← limpiar el punto rojo al abrir
+    conv.unreadCount = 0;
+
     this.messageService
       .getConversation(this.currentUsername, conv.otherUsername)
       .subscribe((msgs) => (this.messages = msgs));

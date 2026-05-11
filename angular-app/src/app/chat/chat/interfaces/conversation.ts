@@ -5,4 +5,5 @@ export interface Conversation {
   lastMessageDate: string;
   conversationId: string;
   profilePhotoUrl?: string;
+  unreadCount?: number;
 }

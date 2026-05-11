@@ -1084,6 +1084,26 @@ app-profile-feed-content-page {
 }
 
 /* ================================================
+   Indicator of new messages en conversation list
+   ================================================ */
+
+.conversation-last-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.conv-unread-dot {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  background: #e53935;
+  flex-shrink: 0;
+}
+
+/* ================================================
    RESPONSIVE (Mobile First)
    ================================================ */
 
