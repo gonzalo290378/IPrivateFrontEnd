@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../../users/services/token.service';
 import { ResourceService } from '../../../users/services/resource.service';
-import { UserProfile } from '../../../models/user-profle';
+import { UserProfile } from '../../../dto/user-profle';
 import { CommonModule } from '@angular/common';
 import { MessageService } from '../../../users/services/message.service';
 import { WebSocketService } from '../../../users/services/websocket.service';
@@ -50,15 +50,14 @@ export class NavbarPageComponent implements OnInit, OnDestroy {
       error: (err) => console.warn('Error cargando unread:', err),
     });
 
-    this.ws.subscribeToUnread(
-      username,
-      (count: number) => {
-        this.unreadCount = count;
-      },
-      () => {
+    this.ws.subscribeToUnread(username, (count: number) => {
+      const previous = this.unreadCount;
+      this.unreadCount = count;
+
+      if (count !== previous) {
         this.messageService.triggerConversationsRefresh();
-      },
-    );
+      }
+    });
   }
 
   getLogged(): void {

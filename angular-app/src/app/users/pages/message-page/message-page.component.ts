@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TokenService } from '../../../users/services/token.service';
 import { MessageService } from '../../../users/services/message.service';
 import { WebSocketService } from '../../../users/services/websocket.service';
-import { Message } from '../../../models/messages';
 import { NavbarPageComponent } from '../../../shared/pages/navbar-page/navbar-page.component';
 import { LinkLoginAndCreateAccountComponent } from '../../../shared/pages/link-login-and-create-account/link-login-and-create-account.component';
 import { Conversation } from '../../../chat/chat/interfaces/conversation';
@@ -15,6 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
+import { MessageDTO } from '../../../dto/messages-dto';
 
 @Component({
   selector: 'app-message-page',
@@ -32,13 +32,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './message-page.component.html',
   styleUrl: './message-page.component.css',
 })
-export class MessagePageComponent implements OnInit {
+export class MessagePageComponent implements OnInit, OnDestroy {
   currentUsername!: string;
   conversations: Conversation[] = [];
   selectedConversation: Conversation | null = null;
-  messages: Message[] = [];
+  messages: MessageDTO[] = [];
   newMessage: string = '';
   private refreshSub?: Subscription;
+  private initialLoadDone = false;
 
   constructor(
     private tokenService: TokenService,
@@ -51,73 +52,25 @@ export class MessagePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUsername = this.tokenService.getUsernameFromToken()!;
+
     this.loadConversations();
 
     this.refreshSub = this.messageService.onConversationsRefresh$.subscribe(
       () => {
-        this.loadConversations();
+        this.refreshConversationList();
       },
     );
-
-    this.messageService.getConversations(this.currentUsername).subscribe({
-      next: (data) => {
-        this.conversations = data;
-
-        const withUsername = this.route.snapshot.queryParamMap.get('with');
-        if (withUsername) {
-          const existing = this.conversations.find(
-            (c) => c.otherUsername === withUsername,
-          );
-          if (existing) {
-            this.selectConversation(existing);
-          } else {
-            this.userService.getEntityByUsername(withUsername).subscribe({
-              next: (userData) => {
-                const newConv: Conversation = {
-                  conversationId: [this.currentUsername, withUsername]
-                    .sort()
-                    .join('_'),
-                  otherUsername: withUsername,
-                  lastMessage: '',
-                  lastMessageDate: '',
-                  otherUserId: userData?.id,
-                  profilePhotoUrl:
-                    userData?.freeAreaDTO?.principalPhotoDTO?.[0]?.url ??
-                    undefined,
-                };
-                this.conversations.unshift(newConv);
-                this.selectConversation(newConv);
-              },
-              error: () => {
-                const newConv: Conversation = {
-                  conversationId: [this.currentUsername, withUsername]
-                    .sort()
-                    .join('_'),
-                  otherUsername: withUsername,
-                  lastMessage: '',
-                  lastMessageDate: '',
-                };
-                this.conversations.unshift(newConv);
-                this.selectConversation(newConv);
-              },
-            });
-          }
-        }
-      },
-      error: (err) => console.error('Error loading conversations:', err),
-    });
   }
 
   ngOnDestroy(): void {
     this.refreshSub?.unsubscribe();
+    this.ws.disconnect();
   }
 
   selectConversation(conv: Conversation): void {
     this.selectedConversation = conv;
     this.messages = [];
     this.ws.disconnect();
-
-    // ← limpiar el punto rojo al abrir
     conv.unreadCount = 0;
 
     this.messageService
@@ -141,6 +94,81 @@ export class MessagePageComponent implements OnInit {
     );
   }
 
+  private loadConversations(): void {
+    this.messageService.getConversations(this.currentUsername).subscribe({
+      next: (data) => {
+        this.conversations = data;
+
+        if (this.initialLoadDone) return;
+        this.initialLoadDone = true;
+
+        const withUsername = this.route.snapshot.queryParamMap.get('with');
+        if (!withUsername) return;
+
+        const existing = this.conversations.find(
+          (c) => c.otherUsername === withUsername,
+        );
+        if (existing) {
+          this.selectConversation(existing);
+          return;
+        }
+
+        this.userService.getEntityByUsername(withUsername).subscribe({
+          next: (userData) => {
+            const newConv: Conversation = {
+              conversationId: [this.currentUsername, withUsername]
+                .sort()
+                .join('_'),
+              otherUsername: withUsername,
+              lastMessage: '',
+              lastMessageDate: '',
+              otherUserId: userData?.id,
+              profilePhotoUrl:
+                userData?.freeAreaDTO?.principalPhotoDTO?.[0]?.url ?? undefined,
+            };
+            this.conversations.unshift(newConv);
+            this.selectConversation(newConv);
+          },
+          error: () => {
+            const newConv: Conversation = {
+              conversationId: [this.currentUsername, withUsername]
+                .sort()
+                .join('_'),
+              otherUsername: withUsername,
+              lastMessage: '',
+              lastMessageDate: '',
+            };
+            this.conversations.unshift(newConv);
+            this.selectConversation(newConv);
+          },
+        });
+      },
+      error: (err) => console.error('Error loading conversations:', err),
+    });
+  }
+
+  private refreshConversationList(): void {
+    this.messageService.getConversations(this.currentUsername).subscribe({
+      next: (data) => {
+        const backendIds = new Set(data.map((c) => c.conversationId));
+        const localOnly = this.conversations.filter(
+          (c) => !backendIds.has(c.conversationId),
+        );
+        const merged = [...localOnly, ...data];
+
+        if (this.selectedConversation) {
+          const activeId = this.selectedConversation.conversationId;
+          this.conversations = merged.map((c) =>
+            c.conversationId === activeId ? { ...c, unreadCount: 0 } : c,
+          );
+        } else {
+          this.conversations = merged;
+        }
+      },
+      error: (err) => console.error('Error refreshing conversations:', err),
+    });
+  }
+
   private bringConversationToTop(
     conversationId: string,
     lastBody: string,
@@ -162,68 +190,16 @@ export class MessagePageComponent implements OnInit {
 
   sendMessage(): void {
     if (!this.newMessage.trim() || !this.selectedConversation) return;
-
-    const message: Message = {
+    const message: MessageDTO = {
       senderId: this.currentUsername,
       receiverId: this.selectedConversation.otherUsername,
       body: this.newMessage,
     };
-
     this.ws.sendMessage(message);
     this.newMessage = '';
   }
 
   goToProfile(conv: Conversation): void {
     this.router.navigate(['/', conv.otherUsername, conv.otherUserId]);
-  }
-
-  private loadConversations(): void {
-    this.messageService.getConversations(this.currentUsername).subscribe({
-      next: (data) => {
-        this.conversations = data;
-
-        const withUsername = this.route.snapshot.queryParamMap.get('with');
-        if (withUsername) {
-          const existing = this.conversations.find(
-            (c) => c.otherUsername === withUsername,
-          );
-          if (existing) {
-            this.selectConversation(existing);
-          } else {
-            this.userService.getEntityByUsername(withUsername).subscribe({
-              next: (userData) => {
-                const newConv: Conversation = {
-                  conversationId: [this.currentUsername, withUsername]
-                    .sort()
-                    .join('_'),
-                  otherUsername: withUsername,
-                  lastMessage: '',
-                  lastMessageDate: '',
-                  otherUserId: userData?.id,
-                  profilePhotoUrl:
-                    userData?.freeAreaDTO?.principalPhotoDTO?.[0]?.url ??
-                    undefined,
-                };
-                this.conversations.unshift(newConv);
-                this.selectConversation(newConv);
-              },
-              error: () => {
-                const newConv: Conversation = {
-                  conversationId: [this.currentUsername, withUsername]
-                    .sort()
-                    .join('_'),
-                  otherUsername: withUsername,
-                  lastMessage: '',
-                  lastMessageDate: '',
-                };
-                this.conversations.unshift(newConv);
-                this.selectConversation(newConv);
-              },
-            });
-          }
-        }
-      },
-      error: (err) => console.error('Error loading conversations:', err),
-    });
   }
 }
