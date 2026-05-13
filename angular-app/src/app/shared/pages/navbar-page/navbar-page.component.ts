@@ -46,14 +46,17 @@ export class NavbarPageComponent implements OnInit, OnDestroy {
 
   private initUnread(username: string): void {
     this.messageService.getTotalUnread(username).subscribe({
-      next: (count) => (this.unreadCount = count),
+      next: (count) => {
+        console.log('REST unread:', count);
+        this.unreadCount = count;
+      },
       error: (err) => console.warn('Error cargando unread:', err),
     });
 
     this.ws.subscribeToUnread(username, (count: number) => {
+      console.log('WS unread recibido:', count);
       const previous = this.unreadCount;
       this.unreadCount = count;
-
       if (count !== previous) {
         this.messageService.triggerConversationsRefresh();
       }
