@@ -22,24 +22,24 @@ export class FreeAreaService {
   }
 
   uploadPrincipalPhoto(
-    formData: FormData
+    formData: FormData,
   ): Observable<PrincipalPhotoDTO | undefined> {
     return this.http
       .post<PrincipalPhotoDTO>(
         `${this.baseUrl}api/v1/free-area/principal-photo/upload`,
-        formData
+        formData,
       )
       .pipe(catchError(() => of(undefined)));
   }
 
   uploadPublicContent(
     formData: FormData,
-    freeAreaId: number
+    freeAreaId: number,
   ): Observable<PublicContentDTO | undefined> {
     return this.http
       .post<PublicContentDTO>(
         `${this.baseUrl}api/v1/free-area/${freeAreaId}/public-content`,
-        formData
+        formData,
       )
       .pipe(catchError(() => of(undefined)));
   }
@@ -47,7 +47,7 @@ export class FreeAreaService {
   updatePublicContent(
     freeAreaId: number,
     contentId: number,
-    description: string
+    description: string,
   ): Observable<PublicContentDTO | undefined> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -55,14 +55,14 @@ export class FreeAreaService {
       .put<PublicContentDTO>(
         `${this.baseUrl}api/v1/free-area/${freeAreaId}/public-content/${contentId}`,
         { description },
-        { headers }
+        { headers },
       )
       .pipe(catchError(() => of(undefined)));
   }
 
   deletePublicContent(freeAreaId: number, contentId: number): Observable<void> {
     return this.http.delete<void>(
-      `${this.baseUrl}api/v1/free-area/${freeAreaId}/public-content/${contentId}`
+      `${this.baseUrl}api/v1/free-area/${freeAreaId}/public-content/${contentId}`,
     );
   }
 }

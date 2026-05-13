@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client, IMessage, StompSubscription } from '@stomp/stompjs';
-import { Message } from '../../models/messages';
 import { environment } from '../../../environments/environment';
+import { MessageDTO } from '../../dto/messages-dto';
 
 @Injectable({ providedIn: 'root' })
 export class WebSocketService {
@@ -38,7 +38,7 @@ export class WebSocketService {
     this.client.activate();
   }
 
-  sendMessage(message: Message): void {
+  sendMessage(message: MessageDTO): void {
     if (!this.client?.connected) return;
     this.client.publish({
       destination: '/app/chat.send',

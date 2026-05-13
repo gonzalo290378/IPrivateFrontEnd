@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Message } from '../../models/messages';
 import { WebSocketService } from '../../users/services/websocket.service';
 import { MessageService } from '../../users/services/message.service';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TokenService } from '../../users/services/token.service';
+import { MessageDTO } from '../../dto/messages-dto';
 
 @Component({
   selector: 'app-chat',
@@ -15,7 +15,7 @@ import { TokenService } from '../../users/services/token.service';
   styleUrl: './chat.component.css',
 })
 export class ChatComponent implements OnInit {
-  messages: Message[] = [];
+  messages: MessageDTO[] = [];
   conversationId!: string;
   newMessage: string = '';
   currentUserId!: string;
@@ -54,7 +54,7 @@ export class ChatComponent implements OnInit {
   sendMessage() {
     if (!this.newMessage.trim()) return;
 
-    const message: Message = {
+    const message: MessageDTO = {
       senderId: this.currentUserId,
       receiverId: this.otherUserId,
       body: this.newMessage,

@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { UserDTO } from '../../dto/user-dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { UserFormDTO } from '../../dto/user-form-dto.model';
-import { User } from '../../models/user';
+import { UserFormDTO } from '../../dto/user-form-dto.';
 import { UserDetailsFreeAreaDTO } from '../../dto/user-details-free-area-dto';
 import { environment } from '../../../environments/environment';
+import { User } from '../../dto/user';
 
 @Injectable({
   providedIn: 'root',

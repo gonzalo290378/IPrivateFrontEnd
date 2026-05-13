@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Message } from '../../models/messages';
 import { environment } from '../../../environments/environment';
 import { Conversation } from '../../chat/chat/interfaces/conversation';
 import { Observable, Subject } from 'rxjs';
+import { MessageDTO } from '../../dto/messages-dto';
 
 @Injectable({ providedIn: 'root' })
 export class MessageService {
@@ -14,7 +14,7 @@ export class MessageService {
   constructor(private http: HttpClient) {}
 
   getConversation(senderId: string, receiverId: string) {
-    return this.http.get<Message[]>(`${this.api}/${senderId}/${receiverId}`);
+    return this.http.get<MessageDTO[]>(`${this.api}/${senderId}/${receiverId}`);
   }
 
   getConversationId(user1: string, user2: string) {
